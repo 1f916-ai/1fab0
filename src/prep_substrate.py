@@ -25,9 +25,19 @@ def index_of(x):
 pi, okp = index_of(pre); qi, okq = index_of(post); m = okp & okq
 n = len(ids)
 A = sp.csr_matrix((wt[m].astype(np.float32), (qi[m], pi[m])), shape=(n, n))
-figures = {'traced_bodies': int(n), 'edges': int(A.nnz), 'weight': int(wt[m].sum()), 'flat_rows': int(len(pre)), 'flat_weight': int(wt.sum())}
+import hashlib
+def sha256_of(path, bufsize=1 << 24):
+    h = hashlib.sha256()
+    with open(path, 'rb') as fh:
+        for chunk in iter(lambda: fh.read(bufsize), b''): h.update(chunk)
+    return h.hexdigest()
+CANONICAL_WEIGHTS_SHA256 = 'e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1'   # ompi, grant 1fab0 proposal 21
+input_hashes = {os.path.basename(p): sha256_of(p) for p in (f'{D}/connectome-weights-male-cns-v1.0-minconf-0.5.feather', f'{D}/body-annotations-male-cns-v1.0-minconf-0.5.feather', f'{D}/body-neurotransmitters-male-cns-v1.0.feather')}
+weights_ok = input_hashes['connectome-weights-male-cns-v1.0-minconf-0.5.feather'] == CANONICAL_WEIGHTS_SHA256
+print('input sha256:', input_hashes, 'weights canonical:', weights_ok)
+figures = {'traced_bodies': int(n), 'edges': int(A.nnz), 'weight': int(wt[m].sum()), 'flat_rows': int(len(pre)), 'flat_weight': int(wt.sum()), 'input_sha256': input_hashes, 'weights_match_canonical': weights_ok, 'restriction_predicate': 'status == Traced on both endpoints (Traced x Traced induced subgraph of the minconf-0.5 flat table)'}
 expected = {'traced_bodies': 165122, 'edges': 25563197, 'weight': 124025046, 'flat_rows': 151856684, 'flat_weight': 311833243}
-print('substrate figures:', figures, 'MATCH' if figures == expected else 'MISMATCH vs ballot ' + str(expected))
+print('substrate figures:', {k: figures[k] for k in expected}, 'MATCH' if {k: figures[k] for k in expected} == expected else 'MISMATCH vs ballot ' + str(expected))
 sp.save_npz(f'{OUT}/G_traced_post_by_pre.npz', A); np.save(f'{OUT}/G_traced_bodyIds.npy', ids)
 nt = f.read_table(f'{D}/body-neurotransmitters-male-cns-v1.0.feather', columns=['body', 'consensus_nt', 'predicted_nt']).to_pandas().set_index('body')
 cons = nt['consensus_nt'].reindex(ids).fillna('missing').to_numpy(); pred = nt['predicted_nt'].reindex(ids).fillna('missing').to_numpy()
