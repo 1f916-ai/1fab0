@@ -1,0 +1,341 @@
+{
+ "DM1 (Or42b: vinegar/ethyl acetate, attractive)": {
+  "orn_types": [
+   "ORN_DM1"
+  ],
+  "orn_bodies": 74,
+  "pn_types": [
+   "DM1_lPN"
+  ],
+  "pn_bodies": 2
+ },
+ "DM5 (Or85a: aversive at high conc.)": {
+  "orn_types": [
+   "ORN_DM5"
+  ],
+  "orn_bodies": 35,
+  "pn_types": [
+   "DM5_lPN"
+  ],
+  "pn_bodies": 7
+ },
+ "V (Gr21a/Gr63a: CO2, aversive)": {
+  "orn_types": [
+   "ORN_V"
+  ],
+  "orn_bodies": 55,
+  "pn_types": [
+   "V_ilPN"
+  ],
+  "pn_bodies": 2
+ },
+ "DA2 (Or56a: geosmin, aversive)": {
+  "orn_types": [
+   "ORN_DA2"
+  ],
+  "orn_bodies": 48,
+  "pn_types": [
+   "DA2_lPN"
+  ],
+  "pn_bodies": 10
+ },
+ "DA1 (Or67d: cVA pheromone)": {
+  "orn_types": [
+   "ORN_DA1"
+  ],
+  "orn_bodies": 204,
+  "pn_types": [
+   "DA1_lPN",
+   "DA1_vPN"
+  ],
+  "pn_bodies": 15
+ },
+ "DL5 (Or7a: benzaldehyde class)": {
+  "orn_types": [
+   "ORN_DL5"
+  ],
+  "orn_bodies": 43,
+  "pn_types": [
+   "DL5_adPN"
+  ],
+  "pn_bodies": 2
+ },
+ "GF+GFC": {
+  "types": [
+   "DNp01",
+   "GFC1",
+   "GFC2",
+   "GFC3",
+   "GFC4"
+  ],
+  "bodies": 36
+ },
+ "LC4": {
+  "types": [
+   "LC4"
+  ],
+  "bodies": 126
+ },
+ "LPLC2": {
+  "types": [
+   "LPLC2"
+  ],
+  "bodies": 185
+ },
+ "T4a-d": {
+  "types": [
+   "T4a",
+   "T4b",
+   "T4c",
+   "T4d"
+  ],
+  "bodies": 6861
+ },
+ "T5a-d": {
+  "types": [
+   "T5a",
+   "T5b",
+   "T5c",
+   "T5d"
+  ],
+  "bodies": 6719
+ },
+ "HS": {
+  "types": [
+   "HSE",
+   "HSN",
+   "HSS"
+  ],
+  "bodies": 6
+ },
+ "DNa01": {
+  "types": [
+   "DNa01"
+  ],
+  "bodies": 2
+ },
+ "DNa02": {
+  "types": [
+   "DNa02"
+  ],
+  "bodies": 2
+ },
+ "pIP10": {
+  "types": [
+   "pIP10"
+  ],
+  "bodies": 2
+ },
+ "wing MNs": {
+  "types": [
+   "MNwm35",
+   "MNwm36"
+  ],
+  "bodies": 4
+ },
+ "pC1 all": {
+  "types": [
+   "pC1_10a",
+   "pC1_10b",
+   "pC1_10c",
+   "pC1_10d",
+   "pC1_11a",
+   "pC1_11b",
+   "pC1_12a",
+   "pC1_12b",
+   "pC1_13a",
+   "pC1_13b",
+   "pC1_13c",
+   "pC1_14a",
+   "pC1_14b",
+   "pC1_15a",
+   "pC1_15b",
+   "pC1_15c",
+   "pC1_16a",
+   "pC1_16b",
+   "pC1_17a",
+   "pC1_17b",
+   "pC1_18a",
+   "pC1_18b",
+   "pC1_19",
+   "pC1_1a",
+   "pC1_1b",
+   "pC1_2a",
+   "pC1_2a/2b",
+   "pC1_2b",
+   "pC1_2c",
+   "pC1_3a",
+   "pC1_3b",
+   "pC1_3c",
+   "pC1_4a",
+   "pC1_4b",
+   "pC1_5a",
+   "pC1_5b",
+   "pC1_6a",
+   "pC1_6b",
+   "pC1_7a",
+   "pC1_7b",
+   "pC1_8a",
+   "pC1_8b",
+   "pC1_8c",
+   "pC1_9a",
+   "pC1_9b",
+   "pC1x_a",
+   "pC1x_b",
+   "pC1x_c",
+   "pC1x_d"
+  ],
+  "bodies": 156
+ },
+ "pC1_fru": {
+  "bodies": 0
+ },
+ "vnc_motor": {
+  "bodies": 708,
+  "types": [
+   "",
+   "ADNM1 MN",
+   "ADNM2 MN",
+   "Acc. ti flexor MN",
+   "Acc. tr flexor MN",
+   "DLMn a, b",
+   "DLMn c-f",
+   "DVMn 1a-c",
+   "DVMn 2a, b",
+   "DVMn 3a, b",
+   "FNM2",
+   "Fe reductor MN",
+   "MNad01",
+   "MNad02",
+   "MNad03",
+   "MNad04,MNad48",
+   "MNad05",
+   "MNad06",
+   "MNad07",
+   "MNad08",
+   "MNad09",
+   "MNad10",
+   "MNad11",
+   "MNad12",
+   "MNad14",
+   "MNad15",
+   "MNad16",
+   "MNad17",
+   "MNad18,MNad27",
+   "MNad19",
+   "MNad20",
+   "MNad21",
+   "MNad22",
+   "MNad23",
+   "MNad24",
+   "MNad25",
+   "MNad26",
+   "MNad28",
+   "MNad29",
+   "MNad30",
+   "MNad31",
+   "MNad32",
+   "MNad33",
+   "MNad34",
+   "MNad35",
+   "MNad36",
+   "MNad40",
+   "MNad41",
+   "MNad42",
+   "MNad43",
+   "MNad44",
+   "MNad45",
+   "MNad46",
+   "MNad47",
+   "MNad49",
+   "MNad50",
+   "MNad53",
+   "MNad54",
+   "MNad55",
+   "MNad56",
+   "MNad57",
+   "MNad61",
+   "MNad62",
+   "MNad63",
+   "MNad64",
+   "MNad65",
+   "MNad66",
+   "MNad67",
+   "MNad68",
+   "MNad69",
+   "MNhl01",
+   "MNhl02",
+   "MNhl29",
+   "MNhl59",
+   "MNhl60",
+   "MNhl62",
+   "MNhl64",
+   "MNhl65",
+   "MNhl87",
+   "MNhl88",
+   "MNhm03",
+   "MNhm42",
+   "MNhm43",
+   "MNml29",
+   "MNml76",
+   "MNml77",
+   "MNml78",
+   "MNml79",
+   "MNml80",
+   "MNml81",
+   "MNml82",
+   "MNml83",
+   "MNnm03",
+   "MNnm07,MNnm12",
+   "MNnm08",
+   "MNnm09",
+   "MNnm10",
+   "MNnm11",
+   "MNnm13",
+   "MNnm14",
+   "MNwm35",
+   "MNwm36",
+   "MNxm01",
+   "MNxm02",
+   "MNxm03",
+   "Pleural remotor/abductor MN",
+   "STTMm",
+   "Sternal adductor MN",
+   "Sternal anterior rotator MN",
+   "Sternal posterior rotator MN",
+   "Sternotrochanter MN",
+   "TTMn",
+   "Ta depressor MN",
+   "Ta levator MN",
+   "Tergopleural/Pleural promotor MN",
+   "Tergotr. MN",
+   "Ti extensor MN",
+   "Ti flexor MN",
+   "Tr extensor MN",
+   "Tr flexor MN",
+   "b1 MN",
+   "b2 MN",
+   "b3 MN",
+   "hDVM MN",
+   "hg1 MN",
+   "hg2 MN",
+   "hg3 MN",
+   "hg4 MN",
+   "hi1 MN",
+   "hi2 MN",
+   "hiii2 MN",
+   "i1 MN",
+   "i2 MN",
+   "iii1 MN",
+   "iii3 MN",
+   "ltm MN",
+   "ltm1-tibia MN",
+   "ltm2-femur MN",
+   "ps1 MN",
+   "ps2 MN",
+   "tp1 MN",
+   "tp2 MN",
+   "tpn MN"
+  ]
+ }
+}

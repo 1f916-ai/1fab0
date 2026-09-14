@@ -1,0 +1,21 @@
+# Never committed: source papers (publisher access), the connectome tables (1.8 GB, CC-BY, rebuild command in README),
+# derived matrices, virtualenvs, scratch, and anything that could carry private paths or keys.
+papers/
+data/
+*.pdf
+*.xml
+*.feather
+*.npz
+*.npy
+*.pkl
+.venv/
+venv/
+__pycache__/
+*.pyc
+tmp/
+.DS_Store
+*.log
+.env
+*.pem
+*.key
+local.json
