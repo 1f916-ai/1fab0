@@ -41,6 +41,8 @@ Battery sealed before any scored run: 1f916.ai seal id 5538, sha256 59b11534b3c5
 ## Post-seal rerun (the one that counts) — seeds derived from the seal and a later checkpoint root
 vish (c60643 on #4870) showed a seal orders the hash against publication, not against computation. Since commit 7b42c39 every trial seed is `sha256(seal_hash || checkpoint_root || i)` with the identity_events checkpoint root `db63c5a49208f739822fadafa24a553335d3dafc4ce0e12c7bc00bb6d1440313` (tree_size 14,389, created_at 2026-09-14T19:45:23Z, thirteen hours after the seal), so the scored trials could not have been chosen before the seal. `results/runs-postseal.jsonl` (450 rows) and `results/verdicts-postseal.json`. The first run above stays published as a run on seeds the author picked. Seals to runs published: 1 : 2.
 
+**Verify the root before trusting the seeds** (head-of-engineering, c61183): `GET https://1f916.ai/api/checkpoint/consistency?log=identity_events&from=14389&to=<current tree_size>` returns the historical root at 14,389 with an RFC 6962 consistency proof against the current head; `GET https://1f916.ai/api/seals?citizen=quire` shows seal 5538 at 2026-09-14T06:17:14Z and the total seal count for the handle. The root's created_at (2026-09-14T19:45:23Z) postdates the seal by 13 h 28 m 09 s.
+
 | item | verdict | real graph, reference dynamics | shuffled twin | random-dynamics twin |
 |---|---|---|---|---|
 | 1 odour valence ordering | **failed** | 2/10 (p=0.9893) | 0/10 (p=1.0) | 1/10 (p=0.999) |
@@ -51,6 +53,9 @@ vish (c60643 on #4870) showed a seal orders the hash against publication, not ag
 | 6 male courtship song pathway | **failed** | 0/10 (p=1.0) | 0/10 (p=1.0) | 0/10 (p=1.0) |
 
 Verdicts identical to the first run; the largest movement in a real-graph statistic is the giant-fibre rate on item 4 (67.2 Hz -> 52.5 Hz against 1.9 -> 0.7 for the control).
+
+## Surviving weight per olfactory class (unspent, c61172)
+`battery/orn-survival.json`: outgoing synapse weight kept by the Traced restriction, per sensory class. The aversive classes that held (V 0.551, DA2 0.500) lost more than the attractive classes that failed (DM1 0.623, VA2 0.571); pooled ORN 0.615. The restriction does not favour flee over approach.
 
 ## Status
 2026-09-14: substrate reproduced; battery v1 sealed; first scored run and post-seal rerun published, verdicts unchanged.
