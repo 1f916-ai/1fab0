@@ -96,8 +96,12 @@ def item_plan(it):
           'HS_R': cls({'classes': ['HSE', 'HSN', 'HSS'], 'side': 'R'}), 'HS_L': cls({'classes': ['HSE', 'HSN', 'HSS'], 'side': 'L'}), 'DNa02_R': cls({'classes': ['DNa02'], 'side': 'R'}), 'DNa02_L': cls({'classes': ['DNa02'], 'side': 'L'})}
     return stim, ro
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--items', default='1,2,3,4,5,6'); ap.add_argument('--trials', type=int, default=T['paired_trials']); ap.add_argument('--conditions', default='real,shuffled,random'); ap.add_argument('--smoke', action='store_true'); ap.add_argument('--out', default='results/runs.jsonl')
-    a = ap.parse_args(); items = [it for it in B['items'] if it['id'] in {int(x) for x in a.items.split(',')}]; conds = a.conditions.split(','); ntr = 1 if a.smoke else a.trials
+    ap = argparse.ArgumentParser(); ap.add_argument('--items', default='1,2,3,4,5,6'); ap.add_argument('--trials', type=int, default=T['paired_trials']); ap.add_argument('--conditions', default='real,shuffled,random'); ap.add_argument('--smoke', action='store_true'); ap.add_argument('--seed-material', default=None, help='sealhash:checkpointroot — derive trial seeds as sha256(seal || root || i) (vish, c60643)'); ap.add_argument('--out', default='results/runs.jsonl')
+    a = ap.parse_args()
+    def trial_seed(i):
+        if not a.seed_material: return i
+        seal, root = a.seed_material.split(':'); return int(hashlib.sha256((seal + root + str(i)).encode()).hexdigest()[:15], 16)
+    items = [it for it in B['items'] if it['id'] in {int(x) for x in a.items.split(',')}]; conds = a.conditions.split(','); ntr = 1 if a.smoke else a.trials
     os.makedirs('results', exist_ok=True); prev = hashlib.sha256(open('battery/battery.json', 'rb').read()).hexdigest()
     W_real = build_weights(A); shuffles = {}
     t0 = time.time(); rows = 0
@@ -106,14 +110,15 @@ def main():
             stim, ro = item_plan(it)
             for cond in conds:
                 for tr in range(ntr):
-                    if cond == 'real': W, (P, jit) = W_real, params('reference', tr)
+                    sd = trial_seed(tr)
+                    if cond == 'real': W, (P, jit) = W_real, params('reference', sd)
                     elif cond == 'shuffled':
-                        if tr not in shuffles: shuffles[tr] = build_weights(A, seed=tr)
-                        W, (P, jit) = shuffles[tr], params('reference', tr)
-                    else: W, (P, jit) = sign_permuted_weights(A, tr), params('random', tr)
+                        if tr not in shuffles: shuffles[tr] = build_weights(A, seed=sd)
+                        W, (P, jit) = shuffles[tr], params('reference', sd)
+                    else: W, (P, jit) = sign_permuted_weights(A, sd), params('random', sd)
                     for sname, inputs in stim.items():
-                        t1 = time.time(); res = simulate(W, P, jit, inputs, ro, seed=tr)
-                        row = dict(battery_sha256=hashlib.sha256(open('battery/battery.json', 'rb').read()).hexdigest(), item=it['id'], condition=cond, trial=tr, stimulus=sname, params={k: (round(v, 4) if isinstance(v, float) else v) for k, v in P.items()}, readouts=res, wall_s=round(time.time() - t1, 1), prev=prev)
+                        t1 = time.time(); res = simulate(W, P, jit, inputs, ro, seed=sd)
+                        row = dict(seed=sd, seed_material=a.seed_material, battery_sha256=hashlib.sha256(open('battery/battery.json', 'rb').read()).hexdigest(), item=it['id'], condition=cond, trial=tr, stimulus=sname, params={k: (round(v, 4) if isinstance(v, float) else v) for k, v in P.items()}, readouts=res, wall_s=round(time.time() - t1, 1), prev=prev)
                         prev = hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest(); row['sha256'] = prev
                         fo.write(json.dumps(row, sort_keys=True) + '\n'); fo.flush(); rows += 1
                         print('item %d %-8s trial %d %-12s %5.1fs  DNp09 %.2f MDN %.2f DNp01 %.2f pC1 %.2f pIP10 %.2f HS R/L %.2f/%.2f' % (it['id'], cond, tr, sname, row['wall_s'], res['DNp09']['stimulus_hz'], res['MDN']['stimulus_hz'], res['DNp01']['stimulus_hz'], res['pC1']['stimulus_hz'], res['pIP10']['stimulus_hz'], res['HS_R']['stimulus_hz'], res['HS_L']['stimulus_hz']), flush=True)
