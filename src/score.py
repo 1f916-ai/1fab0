@@ -6,7 +6,9 @@ dynamics AND does not hold in the shuffled twin AND does not hold in the random-
 Verdicts per item: held | failed | unreadable (a needed row is missing) | not-run."""
 import json, sys, math, collections
 from itertools import groupby
-runs = [json.loads(l) for l in open(sys.argv[1] if len(sys.argv) > 1 else 'results/runs.jsonl')]
+ALL = [json.loads(l) for l in open(sys.argv[1] if len(sys.argv) > 1 else 'results/runs.jsonl')]
+STEP = float(sys.argv[2]) if len(sys.argv) > 2 else None   # v3: score the random arm at one sweep step (multiplier); real/shuffled rows have step None
+runs = [r for r in ALL if r.get('condition') != 'random' or r.get('step') == STEP or (STEP is None and r.get('step') is None)]
 B = json.load(open('battery/battery.json'))
 def hz(row, k): r = row['readouts'][k]; return r['stimulus_hz'] - r['baseline_hz']
 def approach(row): return hz(row, 'DNp09') - hz(row, 'MDN')
@@ -49,5 +51,5 @@ for it in B['items']:
     else: rec['verdict'] = 'held' if (c['real']['holds'] and not c['shuffled']['holds'] and not c['random']['holds']) else 'failed'
     rec['real_only'] = bool(c.get('real', {}).get('holds'))
     out[str(i)] = rec
-json.dump(out, open('results/verdicts.json', 'w'), indent=1)
+json.dump(out, open('results/verdicts.json' if STEP is None else 'results/verdicts-step-%g.json' % STEP, 'w'), indent=1)
 for i, r in out.items(): print(i, r['name'], '->', r['verdict'], {k: (v.get('direction_observed'), v.get('holds')) for k, v in r['conditions'].items()})

@@ -122,7 +122,7 @@ def item_plan(it):
           'HS_R': cls({'classes': ['HSE', 'HSN', 'HSS'], 'side': 'R'}), 'HS_L': cls({'classes': ['HSE', 'HSN', 'HSS'], 'side': 'L'}), 'DNa02_R': cls({'classes': ['DNa02'], 'side': 'R'}), 'DNa02_L': cls({'classes': ['DNa02'], 'side': 'L'})}
     return stim, ro
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--items', default='1,2,3,4,5,6'); ap.add_argument('--trials', type=int, default=T['paired_trials']); ap.add_argument('--conditions', default='real,shuffled,random'); ap.add_argument('--smoke', action='store_true'); ap.add_argument('--activity-match', action='store_true', help='v2: calibrate the random twin so its probe population rate is within [0.5,2]x the reference model'); ap.add_argument('--seed-material', default=None, help='sealhash:checkpointroot — derive trial seeds as sha256(seal || root || i) (vish, c60643)'); ap.add_argument('--out', default='results/runs.jsonl')
+    ap = argparse.ArgumentParser(); ap.add_argument('--items', default='1,2,3,4,5,6'); ap.add_argument('--trials', type=int, default=T['paired_trials']); ap.add_argument('--conditions', default='real,shuffled,random'); ap.add_argument('--smoke', action='store_true'); ap.add_argument('--rate-sweep', default=None, help='v3: comma-separated multipliers of the reference probe rate; the random twin is calibrated to each within 25%% and every step is scored'); ap.add_argument('--activity-match', action='store_true', help='v2: calibrate the random twin so its probe population rate is within [0.5,2]x the reference model'); ap.add_argument('--seed-material', default=None, help='sealhash:checkpointroot — derive trial seeds as sha256(seal || root || i) (vish, c60643)'); ap.add_argument('--out', default='results/runs.jsonl')
     a = ap.parse_args()
     def trial_seed(i):
         if not a.seed_material: return i
@@ -131,8 +131,9 @@ def main():
     os.makedirs('results', exist_ok=True); prev = hashlib.sha256(open(BATTERY_FILE, 'rb').read()).hexdigest()
     W_real = build_weights(A); shuffles = {}
     ref_rate = None
-    if a.activity_match:
+    if a.activity_match or a.rate_sweep:
         Pref, _ = params('reference', 0); ref_rate = probe_rate(W_real, Pref, None, 0); print('reference probe rate %.3f spikes/s/neuron' % ref_rate, flush=True)
+    steps = [float(x) for x in a.rate_sweep.split(',')] if a.rate_sweep else [None]
     t0 = time.time(); rows = 0
     with open(a.out, 'a') as fo:
         for it in items:
@@ -146,13 +147,18 @@ def main():
                         W, (P, jit) = shuffles[tr], params('reference', sd)
                     else:
                         W, (P, jit) = sign_permuted_weights(A, sd), params('random', sd)
-                        if a.activity_match:
+                        if a.activity_match and not a.rate_sweep:
                             P, rate, iters = activity_match(W, P, jit, sd, ref_rate); P['probe_rate'] = round(rate, 3); P['ref_probe_rate'] = round(ref_rate, 3); P['match_iters'] = iters; print('  activity-matched trial %d: wscale %.3f probe %.3f (ref %.3f) in %d iters' % (tr, P['wscale'], rate, ref_rate, iters), flush=True)
-                    for sname, inputs in stim.items():
-                        t1 = time.time(); res = simulate(W, P, jit, inputs, ro, seed=sd)
-                        row = dict(seed=sd, seed_material=a.seed_material, battery_file=BATTERY_FILE, battery_sha256=hashlib.sha256(open(BATTERY_FILE, 'rb').read()).hexdigest(), item=it['id'], condition=cond, trial=tr, stimulus=sname, params={k: (round(v, 4) if isinstance(v, float) else v) for k, v in P.items()}, readouts=res, wall_s=round(time.time() - t1, 1), prev=prev)
-                        prev = hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest(); row['sha256'] = prev
-                        fo.write(json.dumps(row, sort_keys=True) + '\n'); fo.flush(); rows += 1
-                        print('item %d %-8s trial %d %-12s %5.1fs  DNp09 %.2f MDN %.2f DNp01 %.2f pC1 %.2f pIP10 %.2f HS R/L %.2f/%.2f' % (it['id'], cond, tr, sname, row['wall_s'], res['DNp09']['stimulus_hz'], res['MDN']['stimulus_hz'], res['DNp01']['stimulus_hz'], res['pC1']['stimulus_hz'], res['pIP10']['stimulus_hz'], res['HS_R']['stimulus_hz'], res['HS_L']['stimulus_hz']), flush=True)
+                    for step in (steps if cond == 'random' else [None]):
+                      if step is not None:
+                        P0 = dict(P); P0, rate, iters = activity_match(W, P0, jit, sd, ref_rate * step, lo=0.75, hi=1.25, iters=10); P0['probe_rate'] = round(rate, 3); P0['ref_probe_rate'] = round(ref_rate, 3); P0['target_multiplier'] = step; P0['match_iters'] = iters
+                        print('  sweep trial %d x%.2f: wscale %.4f probe %.3f (target %.3f) in %d iters' % (tr, step, P0['wscale'], rate, ref_rate * step, iters), flush=True)
+                      else: P0 = P
+                      for sname, inputs in stim.items():
+                          t1 = time.time(); res = simulate(W, P0, jit, inputs, ro, seed=sd)
+                          row = dict(step=(P0.get('target_multiplier') if cond == 'random' else None), seed=sd, seed_material=a.seed_material, battery_file=BATTERY_FILE, battery_sha256=hashlib.sha256(open(BATTERY_FILE, 'rb').read()).hexdigest(), item=it['id'], condition=cond, trial=tr, stimulus=sname, params={k: (round(v, 4) if isinstance(v, float) else v) for k, v in P0.items()}, readouts=res, wall_s=round(time.time() - t1, 1), prev=prev)
+                          prev = hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest(); row['sha256'] = prev
+                          fo.write(json.dumps(row, sort_keys=True) + '\n'); fo.flush(); rows += 1
+                          print('item %d %-8s trial %d %-12s %5.1fs  DNp09 %.2f MDN %.2f DNp01 %.2f pC1 %.2f pIP10 %.2f HS R/L %.2f/%.2f' % (it['id'], cond, tr, sname, row['wall_s'], res['DNp09']['stimulus_hz'], res['MDN']['stimulus_hz'], res['DNp01']['stimulus_hz'], res['pC1']['stimulus_hz'], res['pIP10']['stimulus_hz'], res['HS_R']['stimulus_hz'], res['HS_L']['stimulus_hz']), flush=True)
     print('rows', rows, 'total %.0fs' % (time.time() - t0))
 if __name__ == '__main__': main()
