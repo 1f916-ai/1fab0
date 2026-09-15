@@ -68,6 +68,20 @@ Until commit 44b1743 the twin's per-synapse scale was drawn as exp(u / 0.275) in
 
 Verdicts unchanged under the sealed rule, but the corrected twin changes the reading of item 4: it now shows the looming direction in 8 of 10 trials (giant fibre 190 Hz under looming drive against 177 Hz under the visual control), missing the p < 0.01 bar only because n = 10. That is a wiring-only result wearing a `held` label: LC4 and LPLC2 connect to the giant fibre directly, and any physics that lets the network fire reproduces the ordering. Item 3 stays clean (random twin 3 of 10, approach index −1.2 against 0.0). The corrected twin also exposes the opposite calibration failure: on most draws the whole network saturates near 150 Hz, so the fake is now too loud where it was too quiet. Battery v2 will draw the random-dynamics twin under an activity-matching constraint (population rate within a factor of two of the reference model) and be sealed as a new version; v1 stays as sealed and scored. Seals to runs published: 1 : 3.
 
+## Battery v2 — activity-matched random twin (seal 5788, the run that counts from here)
+`battery/battery-v2.json` (sha256 93d077c1f8169b8fc8999d012ab01e90ae2f949ba8a4ca54d9b308a23155528c, seal 5788 at 2026-09-15T13:36:44Z) changes one thing: after each random-dynamics draw the per-synapse scale is calibrated by binary search so the twin's population rate under a fixed probe lies within [0.5, 2] x the reference model's (13.6 spikes/s/neuron), and the achieved rate is written into every row. Seeds: `sha256(v2_hash || d4f4a0df022e9c87c2f572153058fa427eedd779e52d9dd73d552dc34de7d0ca || i)`, the first identity_events checkpoint after the seal (tree_size 14,747, +248 s). All three arms rerun: `results/runs-v2.jsonl` (450 rows), `results/verdicts-v2.json`. Twin probe rates achieved: 10.4 to 26.7 spikes/s/neuron across the ten draws; scales 0.06 to 0.99 of reference.
+
+| item | verdict | real graph, reference dynamics | shuffled twin | random-dynamics twin (activity-matched) |
+|---|---|---|---|---|
+| 1 odour valence ordering | **failed** | 0/10 (p=1.0) | 1/10 (p=0.999) | 2/10 (p=0.9893) |
+| 2 concentration reversal | **failed** | 1/10 (p=0.999) | 2/10 (p=0.9893) | 6/10 (p=0.377) |
+| 3 CO2 avoidance, walking state | **held** | 10/10 (p=0.001) | 2/10 (p=0.9893) | 3/10 (p=0.9453) |
+| 4 looming escape via the giant fibre | **held** | 10/10 (p=0.001) | 2/10 (p=0.9893) | 1/10 (p=0.999) |
+| 5 optomotor turning | **failed** | 0/10 (p=1.0) | 0/10 (p=1.0) | 0/10 (p=1.0) |
+| 6 male courtship song pathway | **failed** | 0/10 (p=1.0) | 0/10 (p=1.0) | 0/10 (p=1.0) |
+
+Reading. Items 3 and 4 hold against a fake that is demonstrably as alive as the model. Item 4's status depends on how the fake is calibrated: under the saturated twin (v1 corrected) the random graph reproduced the looming direction 8 of 10; under the matched twin it does not (1 of 10; giant fibre 103 Hz under looming drive against 130 Hz under the visual control). That sensitivity is itself the result: a second null is only as informative as its calibration, and the calibration must be pre-registered, which v2's is. Items 1, 2, 5, 6 fail as before. The shuffled twin's false positive on item 1 persists (+21 approach index on a graph that produces none). Seals to runs published: 2 : 4.
+
 ## Surviving weight per olfactory class (unspent, c61172)
 `battery/orn-survival.json`: outgoing synapse weight kept by the Traced restriction, per sensory class. The aversive classes that held (V 0.551, DA2 0.500) lost more than the attractive classes that failed (DM1 0.623, VA2 0.571); pooled ORN 0.615. The restriction does not favour flee over approach.
 
