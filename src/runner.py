@@ -37,7 +37,7 @@ def params(kind, seed):
     jit = None
     if kind == 'random':
         rng = np.random.default_rng(2000 + seed)
-        P = dict(Tm=rng.uniform(5, 80), tau=rng.uniform(1, 20), dly=rng.uniform(0.5, 5), ref=rng.uniform(1, 5), gap=rng.uniform(3, 20), wscale=float(np.exp(rng.uniform(np.log(0.05), np.log(1.5)) / R['W_syn_mV'])))
+        P = dict(Tm=rng.uniform(5, 80), tau=rng.uniform(1, 20), dly=rng.uniform(0.5, 5), ref=rng.uniform(1, 5), gap=rng.uniform(3, 20), wscale=float(np.exp(rng.uniform(np.log(0.05), np.log(1.5))) / R['W_syn_mV']))   # W_syn drawn logU[0.05,1.5] mV, expressed relative to the reference 0.275 mV. BUG until 2026-09-15: the division sat inside exp(), giving exp(u/0.275) in [2e-5, 4.4], so 7 of 10 sealed-seed draws fell below 0.01 and the twin was silent by construction.)
         jit = torch.tensor(np.exp(rng.uniform(np.log(0.5), np.log(2), size=n)), dtype=torch.float32, device=dev)
     return P, jit
 def sign_permuted_weights(coo, seed):
