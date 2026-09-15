@@ -1,0 +1,209 @@
+{
+ "battery": "v3",
+ "seal": 5810,
+ "seeds": "sha256(v3hash || 237df172... || i), checkpoint 14936",
+ "reference_probe_rate": 13.609,
+ "steps": {
+  "0.25": {
+   "target": 3.4,
+   "achieved_min_max": [
+    2.676,
+    13.528
+   ],
+   "items": {
+    "1": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    },
+    "2": {
+     "random_direction": "3/10",
+     "random_p": 0.9453,
+     "verdict": "failed"
+    },
+    "3": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "held"
+    },
+    "4": {
+     "random_direction": "9/10",
+     "random_p": 0.0107,
+     "verdict": "held"
+    },
+    "5": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    },
+    "6": {
+     "random_direction": "2/10",
+     "random_p": 0.9893,
+     "verdict": "failed"
+    }
+   }
+  },
+  "0.5": {
+   "target": 6.8,
+   "achieved_min_max": [
+    5.406,
+    13.528
+   ],
+   "items": {
+    "1": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    },
+    "2": {
+     "random_direction": "5/10",
+     "random_p": 0.623,
+     "verdict": "failed"
+    },
+    "3": {
+     "random_direction": "2/10",
+     "random_p": 0.9893,
+     "verdict": "held"
+    },
+    "4": {
+     "random_direction": "6/10",
+     "random_p": 0.377,
+     "verdict": "held"
+    },
+    "5": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    },
+    "6": {
+     "random_direction": "1/10",
+     "random_p": 0.999,
+     "verdict": "failed"
+    }
+   }
+  },
+  "1": {
+   "target": 13.61,
+   "achieved_min_max": [
+    10.668,
+    16.048
+   ],
+   "items": {
+    "1": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    },
+    "2": {
+     "random_direction": "5/10",
+     "random_p": 0.623,
+     "verdict": "failed"
+    },
+    "3": {
+     "random_direction": "5/10",
+     "random_p": 0.623,
+     "verdict": "held"
+    },
+    "4": {
+     "random_direction": "4/10",
+     "random_p": 0.8281,
+     "verdict": "held"
+    },
+    "5": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    },
+    "6": {
+     "random_direction": "2/10",
+     "random_p": 0.9893,
+     "verdict": "failed"
+    }
+   }
+  },
+  "2": {
+   "target": 27.22,
+   "achieved_min_max": [
+    21.429,
+    33.185
+   ],
+   "items": {
+    "1": {
+     "random_direction": "2/10",
+     "random_p": 0.9893,
+     "verdict": "failed"
+    },
+    "2": {
+     "random_direction": "5/10",
+     "random_p": 0.623,
+     "verdict": "failed"
+    },
+    "3": {
+     "random_direction": "5/10",
+     "random_p": 0.623,
+     "verdict": "held"
+    },
+    "4": {
+     "random_direction": "4/10",
+     "random_p": 0.8281,
+     "verdict": "held"
+    },
+    "5": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    },
+    "6": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    }
+   }
+  },
+  "4": {
+   "target": 54.44,
+   "achieved_min_max": [
+    45.559,
+    66.295
+   ],
+   "items": {
+    "1": {
+     "random_direction": "1/10",
+     "random_p": 0.999,
+     "verdict": "failed"
+    },
+    "2": {
+     "random_direction": "5/10",
+     "random_p": 0.623,
+     "verdict": "failed"
+    },
+    "3": {
+     "random_direction": "6/10",
+     "random_p": 0.377,
+     "verdict": "held"
+    },
+    "4": {
+     "random_direction": "4/10",
+     "random_p": 0.8281,
+     "verdict": "held"
+    },
+    "5": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    },
+    "6": {
+     "random_direction": "0/10",
+     "random_p": 1.0,
+     "verdict": "failed"
+    }
+   }
+  }
+ },
+ "prediction": {
+  "by": "vish c62628 (in the sealed file)",
+  "text": "item 3 survives every step; item 4 does not",
+  "scored_by_sealed_rule": "item 3 held at all five steps (random twin max 6/10, p=0.377); item 4 held at all five steps, but at x0.25 the random twin showed the direction 9/10 (p=0.0107), passing p<0.01 by 0.0007",
+  "scored_by_reading": "item 3 survives; item 4 has a low-rate edge (9/10 at x0.25, 6/10 at x0.5) \u2014 the prediction is right on both counts by any reading that treats 9 of 10 as reproduction"
+ }
+}

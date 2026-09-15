@@ -82,6 +82,22 @@ Verdicts unchanged under the sealed rule, but the corrected twin changes the rea
 
 Reading. Items 3 and 4 hold against a fake that is demonstrably as alive as the model. Item 4's status depends on how the fake is calibrated: under the saturated twin (v1 corrected) the random graph reproduced the looming direction 8 of 10; under the matched twin it does not (1 of 10; giant fibre 103 Hz under looming drive against 130 Hz under the visual control). That sensitivity is itself the result: a second null is only as informative as its calibration, and the calibration must be pre-registered, which v2's is. Items 1, 2, 5, 6 fail as before. The shuffled twin's false positive on item 1 persists (+21 approach index on a graph that produces none). Seals to runs published: 2 : 4.
 
+## Battery v3 — the rate sweep (seal 5810; vish's proposal c62628)
+The random-dynamics twin calibrated to 0.25, 0.5, 1, 2 and 4 x the reference model's probe rate (13.6 spikes/s/neuron), within 25%, ten paired trials per step on seeds `sha256(v3_hash || 237df172ae35ab77c3a4d402dd635b7307e5c62c38f47012883a756b60dbbaa1 || i)` (first identity_events checkpoint after the seal, tree_size 14,936, +130 s). 1,050 rows in `results/runs-v3.jsonl`; per-step verdicts in `results/verdicts-step-*.json`; `results/sweep-v3-summary.json`. Achieved twin rates per step: x0.25 2.7-13.5 (some draws could not be brought down to target within ten iterations), x0.5 5.4-13.5, x1 10.7-16.0, x2 21.4-33.2, x4 45.6-66.3.
+
+Direction observed under the random twin at each step (fraction of ten trials):
+
+| item | x0.25 | x0.5 | x1 | x2 | x4 | real | shuffled |
+|---|---|---|---|---|---|---|---|
+| 1 odour valence ordering | 0/10 | 0/10 | 0/10 | 2/10 | 1/10 | real 1/10 | 1/10 |
+| 2 concentration reversal | 3/10 | 5/10 | 5/10 | 5/10 | 5/10 | real 0/10 | 2/10 |
+| 3 CO2 avoidance, walking state | 0/10 | 2/10 | 5/10 | 5/10 | 6/10 | real 10/10 | 0/10 |
+| 4 looming escape via the giant fibre | 9/10 | 6/10 | 4/10 | 4/10 | 4/10 | real 10/10 | 1/10 |
+| 5 optomotor turning | 0/10 | 0/10 | 0/10 | 0/10 | 0/10 | real 0/10 | 0/10 |
+| 6 male courtship song pathway | 2/10 | 1/10 | 2/10 | 0/10 | 0/10 | real 0/10 | 1/10 |
+
+Reading. Item 3 holds at every step by the sealed rule (twin never above 6 of 10), with a visible trend: the louder the fake, the more often CO2 drive produces backward walking in it (0, 2, 5, 5, 6). Item 4 passes the sealed rule at every step, but at x0.25 the fake shows the looming direction in 9 of 10 trials (p = 0.0107 against the 0.01 bar) and 6 of 10 at x0.5: quiet random physics reproduces the giant-fibre ordering because the direct LC4/LPLC2 -> GF wiring dominates when there is little recurrent activity, and loud random physics washes it out. That is an edge, not a plateau. vish's sealed prediction, item 3 survives and item 4 does not, is right by any reading that treats 9 of 10 as reproduction; by the letter of the p < 0.01 rule with n = 10, item 4 survived by 0.0007. The rule's granularity at n = 10 is the weakness, and it is reported as such. Seals to runs published: 3 : 5.
+
 ## Surviving weight per olfactory class (unspent, c61172)
 `battery/orn-survival.json`: outgoing synapse weight kept by the Traced restriction, per sensory class. The aversive classes that held (V 0.551, DA2 0.500) lost more than the attractive classes that failed (DM1 0.623, VA2 0.571); pooled ORN 0.615. The restriction does not favour flee over approach.
 
