@@ -9,7 +9,7 @@ import numpy as np, scipy.sparse as sp, torch
 import pyarrow.feather as f, pyarrow.compute as pc
 DER = os.environ.get('FLY_DERIVED', 'data/derived'); DATA = os.environ.get('FLY_DATA', 'data/malecns')
 dev = 'mps' if torch.backends.mps.is_available() else 'cpu'
-B = json.load(open('battery/battery.json')); R = B['reference_dynamics']; T = B['trials']
+BATTERY_FILE = os.environ.get('FLY_BATTERY', 'battery/battery.json'); B = json.load(open(BATTERY_FILE)); R = B['reference_dynamics']; T = B['trials']
 ids = np.load(f'{DER}/G_traced_bodyIds.npy'); n = len(ids); sign = np.load(f'{DER}/G_traced_presyn_sign.npy')
 A = sp.load_npz(f'{DER}/G_traced_post_by_pre.npz').tocoo()        # rows post, cols pre, values synapse count
 ann = f.read_table(f'{DATA}/body-annotations-male-cns-v1.0-minconf-0.5.feather', columns=['bodyId', 'status', 'type', 'somaSide', 'receptorType'])
@@ -128,7 +128,7 @@ def main():
         if not a.seed_material: return i
         seal, root = a.seed_material.split(':'); return int(hashlib.sha256((seal + root + str(i)).encode()).hexdigest()[:15], 16)
     items = [it for it in B['items'] if it['id'] in {int(x) for x in a.items.split(',')}]; conds = a.conditions.split(','); ntr = 1 if a.smoke else a.trials
-    os.makedirs('results', exist_ok=True); prev = hashlib.sha256(open('battery/battery.json', 'rb').read()).hexdigest()
+    os.makedirs('results', exist_ok=True); prev = hashlib.sha256(open(BATTERY_FILE, 'rb').read()).hexdigest()
     W_real = build_weights(A); shuffles = {}
     ref_rate = None
     if a.activity_match:
@@ -147,10 +147,10 @@ def main():
                     else:
                         W, (P, jit) = sign_permuted_weights(A, sd), params('random', sd)
                         if a.activity_match:
-                            P, rate, it = activity_match(W, P, jit, sd, ref_rate); P['probe_rate'] = round(rate, 3); P['ref_probe_rate'] = round(ref_rate, 3); P['match_iters'] = it; print('  activity-matched trial %d: wscale %.3f probe %.3f (ref %.3f) in %d iters' % (tr, P['wscale'], rate, ref_rate, it), flush=True)
+                            P, rate, iters = activity_match(W, P, jit, sd, ref_rate); P['probe_rate'] = round(rate, 3); P['ref_probe_rate'] = round(ref_rate, 3); P['match_iters'] = iters; print('  activity-matched trial %d: wscale %.3f probe %.3f (ref %.3f) in %d iters' % (tr, P['wscale'], rate, ref_rate, iters), flush=True)
                     for sname, inputs in stim.items():
                         t1 = time.time(); res = simulate(W, P, jit, inputs, ro, seed=sd)
-                        row = dict(seed=sd, seed_material=a.seed_material, battery_sha256=hashlib.sha256(open('battery/battery.json', 'rb').read()).hexdigest(), item=it['id'], condition=cond, trial=tr, stimulus=sname, params={k: (round(v, 4) if isinstance(v, float) else v) for k, v in P.items()}, readouts=res, wall_s=round(time.time() - t1, 1), prev=prev)
+                        row = dict(seed=sd, seed_material=a.seed_material, battery_file=BATTERY_FILE, battery_sha256=hashlib.sha256(open(BATTERY_FILE, 'rb').read()).hexdigest(), item=it['id'], condition=cond, trial=tr, stimulus=sname, params={k: (round(v, 4) if isinstance(v, float) else v) for k, v in P.items()}, readouts=res, wall_s=round(time.time() - t1, 1), prev=prev)
                         prev = hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest(); row['sha256'] = prev
                         fo.write(json.dumps(row, sort_keys=True) + '\n'); fo.flush(); rows += 1
                         print('item %d %-8s trial %d %-12s %5.1fs  DNp09 %.2f MDN %.2f DNp01 %.2f pC1 %.2f pIP10 %.2f HS R/L %.2f/%.2f' % (it['id'], cond, tr, sname, row['wall_s'], res['DNp09']['stimulus_hz'], res['MDN']['stimulus_hz'], res['DNp01']['stimulus_hz'], res['pC1']['stimulus_hz'], res['pIP10']['stimulus_hz'], res['HS_R']['stimulus_hz'], res['HS_L']['stimulus_hz']), flush=True)
