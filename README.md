@@ -54,6 +54,20 @@ vish (c60643 on #4870) showed a seal orders the hash against publication, not ag
 
 Verdicts identical to the first run; the largest movement in a real-graph statistic is the giant-fibre rate on item 4 (67.2 Hz -> 52.5 Hz against 1.9 -> 0.7 for the control).
 
+## Correction 2026-09-15: the random-dynamics twin was mis-scaled, then corrected
+Until commit 44b1743 the twin's per-synapse scale was drawn as exp(u / 0.275) instead of exp(u) / 0.275, so 7 of 10 sealed-seed draws fell below 1% of the reference weight and 112 of 150 random-twin rows were silent (every readout zero). A null that cannot fire cannot show a direction, so the two `held` verdicts above rested partly on a switched-off fake. Confessed on the grant thread (c61763) before the rerun. `results/runs-postseal-random-fixed.jsonl` is the corrected random arm on the same sealed seeds; `results/runs-postseal-v2.jsonl` merges it with the untouched real and shuffled arms; `results/verdicts-postseal-v2.json` is the score.
+
+| item | verdict | real graph, reference dynamics | shuffled twin | random-dynamics twin (corrected) |
+|---|---|---|---|---|
+| 1 odour valence ordering | **failed** | 2/10 (p=0.9893) | 0/10 (p=1.0) | 1/10 (p=0.999) |
+| 2 concentration reversal | **failed** | 1/10 (p=0.999) | 5/10 (p=0.623) | 5/10 (p=0.623) |
+| 3 CO2 avoidance, walking state | **held** | 10/10 (p=0.001) | 0/10 (p=1.0) | 3/10 (p=0.9453) |
+| 4 looming escape via the giant fibre | **held** | 10/10 (p=0.001) | 1/10 (p=0.999) | 8/10 (p=0.0547) |
+| 5 optomotor turning | **failed** | 0/10 (p=1.0) | 0/10 (p=1.0) | 0/10 (p=1.0) |
+| 6 male courtship song pathway | **failed** | 0/10 (p=1.0) | 0/10 (p=1.0) | 0/10 (p=1.0) |
+
+Verdicts unchanged under the sealed rule, but the corrected twin changes the reading of item 4: it now shows the looming direction in 8 of 10 trials (giant fibre 190 Hz under looming drive against 177 Hz under the visual control), missing the p < 0.01 bar only because n = 10. That is a wiring-only result wearing a `held` label: LC4 and LPLC2 connect to the giant fibre directly, and any physics that lets the network fire reproduces the ordering. Item 3 stays clean (random twin 3 of 10, approach index −1.2 against 0.0). The corrected twin also exposes the opposite calibration failure: on most draws the whole network saturates near 150 Hz, so the fake is now too loud where it was too quiet. Battery v2 will draw the random-dynamics twin under an activity-matching constraint (population rate within a factor of two of the reference model) and be sealed as a new version; v1 stays as sealed and scored. Seals to runs published: 1 : 3.
+
 ## Surviving weight per olfactory class (unspent, c61172)
 `battery/orn-survival.json`: outgoing synapse weight kept by the Traced restriction, per sensory class. The aversive classes that held (V 0.551, DA2 0.500) lost more than the attractive classes that failed (DM1 0.623, VA2 0.571); pooled ORN 0.615. The restriction does not favour flee over approach.
 
