@@ -40,6 +40,32 @@ def params(kind, seed):
         P = dict(Tm=rng.uniform(5, 80), tau=rng.uniform(1, 20), dly=rng.uniform(0.5, 5), ref=rng.uniform(1, 5), gap=rng.uniform(3, 20), wscale=float(np.exp(rng.uniform(np.log(0.05), np.log(1.5))) / R['W_syn_mV']))   # W_syn drawn logU[0.05,1.5] mV, expressed relative to the reference 0.275 mV. BUG until 2026-09-15: the division sat inside exp(), giving exp(u/0.275) in [2e-5, 4.4], so 7 of 10 sealed-seed draws fell below 0.01 and the twin was silent by construction.)
         jit = torch.tensor(np.exp(rng.uniform(np.log(0.5), np.log(2), size=n)), dtype=torch.float32, device=dev)
     return P, jit
+def probe_rate(W, P, jit, seed, ms=300):
+    """population spikes/s/neuron under a fixed probe: all ORN classes + LC4/LPLC2 + T4a forced at 30 Hz for `ms` after a 200 ms warmup."""
+    g = torch.Generator(device='cpu').manual_seed(seed)
+    v = torch.zeros(n, device=dev); gsyn = torch.zeros(n, device=dev); refr = torch.zeros(n, device=dev)
+    D = max(1, int(round(P['dly']))); buf = [torch.zeros(n, device=dev) for _ in range(D)]
+    ix = torch.tensor(np.flatnonzero(np.char.startswith(typ.astype(str), 'ORN_') | np.isin(typ, ['LC4', 'LPLC2', 'T4a'])), device=dev)
+    decay_g = math.exp(-1.0 / P['tau']); total = 0.0
+    for t in range(200 + ms):
+        inc = torch.sparse.mm(W, buf[t % D][:, None])[:, 0] * P['wscale']
+        if jit is not None: inc = inc * jit
+        gsyn = gsyn * decay_g + inc; v = v + (gsyn - v) / P['Tm']
+        spk = (v >= P['gap']) & (refr <= 0)
+        forced = torch.rand(len(ix), generator=g) < (30.0 / 1000.0); spk[ix] = spk[ix] | forced.to(dev)
+        v = torch.where(spk, torch.zeros_like(v), v); refr = torch.where(spk, torch.full_like(refr, P['ref']), refr - 1.0)
+        buf[t % D] = spk.float()
+        if t >= 200: total += float(spk.sum())
+    return total / n / (ms / 1000.0)
+def activity_match(W, P, jit, seed, target, lo=0.5, hi=2.0, iters=8):
+    """binary-search wscale (log space) until probe_rate is within [lo*target, hi*target]; returns (P, rate, iterations)."""
+    a, b = math.log(P['wscale'] / 64), math.log(P['wscale'] * 64); rate = None
+    for i in range(iters):
+        P['wscale'] = math.exp((a + b) / 2); rate = probe_rate(W, P, jit, seed)
+        if rate < lo * target: a = math.log(P['wscale'])
+        elif rate > hi * target: b = math.log(P['wscale'])
+        else: return P, rate, i + 1
+    return P, rate, iters
 def sign_permuted_weights(coo, seed):
     """random-dynamics twin also permutes the sign assignment within counts."""
     rng = np.random.default_rng(3000 + seed); s2 = sign[rng.permutation(n)]
@@ -96,7 +122,7 @@ def item_plan(it):
           'HS_R': cls({'classes': ['HSE', 'HSN', 'HSS'], 'side': 'R'}), 'HS_L': cls({'classes': ['HSE', 'HSN', 'HSS'], 'side': 'L'}), 'DNa02_R': cls({'classes': ['DNa02'], 'side': 'R'}), 'DNa02_L': cls({'classes': ['DNa02'], 'side': 'L'})}
     return stim, ro
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--items', default='1,2,3,4,5,6'); ap.add_argument('--trials', type=int, default=T['paired_trials']); ap.add_argument('--conditions', default='real,shuffled,random'); ap.add_argument('--smoke', action='store_true'); ap.add_argument('--seed-material', default=None, help='sealhash:checkpointroot — derive trial seeds as sha256(seal || root || i) (vish, c60643)'); ap.add_argument('--out', default='results/runs.jsonl')
+    ap = argparse.ArgumentParser(); ap.add_argument('--items', default='1,2,3,4,5,6'); ap.add_argument('--trials', type=int, default=T['paired_trials']); ap.add_argument('--conditions', default='real,shuffled,random'); ap.add_argument('--smoke', action='store_true'); ap.add_argument('--activity-match', action='store_true', help='v2: calibrate the random twin so its probe population rate is within [0.5,2]x the reference model'); ap.add_argument('--seed-material', default=None, help='sealhash:checkpointroot — derive trial seeds as sha256(seal || root || i) (vish, c60643)'); ap.add_argument('--out', default='results/runs.jsonl')
     a = ap.parse_args()
     def trial_seed(i):
         if not a.seed_material: return i
@@ -104,6 +130,9 @@ def main():
     items = [it for it in B['items'] if it['id'] in {int(x) for x in a.items.split(',')}]; conds = a.conditions.split(','); ntr = 1 if a.smoke else a.trials
     os.makedirs('results', exist_ok=True); prev = hashlib.sha256(open('battery/battery.json', 'rb').read()).hexdigest()
     W_real = build_weights(A); shuffles = {}
+    ref_rate = None
+    if a.activity_match:
+        Pref, _ = params('reference', 0); ref_rate = probe_rate(W_real, Pref, None, 0); print('reference probe rate %.3f spikes/s/neuron' % ref_rate, flush=True)
     t0 = time.time(); rows = 0
     with open(a.out, 'a') as fo:
         for it in items:
@@ -115,7 +144,10 @@ def main():
                     elif cond == 'shuffled':
                         if tr not in shuffles: shuffles[tr] = build_weights(A, seed=sd)
                         W, (P, jit) = shuffles[tr], params('reference', sd)
-                    else: W, (P, jit) = sign_permuted_weights(A, sd), params('random', sd)
+                    else:
+                        W, (P, jit) = sign_permuted_weights(A, sd), params('random', sd)
+                        if a.activity_match:
+                            P, rate, it = activity_match(W, P, jit, sd, ref_rate); P['probe_rate'] = round(rate, 3); P['ref_probe_rate'] = round(ref_rate, 3); P['match_iters'] = it; print('  activity-matched trial %d: wscale %.3f probe %.3f (ref %.3f) in %d iters' % (tr, P['wscale'], rate, ref_rate, it), flush=True)
                     for sname, inputs in stim.items():
                         t1 = time.time(); res = simulate(W, P, jit, inputs, ro, seed=sd)
                         row = dict(seed=sd, seed_material=a.seed_material, battery_sha256=hashlib.sha256(open('battery/battery.json', 'rb').read()).hexdigest(), item=it['id'], condition=cond, trial=tr, stimulus=sname, params={k: (round(v, 4) if isinstance(v, float) else v) for k, v in P.items()}, readouts=res, wall_s=round(time.time() - t1, 1), prev=prev)

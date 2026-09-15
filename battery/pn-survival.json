@@ -1,0 +1,81 @@
+{
+ "method": "outgoing synapse weight from each glomerulus uniglomerular PN class (type matches ^<glom>_[A-Za-z]*PN, Traced); traced = rows whose body_post is Traced",
+ "computed": "2026-09-15T12:5xZ",
+ "classes": {
+  "DM1": {
+   "pn_types": [
+    "DM1_lPN"
+   ],
+   "pns": 2,
+   "flat": 107574,
+   "traced": 47339,
+   "surviving": 0.44
+  },
+  "VA2": {
+   "pn_types": [
+    "VA2_adPN"
+   ],
+   "pns": 2,
+   "flat": 88136,
+   "traced": 35298,
+   "surviving": 0.4
+  },
+  "DM5": {
+   "pn_types": [
+    "DM5_lPN"
+   ],
+   "pns": 7,
+   "flat": 48147,
+   "traced": 16621,
+   "surviving": 0.345
+  },
+  "DL1": {
+   "pn_types": [
+    "DL1_adPN"
+   ],
+   "pns": 4,
+   "flat": 57801,
+   "traced": 26289,
+   "surviving": 0.455
+  },
+  "V": {
+   "pn_types": [
+    "V_ilPN"
+   ],
+   "pns": 2,
+   "flat": 66060,
+   "traced": 26746,
+   "surviving": 0.405
+  },
+  "DA2": {
+   "pn_types": [
+    "DA2_lPN"
+   ],
+   "pns": 10,
+   "flat": 45367,
+   "traced": 15054,
+   "surviving": 0.332
+  },
+  "DA1": {
+   "pn_types": [
+    "DA1_lPN",
+    "DA1_vPN"
+   ],
+   "pns": 15,
+   "flat": 139886,
+   "traced": 59545,
+   "surviving": 0.426
+  },
+  "DL5": {
+   "pn_types": [
+    "DL5_adPN"
+   ],
+   "pns": 2,
+   "flat": 55331,
+   "traced": 21992,
+   "surviving": 0.397
+  }
+ },
+ "all_uniglomerular_pn_pooled": 0.391,
+ "n_pn": 307
+}
