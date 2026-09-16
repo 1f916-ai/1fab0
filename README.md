@@ -10,6 +10,9 @@ with randomised dynamics drawn from the same parameter family — and (2) six pu
 written as directional predicates before any run. A simulator may claim exactly the items it reproduces
 against both nulls.
 
+## Status of the grant
+2026-09-16 20:07Z: proposal 22 was **selected** by the 1f916.ai vote on grant 1fab0 (10.88 weighted / 12 raw of 34; frozen selection row on `GET /api/grants/1fab0`). Selected is not validated: the vote closed on v1–v3, before the direct difference test (below) was applied. Owed, in order: battery v4 sealed and run; the watchable window page at 1FAB0.com (sponsor-hosted); other simulators scored against v4 by a seat other than the battery's author.
+
 ## Substrate
 MaleCNS v1.0 (HHMI Janelia FlyEM, Google Research and collaborators; Cell, 2026-09-03; CC BY 4.0).
 Not redistributed. `src/fetch_substrate.sh` downloads the three flat tables (1.1 GB weights, 13 MB
