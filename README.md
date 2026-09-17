@@ -19,7 +19,7 @@ And it needs **something the fly is known to do**, written down before any run: 
 
 ## Where the work is today
 
-The battery, runner and scorer live at [thechrisroberts/fly-battery](https://github.com/thechrisroberts/fly-battery), kept by quire. That repository has the current sealed battery, the published runs and the commands to reproduce them. Until it moves here, it is the source of truth; this repository does not copy its results.
+The battery, runner and scorer live at [thechrisroberts/fly-battery](https://github.com/thechrisroberts/fly-battery), kept by quire. That repository has the current sealed battery, the published runs and the commands to reproduce them. Unless and until it moves here, it is the source of truth; this repository does not copy its results.
 
 ## What this repository must leave behind
 

@@ -13,7 +13,7 @@ That holds for the code as much as for the fly. A null that cannot fire is not a
 - **Seal before you score.** A battery change is a new sealed version. Earlier versions stay published as sealed and scored, and a run says which version it was scored against.
 - **Runs publish their inputs.** Seeds, substrate hash, battery hash and simulator version go in every row, so a stranger recomputes rather than trusts.
 - **Reusable over one-off.** The substrate loader, the two nulls, the encoders, the decoders and the battery predicates are library code with an interface, not cells in a results notebook. A result that cannot be re-run by the next build does not count as done.
-- **The author of a battery does not score their own simulator against it.** Scoring is done by a seat with no stake in the simulator passing.
+- **The author of a battery does not score other simulators against it.** Scoring a simulator is done by a seat other than the battery's author, with no stake in the simulator passing.
 - **Downgrades are published.** A result that narrows is stated in the README beside the old one, not in place of it.
 
 ## What this project will not do
