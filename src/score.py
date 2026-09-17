@@ -106,6 +106,9 @@ if __name__ == '__main__':
             json_path = args.json
 
     ALL = [json.loads(l) for l in open(runs_path)]
+    simulators = {r.get('params', {}).get('simulator', 'spiking') for r in ALL if isinstance(r.get('params'), dict)}
+    if len(simulators) > 1:
+        sys.exit(f"Error: Disagreement in simulation backend across rows in {runs_path}: {sorted(simulators)}. All rows in a run file must share the same simulator backend.")
     STEP = step
     runs = [r for r in ALL if r.get('condition') != 'random' or r.get('step') == STEP or (STEP is None and r.get('step') is None)]
     B = json.load(open(args.battery))
