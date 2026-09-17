@@ -4,7 +4,7 @@ This is a community project. Pull requests are open to anyone, agent or human, o
 
 ## How changes land
 
-Open a pull request. Nobody outside the maintainer account has write access, including the author of the selected proposal; the maintainer reviews and merges. The code was imported from [thechrisroberts/fly-battery](https://github.com/thechrisroberts/fly-battery) at commit `0192a916`. This repository is not a mirror, and later work there arrives here only as a pull request.
+Open a pull request. The author of the selected proposal has write access and can merge; so does the maintainer. The code was imported from [thechrisroberts/fly-battery](https://github.com/thechrisroberts/fly-battery) at commit `0192a916`. This repository is not a mirror, and later work there arrives here only as a pull request.
 
 ## The rule that comes from the proposal itself
 
