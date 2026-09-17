@@ -10,6 +10,13 @@ from itertools import groupby
 
 def hz(row, k): r = row['readouts'][k]; return r['stimulus_hz'] - r['baseline_hz']
 def approach(row): return hz(row, 'DNp09') - hz(row, 'MDN')
+def fpi(row):
+    if row and 'trajectory' in row and isinstance(row['trajectory'], dict):
+        return row['trajectory'].get('forward_progress_index', row['trajectory'].get('chemotaxis_index'))
+    return None
+
+ci = fpi
+
 def get(item, cond, trial, stim):
     for r in runs:
         if r['item'] == item and r['condition'] == cond and r['trial'] == trial and r['stimulus'] == stim: return r
@@ -24,25 +31,40 @@ def magnitude(item, v):
     elif item == 4: return v[0] - v[1]
     return None
 
-def stats(item, cond):
+def stats(item, cond, decoder='approach_index'):
     """list of per-trial booleans 'predicate direction observed' and the per-trial statistic values"""
     trials = sorted({r['trial'] for r in runs if r['item'] == item and r['condition'] == cond}); obs = []; vals = []; ts = []
     for t in trials:
         g = lambda s: get(item, cond, t, s)
         try:
-            if item == 1:
-                a, nn, rp = approach(g('attractant')), approach(g('neutral')), approach(g('repellent')); obs.append(a > nn and nn > rp); vals.append([a, nn, rp])
-            elif item == 2:
-                lo, hi = approach(g('low')), approach(g('high')); obs.append(lo > hi); vals.append([lo, hi])
-            elif item == 3:
-                c, z = approach(g('co2')), approach(g('none')); obs.append(c < z); vals.append([c, z])
-            elif item == 4:
-                l, c = hz(g('loom'), 'DNp01'), hz(g('control_visual'), 'DNp01'); obs.append(l > c); vals.append([l, c])
-            elif item == 5:
-                ra, rb = (g('rot_a'), g('rot_b')) if get(item, cond, t, 'rot_a') else (g('right_a'), g('right_b')); ha = hz(ra, 'HS_R') - hz(ra, 'HS_L'); hb = hz(rb, 'HS_R') - hz(rb, 'HS_L'); da = hz(ra, 'DNa02_R') - hz(ra, 'DNa02_L'); db = hz(rb, 'DNa02_R') - hz(rb, 'DNa02_L')
-                obs.append(ha * hb < 0 and da * db < 0); vals.append([ha, hb, da, db])
-            elif item == 6:
-                ft, cv, no = g('female_taste'), g('cva'), g('none'); obs.append(hz(ft, 'pC1') > hz(no, 'pC1') and hz(ft, 'pIP10') > hz(no, 'pIP10') and hz(cv, 'pC1') <= hz(no, 'pC1')); vals.append([hz(ft, 'pC1'), hz(no, 'pC1'), hz(cv, 'pC1'), hz(ft, 'pIP10'), hz(no, 'pIP10')])
+            if decoder in ('trajectory', 'forward_progress_index', 'fpi', 'chemotaxis_index'):
+                if item not in (1, 2, 3): return None
+                if item == 1:
+                    a, nn, rp = fpi(g('attractant')), fpi(g('neutral')), fpi(g('repellent'))
+                    if a is None or nn is None or rp is None: return None
+                    obs.append(a > nn and nn > rp); vals.append([a, nn, rp])
+                elif item == 2:
+                    lo, hi = fpi(g('low')), fpi(g('high'))
+                    if lo is None or hi is None: return None
+                    obs.append(lo > hi); vals.append([lo, hi])
+                elif item == 3:
+                    c, z = fpi(g('co2')), fpi(g('none'))
+                    if c is None or z is None: return None
+                    obs.append(c < z); vals.append([c, z])
+            else:
+                if item == 1:
+                    a, nn, rp = approach(g('attractant')), approach(g('neutral')), approach(g('repellent')); obs.append(a > nn and nn > rp); vals.append([a, nn, rp])
+                elif item == 2:
+                    lo, hi = approach(g('low')), approach(g('high')); obs.append(lo > hi); vals.append([lo, hi])
+                elif item == 3:
+                    c, z = approach(g('co2')), approach(g('none')); obs.append(c < z); vals.append([c, z])
+                elif item == 4:
+                    l, c = hz(g('loom'), 'DNp01'), hz(g('control_visual'), 'DNp01'); obs.append(l > c); vals.append([l, c])
+                elif item == 5:
+                    ra, rb = (g('rot_a'), g('rot_b')) if get(item, cond, t, 'rot_a') else (g('right_a'), g('right_b')); ha = hz(ra, 'HS_R') - hz(ra, 'HS_L'); hb = hz(rb, 'HS_R') - hz(rb, 'HS_L'); da = hz(ra, 'DNa02_R') - hz(ra, 'DNa02_L'); db = hz(rb, 'DNa02_R') - hz(rb, 'DNa02_L')
+                    obs.append(ha * hb < 0 and da * db < 0); vals.append([ha, hb, da, db])
+                elif item == 6:
+                    ft, cv, no = g('female_taste'), g('cva'), g('none'); obs.append(hz(ft, 'pC1') > hz(no, 'pC1') and hz(ft, 'pIP10') > hz(no, 'pIP10') and hz(cv, 'pC1') <= hz(no, 'pC1')); vals.append([hz(ft, 'pC1'), hz(no, 'pC1'), hz(cv, 'pC1'), hz(ft, 'pIP10'), hz(no, 'pIP10')])
             ts.append(t)
         except (TypeError, AttributeError): return None
     return obs, vals, ts
@@ -63,7 +85,7 @@ if __name__ == '__main__':
     parser.add_argument('runs', nargs='?', default='results/runs.jsonl', help='Path to runs JSONL file (default: results/runs.jsonl)')
     parser.add_argument('pos_step', nargs='?', type=float, default=None, metavar='STEP', help='Sweep step multiplier for random arm (optional positional)')
     parser.add_argument('--battery', '-b', default=default_battery, metavar='FILE',
-                        help='Path to battery JSON file (default: $FLY_BATTERY, battery/battery-v4.json if present, else battery/battery.json)')
+                        help='Path to battery JSON file (default: , battery/battery-v4.json if present, else battery/battery.json)')
     parser.add_argument('--step', '-s', type=float, default=None, help='Sweep step multiplier for random arm')
     parser.add_argument('--json', '-j', nargs='?', const=True, default=None, metavar='FILE',
                         help='Export evaluation verdicts to machine-readable JSON file (default: results/verdicts.json or results/verdicts-step-<step>.json)')
@@ -88,11 +110,10 @@ if __name__ == '__main__':
     runs = [r for r in ALL if r.get('condition') != 'random' or r.get('step') == STEP or (STEP is None and r.get('step') is None)]
     B = json.load(open(args.battery))
 
-    out = {}
-    for it in B['items']:
+    def eval_item(it, decoder='approach_index'):
         i = it['id']; rec = {'name': it['name'], 'conditions': {}}
         for cond in ('real', 'shuffled', 'random'):
-            s = stats(i, cond)
+            s = stats(i, cond, decoder=decoder)
             if s is None or not s[0]: rec['conditions'][cond] = {'verdict': 'unreadable' if s is None else 'not-run'}; continue
             k, m, p = sign_test(s[0]); rec['conditions'][cond] = {'direction_observed': f'{k}/{m}', 'p_one_sided': round(p, 4), 'holds': p < 0.01, 'mean_stats': [round(sum(v[j] for v in s[1]) / m, 3) for j in range(len(s[1][0]))]}
         c = rec['conditions']
@@ -101,11 +122,11 @@ if __name__ == '__main__':
             def fisher(a, na, b, nb):
                 tot = a + b; N = na + nb
                 return sum(math.comb(na, x) * math.comb(nb, tot - x) / math.comb(N, tot) for x in range(a, min(na, tot) + 1))
-            sr = stats(i, 'real')
+            sr = stats(i, 'real', decoder=decoder)
             if sr and sr[0]:
                 ka, na = sum(sr[0]), len(sr[0]); rec['difference_tests'] = {}
                 for cond in ('shuffled', 'random'):
-                    sf = stats(i, cond)
+                    sf = stats(i, cond, decoder=decoder)
                     if not sf or not sf[0]: rec['difference_tests'][cond] = {'verdict': 'unreadable'}; continue
                     kb, nb = sum(sf[0]), len(sf[0]); pf = fisher(ka, na, kb, nb)
                     tr_map = dict(zip(sr[2], sr[1]))
@@ -148,11 +169,25 @@ if __name__ == '__main__':
                 bar = max([k for k in range(0, na + 1) if fisher(ka, na, k, na) < 0.01] or [-1])
                 rec['count_bar'] = f'with real at {ka}/{na}, the fake must show the direction in at most {bar} of {na}'
                 rec['verdict'] = 'held' if all(rec['difference_tests'][x].get('holds') for x in ('shuffled', 'random')) else ('unreadable' if any(rec['difference_tests'][x].get('verdict') == 'unreadable' for x in ('shuffled', 'random')) else 'failed')
-                rec['real_only'] = bool(c.get('real', {}).get('holds')); out[str(i)] = rec; continue
+                rec['real_only'] = bool(c.get('real', {}).get('holds'))
+                return rec
         if all(x.get('verdict') in ('unreadable', 'not-run') for x in c.values()): rec['verdict'] = 'not-run'
         elif any('holds' not in x for x in c.values()): rec['verdict'] = 'unreadable'
         else: rec['verdict'] = 'held' if (c['real']['holds'] and not c['shuffled']['holds'] and not c['random']['holds']) else 'failed'
         rec['real_only'] = bool(c.get('real', {}).get('holds'))
+        return rec
+
+    out = {}
+    for it in B['items']:
+        i = it['id']
+        rec = eval_item(it, decoder='approach_index')
+        if i in (1, 2, 3):
+            has_traj = any(r.get('item') == i and 'trajectory' in r and r['trajectory'] is not None for r in runs)
+            if has_traj:
+                traj_stats = stats(i, 'real', decoder='trajectory')
+                if traj_stats is not None:
+                    rec_traj = eval_item(it, decoder='trajectory')
+                    rec['trajectory'] = rec_traj
         out[str(i)] = rec
 
     if json_path:
@@ -161,4 +196,8 @@ if __name__ == '__main__':
         with open(json_path, 'w') as f:
             json.dump(out, f, indent=1)
 
-    for i, r in out.items(): print(i, r['name'], '->', r['verdict'], {k: (v.get('direction_observed'), v.get('holds')) for k, v in r['conditions'].items()})
+    for i, r in out.items():
+        print(i, r['name'], '->', r['verdict'], {k: (v.get('direction_observed'), v.get('holds')) for k, v in r['conditions'].items()})
+        if 'trajectory' in r:
+            tr = r['trajectory']
+            print(' ', '-> [trajectory FPI]', tr['verdict'], {k: (v.get('direction_observed'), v.get('holds')) for k, v in tr['conditions'].items()})
