@@ -1,0 +1,288 @@
+{
+ "battery": "v4",
+ "seal": 6052,
+ "checkpoint_root": "23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc",
+ "tree_size": 16130,
+ "rows": 3150,
+ "items": {
+  "1": {
+   "name": "odour valence ordering",
+   "real": "5/30",
+   "shuffled": {
+    "fake": "5/30",
+    "fisher_p": 0.63468,
+    "holds": false
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "0/30",
+     "fisher_p": 0.02609,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "0.5": {
+     "fake": "4/30",
+     "fisher_p": 0.5,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "1": {
+     "fake": "8/30",
+     "fisher_p": 0.89538,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "2": {
+     "fake": "5/30",
+     "fisher_p": 0.63468,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "4": {
+     "fake": "5/30",
+     "fisher_p": 0.63468,
+     "holds": false,
+     "verdict": "failed"
+    }
+   },
+   "count_bar": "with real at 5/30, the fake must show the direction in at most -1 of 30"
+  },
+  "2": {
+   "name": "concentration reversal",
+   "real": "1/30",
+   "shuffled": {
+    "fake": "13/30",
+    "fisher_p": 0.99999,
+    "holds": false
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "8/30",
+     "fisher_p": 0.99903,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "0.5": {
+     "fake": "11/30",
+     "fisher_p": 0.99994,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "1": {
+     "fake": "14/30",
+     "fisher_p": 1.0,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "2": {
+     "fake": "15/30",
+     "fisher_p": 1.0,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "4": {
+     "fake": "9/30",
+     "fisher_p": 0.9996,
+     "holds": false,
+     "verdict": "failed"
+    }
+   },
+   "count_bar": "with real at 1/30, the fake must show the direction in at most -1 of 30"
+  },
+  "3": {
+   "name": "CO2 avoidance, walking state",
+   "real": "30/30",
+   "shuffled": {
+    "fake": "4/30",
+    "fisher_p": 0.0,
+    "holds": true
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "4/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    },
+    "0.5": {
+     "fake": "6/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    },
+    "1": {
+     "fake": "9/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    },
+    "2": {
+     "fake": "13/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    },
+    "4": {
+     "fake": "14/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    }
+   },
+   "count_bar": "with real at 30/30, the fake must show the direction in at most 23 of 30"
+  },
+  "4": {
+   "name": "looming escape via the giant fibre",
+   "real": "30/30",
+   "shuffled": {
+    "fake": "3/30",
+    "fisher_p": 0.0,
+    "holds": true
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "24/30",
+     "fisher_p": 0.01186,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "0.5": {
+     "fake": "19/30",
+     "fisher_p": 0.00016,
+     "holds": true,
+     "verdict": "held"
+    },
+    "1": {
+     "fake": "11/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    },
+    "2": {
+     "fake": "16/30",
+     "fisher_p": 1e-05,
+     "holds": true,
+     "verdict": "held"
+    },
+    "4": {
+     "fake": "15/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    }
+   },
+   "count_bar": "with real at 30/30, the fake must show the direction in at most 23 of 30"
+  },
+  "5": {
+   "name": "optomotor turning",
+   "real": "29/30",
+   "shuffled": {
+    "fake": "0/30",
+    "fisher_p": 0.0,
+    "holds": true
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "0/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    },
+    "0.5": {
+     "fake": "0/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    },
+    "1": {
+     "fake": "1/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    },
+    "2": {
+     "fake": "1/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    },
+    "4": {
+     "fake": "1/30",
+     "fisher_p": 0.0,
+     "holds": true,
+     "verdict": "held"
+    }
+   },
+   "count_bar": "with real at 29/30, the fake must show the direction in at most 21 of 30"
+  },
+  "6": {
+   "name": "male courtship song pathway",
+   "real": "0/30",
+   "shuffled": {
+    "fake": "0/30",
+    "fisher_p": 1.0,
+    "holds": false
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "1/30",
+     "fisher_p": 1.0,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "0.5": {
+     "fake": "3/30",
+     "fisher_p": 1.0,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "1": {
+     "fake": "4/30",
+     "fisher_p": 1.0,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "2": {
+     "fake": "4/30",
+     "fisher_p": 1.0,
+     "holds": false,
+     "verdict": "failed"
+    },
+    "4": {
+     "fake": "0/30",
+     "fisher_p": 1.0,
+     "holds": false,
+     "verdict": "failed"
+    }
+   },
+   "count_bar": "with real at 0/30, the fake must show the direction in at most -1 of 30"
+  }
+ },
+ "achieved_probe_rates": {
+  "0.25": [
+   1.544,
+   4.235
+  ],
+  "0.5": [
+   5.34,
+   8.498
+  ],
+  "1": [
+   10.688,
+   16.305
+  ],
+  "2": [
+   21.468,
+   33.413
+  ],
+  "4": [
+   41.208,
+   66.039
+  ]
+ },
+ "predictions_scored": {
+  "vish_c62628 (item 3 survives every step; item 4 does not)": "RIGHT on both: item 3 held at all five steps; item 4 failed at x0.25 (fake 24/30, p=0.012)",
+  "vish_c64470_n30 (item 3 through 2x; item 4 from 0.5x up)": "item 4 exactly right (fails x0.25, holds x0.5-x4); item 3 held further than predicted (all five steps, including x4 at fake 14/30, p<0.001) \u2014 prediction correct as a floor, conservative at the top",
+  "unspent_c63051 (item 5 HS clause passable only under a rotation)": "RIGHT: with both eyes driven item 5 holds 29/30 real vs 0-1/30 for every fake"
+ }
+}
