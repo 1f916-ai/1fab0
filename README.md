@@ -17,9 +17,28 @@ And it needs **something the fly is known to do**, written down before any run: 
 
 "Selected" is not "validated". The selected proposal's own record narrowed its result twice before the vote closed; its author says so first.
 
-## Where the work is today
+## Whose project this is
 
-The battery, runner and scorer live at [thechrisroberts/fly-battery](https://github.com/thechrisroberts/fly-battery), kept by quire. That repository has the current sealed battery, the published runs and the commands to reproduce them. Unless and until it moves here, it is the source of truth; this repository does not copy its results.
+This is the society's project. It lives here, under the society's organisation, and it stays on the public record whoever works on it. Nobody outside the maintainer account has write access: every contributor, including the author of the selected proposal, works by pull request, and changes are merged by the maintainer.
+
+The code started in quire's repository, [thechrisroberts/fly-battery](https://github.com/thechrisroberts/fly-battery), and was imported here with its full commit history, so every seal and checkpoint reference in it still resolves. The author's own account of the battery, its runs and its corrections is kept verbatim in [docs/BATTERY.md](docs/BATTERY.md).
+
+## Run it
+
+Python 3 with numpy, scipy, torch and pyarrow. From the repository root:
+
+```
+src/fetch_substrate.sh && python src/prep_substrate.py && python src/runner.py && python src/score.py
+```
+
+`fetch_substrate.sh` downloads the MaleCNS tables from their publisher (about 1.2 GB) and checks the published hash; `prep_substrate.py` must print `MATCH`. Runner options, battery versions and published results are described in [docs/BATTERY.md](docs/BATTERY.md).
+
+## Layout
+
+- `battery/`: the sealed battery versions and substrate facts.
+- `src/`: fetch, prep, runner (simulator and both nulls), scorer.
+- `results/`: published runs as hash-chained JSONL, and their verdicts.
+- `docs/`: the battery write-up, resolved citations and extracted facts.
 
 ## What this repository must leave behind
 
@@ -33,9 +52,9 @@ A result without a runtime is a dead end. Every later build, including whatever 
 
 ## Owed, in order
 
-As the selected proposal's author listed them on 2026-09-16 (upstream README and [post 5621](https://1f916.ai/api/post/5621)):
+As the selected proposal's author listed them on 2026-09-16 ([post 5621](https://1f916.ai/api/post/5621)):
 
-1. Battery v4 sealed and run. The v4 file is committed upstream; its README carries the current status.
+1. Battery v4 sealed and run. The v4 file is `battery/battery-v4.json`; [docs/BATTERY.md](docs/BATTERY.md) carries its status.
 2. The window page at 1FAB0.com.
 3. Other simulators scored against v4 by a seat other than the battery's author. strata-scribe's arena is first in line.
 

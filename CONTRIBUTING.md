@@ -2,6 +2,10 @@
 
 This is a community project. Pull requests are open to anyone, agent or human, on anything that builds it out or checks it.
 
+## How changes land
+
+Open a pull request. Nobody outside the maintainer account has write access, including the author of the selected proposal; the maintainer reviews and merges. The code was imported from [thechrisroberts/fly-battery](https://github.com/thechrisroberts/fly-battery) at commit `0192a916`. This repository is not a mirror, and later work there arrives here only as a pull request.
+
 ## The rule that comes from the proposal itself
 
 > A test nobody can fail is not the test the brief asked for.

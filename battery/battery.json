@@ -1,0 +1,213 @@
+{
+ "battery": "fly-battery v1",
+ "grant": "1fab0",
+ "proposal": 22,
+ "substrate": {
+  "dataset": "MaleCNS v1.0 (HHMI Janelia FlyEM / Google Research; Cell 2026-09-03; CC BY 4.0)",
+  "graph": "G_traced: Traced x Traced induced subgraph of connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+  "weights_sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+  "figures": {
+   "traced_bodies": 165122,
+   "edges": 25563197,
+   "weight": 124025046
+  },
+  "sign_rule": "battery/sign-rule.json"
+ },
+ "reference_dynamics": {
+  "source": "Shiu et al. 2024, Nature, doi 10.1038/s41586-024-07763-9, Methods",
+  "model": "leaky integrate-and-fire with alpha synapses: dv/dt = (g - (v - V_rest))/T_mbr; dg/dt = -g/tau; g += w on a delayed presynaptic spike",
+  "V_rest_mV": -52,
+  "V_reset_mV": -52,
+  "V_threshold_mV": -45,
+  "T_mbr_ms": 20,
+  "tau_syn_ms": 5,
+  "T_dly_ms": 1.8,
+  "T_refractory_ms": 2.2,
+  "W_syn_mV": 0.275,
+  "weight": "synapse count x sign x W_syn",
+  "dt_ms": 1.0,
+  "input": "forced spiking of the named input class at the stated rate (Shiu drove GRNs at 100 Hz)"
+ },
+ "nulls": {
+  "shuffled_twin": "degree-preserving rewire of G_traced: the postsynaptic endpoint column is permuted across all edges, which preserves every body's in-degree and out-degree and, because sign is a property of the presynaptic body, every sign; duplicate edges are summed; seeded",
+  "random_dynamics_twin": "the real G_traced with the reference parameters replaced by draws: T_mbr U[5,80] ms, tau U[1,20] ms, T_dly U[0.5,5] ms, T_refractory U[1,5] ms, W_syn logU[0.05,1.5] mV, threshold gap U[3,20] mV, each jittered per neuron by logU[0.5,2]; signs permuted within their counts; seeded",
+  "pass_condition": "an item HOLDS for a model only if the predicate's direction is observed in the real graph with reference dynamics (one-sided sign test over paired trials, p < 0.01) AND is NOT observed in the shuffled twin AND is NOT observed in the random-dynamics twin under the same test"
+ },
+ "decoders": {
+  "rate": "mean spikes per second of the named class over the stimulus window, minus the same over the pre-stimulus window, averaged over trials",
+  "approach_index": "rate(DNp09, forward-walking descending neurons; Bidaye et al. 2020) minus rate(MDN, moonwalker backward-walking descending neurons; Bidaye et al. 2014) \u2014 abstract-level citations, marked for verification",
+  "steer_asymmetry": "rate(class, somaSide R) minus rate(class, somaSide L)",
+  "note": "decoders are linear reads of named descending or motor classes; no learned policy"
+ },
+ "trials": {
+  "warmup_ms": 300,
+  "baseline_ms": 300,
+  "stimulus_ms": 600,
+  "paired_trials": 10,
+  "seeds": "trial index; identical across conditions"
+ },
+ "items": [
+  {
+   "id": 1,
+   "name": "odour valence ordering",
+   "sources": [
+    "Semmelhack & Wang 2009 (10.1038/nature07983)",
+    "Knaden et al. 2012 (10.1016/j.celrep.2012.03.002)",
+    "Stensmyr et al. 2012 (10.1016/j.cell.2012.09.046)"
+   ],
+   "stimuli": {
+    "attractant": [
+     "ORN_DM1",
+     "ORN_VA2"
+    ],
+    "neutral": [
+     "ORN_DL1"
+    ],
+    "repellent": [
+     "ORN_DA2"
+    ]
+   },
+   "rate_hz": 50,
+   "readout": "approach_index",
+   "predicate": "approach_index(attractant) > approach_index(neutral) > approach_index(repellent)",
+   "literature_effect": "PI 69-75% at 3 ppm vinegar via DM1+VA2; DA2 activation sufficient and necessary for geosmin aversion"
+  },
+  {
+   "id": 2,
+   "name": "concentration reversal",
+   "sources": [
+    "Semmelhack & Wang 2009"
+   ],
+   "stimuli": {
+    "low": [
+     "ORN_DM1",
+     "ORN_VA2"
+    ],
+    "high": [
+     "ORN_DM1",
+     "ORN_VA2",
+     "ORN_DM5"
+    ]
+   },
+   "rate_hz": {
+    "low": 30,
+    "high": 100
+   },
+   "readout": "approach_index",
+   "predicate": "approach_index(low) > approach_index(high)",
+   "literature_effect": "PI 75% at 3 ppm falls to 9% at 32 ppm; DM5 silenced restores 87%; DM5 alone -34%"
+  },
+  {
+   "id": 3,
+   "name": "CO2 avoidance, walking state",
+   "sources": [
+    "Suh et al. 2004 (10.1038/nature02980)",
+    "Jones et al. 2007 (10.1038/nature05466)",
+    "Wasserman et al. 2013 (10.1016/j.cub.2012.12.038) \u2014 flight reversal, limits"
+   ],
+   "stimuli": {
+    "co2": [
+     "ORN_V"
+    ],
+    "none": []
+   },
+   "rate_hz": 50,
+   "readout": "approach_index",
+   "predicate": "approach_index(co2) < approach_index(none)",
+   "literature_effect": "PI 29.6 +/- 10.9 avoidance at 0.1% CO2 above ambient; V is the only glomerulus CO2 activates"
+  },
+  {
+   "id": 4,
+   "name": "looming escape via the giant fibre",
+   "sources": [
+    "von Reyn et al. 2014 (10.1038/nn.3741)",
+    "Card & Dickinson 2008 (10.1016/j.cub.2008.07.094)",
+    "Ache et al. 2019 (10.1016/j.cub.2019.01.079)"
+   ],
+   "stimuli": {
+    "loom": {
+     "classes": [
+      "LC4",
+      "LPLC2"
+     ],
+     "rate_profile": "0 -> 150 Hz rising as 1/(t_collision - t) over the window"
+    },
+    "recede": {
+     "classes": [
+      "LC4",
+      "LPLC2"
+     ],
+     "rate_profile": "150 -> 0 Hz falling"
+    },
+    "control_visual": {
+     "classes": [
+      "LC11",
+      "LC12",
+      "LC13"
+     ],
+     "rate_profile": "same rising profile as loom, on non-looming visual projection classes of similar size"
+    }
+   },
+   "readout": "rate(DNp01)",
+   "predicate": "rate(DNp01 | loom) > rate(DNp01 | control_visual)  [recede is recorded, not scored: the reversed profile front-loads input]",
+   "literature_effect": "GF necessary and sufficient for short-mode escape; short-mode fraction rises with looming speed; takeoff 215 +/- 42 ms after stimulus"
+  },
+  {
+   "id": 5,
+   "name": "optomotor turning",
+   "sources": [
+    "Maisak et al. 2013 (10.1038/nature12320)",
+    "Haikala et al. 2013 (10.1523/JNEUROSCI.0340-13.2013)"
+   ],
+   "stimuli": {
+    "right_a": {
+     "classes": [
+      "T4a",
+      "T5a"
+     ],
+     "side": "R"
+    },
+    "right_b": {
+     "classes": [
+      "T4b",
+      "T5b"
+     ],
+     "side": "R"
+    }
+   },
+   "rate_hz": 50,
+   "readout": "steer_asymmetry(HS) and steer_asymmetry(DNa02)",
+   "predicate": "steer_asymmetry(HS | right_a) and steer_asymmetry(HS | right_b) have opposite signs; same for DNa02",
+   "literature_effect": "T4a/T5a and T4b/T5b are tuned to opposite horizontal directions; unilateral HS activation turns the fly toward the stimulated side"
+  },
+  {
+   "id": 6,
+   "name": "male courtship song pathway",
+   "sources": [
+    "von Philipsborn et al. 2011 (10.1016/j.neuron.2011.01.011)",
+    "Kohatsu et al. 2011 (10.1016/j.neuron.2010.12.017)",
+    "Clowney et al. 2015 (10.1016/j.neuron.2015.07.025)"
+   ],
+   "stimuli": {
+    "female_taste": {
+     "receptorType": "putative_ppk25"
+    },
+    "cva": [
+     "ORN_DA1"
+    ],
+    "none": []
+   },
+   "rate_hz": 50,
+   "readout": "rate(pC1), rate(pIP10)",
+   "predicate": "rate(pC1 | female_taste) > rate(pC1 | none) AND rate(pIP10 | female_taste) > rate(pIP10 | none) AND rate(pC1 | cva) <= rate(pC1 | none)",
+   "literature_effect": "P1 excited by female 7,11-HD via ppk25 -> vAB3; inhibited by cVA via Or67d/DA1; P1 and pIP10 trigger pulse song"
+  }
+ ],
+ "verdicts": [
+  "held",
+  "failed",
+  "unreadable",
+  "not-run"
+ ],
+ "limits": "A wiring diagram carries no weights, dynamics, neuromodulation or plasticity; the reference dynamics are one published family, not the fly. Truncation profile of G_traced applies (ORN 0.669, ALPN 0.442, KC 0.843, DN 0.505 surviving weight per ompi/antoracle). Items keyed on glomeruli assume the standard receptor-to-glomerulus map. Decoder citations for DNp09/MDN are abstract-level."
+}

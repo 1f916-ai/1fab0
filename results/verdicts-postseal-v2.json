@@ -1,0 +1,224 @@
+{
+ "1": {
+  "name": "odour valence ordering",
+  "conditions": {
+   "real": {
+    "direction_observed": "2/10",
+    "p_one_sided": 0.9893,
+    "holds": false,
+    "mean_stats": [
+     0.0,
+     -0.083,
+     -3.042
+    ]
+   },
+   "shuffled": {
+    "direction_observed": "0/10",
+    "p_one_sided": 1.0,
+    "holds": false,
+    "mean_stats": [
+     14.417,
+     -2.167,
+     0.0
+    ]
+   },
+   "random": {
+    "direction_observed": "1/10",
+    "p_one_sided": 0.999,
+    "holds": false,
+    "mean_stats": [
+     -1.333,
+     -0.583,
+     -1.292
+    ]
+   }
+  },
+  "verdict": "failed",
+  "real_only": false
+ },
+ "2": {
+  "name": "concentration reversal",
+  "conditions": {
+   "real": {
+    "direction_observed": "1/10",
+    "p_one_sided": 0.999,
+    "holds": false,
+    "mean_stats": [
+     -0.167,
+     -0.042
+    ]
+   },
+   "shuffled": {
+    "direction_observed": "5/10",
+    "p_one_sided": 0.623,
+    "holds": false,
+    "mean_stats": [
+     3.292,
+     11.792
+    ]
+   },
+   "random": {
+    "direction_observed": "5/10",
+    "p_one_sided": 0.623,
+    "holds": false,
+    "mean_stats": [
+     -0.792,
+     -1.125
+    ]
+   }
+  },
+  "verdict": "failed",
+  "real_only": false
+ },
+ "3": {
+  "name": "CO2 avoidance, walking state",
+  "conditions": {
+   "real": {
+    "direction_observed": "10/10",
+    "p_one_sided": 0.001,
+    "holds": true,
+    "mean_stats": [
+     -6.417,
+     0.0
+    ]
+   },
+   "shuffled": {
+    "direction_observed": "0/10",
+    "p_one_sided": 1.0,
+    "holds": false,
+    "mean_stats": [
+     0.0,
+     0.0
+    ]
+   },
+   "random": {
+    "direction_observed": "3/10",
+    "p_one_sided": 0.9453,
+    "holds": false,
+    "mean_stats": [
+     -1.208,
+     0.0
+    ]
+   }
+  },
+  "verdict": "held",
+  "real_only": true
+ },
+ "4": {
+  "name": "looming escape via the giant fibre",
+  "conditions": {
+   "real": {
+    "direction_observed": "10/10",
+    "p_one_sided": 0.001,
+    "holds": true,
+    "mean_stats": [
+     52.5,
+     0.667
+    ]
+   },
+   "shuffled": {
+    "direction_observed": "1/10",
+    "p_one_sided": 0.999,
+    "holds": false,
+    "mean_stats": [
+     4.5,
+     18.083
+    ]
+   },
+   "random": {
+    "direction_observed": "8/10",
+    "p_one_sided": 0.0547,
+    "holds": false,
+    "mean_stats": [
+     190.5,
+     177.25
+    ]
+   }
+  },
+  "verdict": "held",
+  "real_only": true
+ },
+ "5": {
+  "name": "optomotor turning",
+  "conditions": {
+   "real": {
+    "direction_observed": "0/10",
+    "p_one_sided": 1.0,
+    "holds": false,
+    "mean_stats": [
+     250.0,
+     0.0,
+     232.167,
+     -4.5
+    ]
+   },
+   "shuffled": {
+    "direction_observed": "0/10",
+    "p_one_sided": 1.0,
+    "holds": false,
+    "mean_stats": [
+     18.167,
+     10.167,
+     0.833,
+     1.333
+    ]
+   },
+   "random": {
+    "direction_observed": "0/10",
+    "p_one_sided": 1.0,
+    "holds": false,
+    "mean_stats": [
+     59.111,
+     4.222,
+     1.0,
+     0.333
+    ]
+   }
+  },
+  "verdict": "failed",
+  "real_only": false
+ },
+ "6": {
+  "name": "male courtship song pathway",
+  "conditions": {
+   "real": {
+    "direction_observed": "0/10",
+    "p_one_sided": 1.0,
+    "holds": false,
+    "mean_stats": [
+     1.017,
+     0.0,
+     10.574,
+     0.25,
+     0.0
+    ]
+   },
+   "shuffled": {
+    "direction_observed": "0/10",
+    "p_one_sided": 1.0,
+    "holds": false,
+    "mean_stats": [
+     0.01,
+     0.0,
+     0.071,
+     0.0,
+     0.0
+    ]
+   },
+   "random": {
+    "direction_observed": "0/10",
+    "p_one_sided": 1.0,
+    "holds": false,
+    "mean_stats": [
+     163.045,
+     0.0,
+     160.606,
+     175.0,
+     0.0
+    ]
+   }
+  },
+  "verdict": "failed",
+  "real_only": false
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "method": "outgoing synapse weight from each Traced ORN class: sum over flat-table rows with body_pre in class; traced = rows whose body_post is Traced",
+ "computed": "2026-09-14T22:2xZ",
+ "classes": {
+  "ORN_DM1": {
+   "orns": 74,
+   "flat": 80712,
+   "traced": 50259,
+   "surviving": 0.623
+  },
+  "ORN_VA2": {
+   "orns": 83,
+   "flat": 78198,
+   "traced": 44680,
+   "surviving": 0.571
+  },
+  "ORN_DM5": {
+   "orns": 35,
+   "flat": 18237,
+   "traced": 9651,
+   "surviving": 0.529
+  },
+  "ORN_DL1": {
+   "orns": 83,
+   "flat": 51532,
+   "traced": 36476,
+   "surviving": 0.708
+  },
+  "ORN_V": {
+   "orns": 55,
+   "flat": 43285,
+   "traced": 23866,
+   "surviving": 0.551
+  },
+  "ORN_DA2": {
+   "orns": 48,
+   "flat": 35651,
+   "traced": 17841,
+   "surviving": 0.5
+  },
+  "ORN_DA1": {
+   "orns": 204,
+   "flat": 156534,
+   "traced": 112615,
+   "surviving": 0.719
+  },
+  "ORN_DL5": {
+   "orns": 43,
+   "flat": 46984,
+   "traced": 28241,
+   "surviving": 0.601
+  }
+ },
+ "all_orn_pooled": 0.615
+}

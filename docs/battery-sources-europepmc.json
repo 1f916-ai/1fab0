@@ -1,0 +1,340 @@
+[
+ {
+  "item": "substrate",
+  "title": "Sexual dimorphism in the complete connectome of the  <i>Drosophila</i>  male central nervous system",
+  "authors": "Berg S, Beckett IR, Costa M, Schlegel P, Januszewski M, Marin EC, Nern A, Preibi",
+  "journal": null,
+  "year": "2025",
+  "doi": "10.1101/2025.10.09.680999",
+  "pmid": null,
+  "pmcid": null,
+  "open_access": "Y",
+  "full_text_urls": [
+   "https://europepmc.org/article/PPR/PPR1098763",
+   "https://europepmc.org/api/fulltextRepo?pprId=PPR1098763&type=FILE&fileName=EMS209781-pdf.pdf&mimeType=application/pdf"
+  ],
+  "fetch": {
+   "biorxiv_pdf": "ok 25186 KB application/pdf"
+  },
+  "abstract": "Sex differences in behaviour exist across all animals, typically under strong genetic regulation. In  Drosophila ,  fruitless /  doublesex transcription factors can identify dimorphic neurons but their organisation into functional circuits remains unclear. We present the connectome of the entire  Drosophila male central nervous system. This contains 166,691 neurons spanning the brain and nerve cord, fully proofread and annotated including  fruitless /  doublesex expression and 11,691 types. We provide the first comprehensive comparison between male and female brain connectomes to synaptic resolution, finding 7,205 isomorphic, 114 dimorphic, 262 male-specific and 69 female-specific types. This resource enables analysis of full sensory-to-motor circuits underlying complex behaviours and the impact of dimorphic elements. Sex-specific/dimorphic neurons are concentrated in higher brain centres while the sensory and motor periphery are largely isomorphic. Within higher centres, male-specific connections are organised into hotspots defined by male-specific neurons or arbours. Numerous circuit switches reroute sensory information to form antagonistic circuits controlling opposing behaviours.",
+  "authors_full": "Berg S, Beckett IR, Costa M, Schlegel P, Januszewski M, Marin EC, Nern A, Preibisch S, Qiu W, Takemura S, Fragniere AMC, Champion AS, Adjavon D, Cook M, Gkantia M, Hayworth KJ, Huang GB, Kampf F, Katz WT, Lu Z, Ordish C, Paterson T, Stuerner T, Trautman ET, Whittle CR, Burnett LE, Hoeller J, Li F, Loesche F, Morris BJ, Pietzsch T, Pleijzier MW, Silva V, Yin Y, Ali I, Bates AS, Beresford RJ, Bogovic J, Brooks P, Cachero S, Canino BS, Chaisrisawatsuk B, Clements J, Crowe A, de Haan Vicente I, Dempsey G, Dona E, dos Santos M, Dreher M, Dunne CR, Eichler K, Finley-May S, Flynn MA, Hameed I, Hopkins GP, Hubbard PM, Kiassat L, Kovalyak J, Lauchie SA, Leonard M, Lohff A, Longden KD, Maldonado CA, Moitra I, Moon SS, Mooney C, Munnelly EJ, Okeoma N, Olbris DJ, Pai A, Patel B, Phillips EM, Plaza SM, Richards A, Rivas Salinas J, Roberts RJV, Rogers EM, Scott AL, Scuderi LA, Seenivasan P, Serratosa Capdevila L, Smith C, Svirskas R, Takemura S, Tastekin I, Thomson A, Umayam L, Walsh JJ, Whittome H, Xu CS, Yakal EA, Yang T, Zhao A, George R, Jain V, Jayaraman V, Korff W, Meissner GW, Romani S, Funke J, Knecht C, Saalfeld S, Scheffer LK, Waddell S, Card GM, Ribeiro C, Reiser MB, Hess HF, Rubin GM, Jefferis GSXE."
+ },
+ {
+  "item": "method",
+  "title": "A Drosophila computational brain model reveals sensorimotor processing.",
+  "authors": "Shiu PK, Sterne GR, Spiller N, Franconville R, Sandoval A, Zhou J, Simha N, Kang",
+  "journal": null,
+  "year": "2024",
+  "doi": "10.1038/s41586-024-07763-9",
+  "pmid": "39358519",
+  "pmcid": "PMC11446845",
+  "open_access": "Y",
+  "full_text_urls": [
+   "https://europepmc.org/articles/PMC11446845",
+   "https://europepmc.org/articles/PMC11446845?pdf=render"
+  ],
+  "fetch": {
+   "epmc_xml": "ok 181 KB application/xml",
+   "pmc_pdf": "small(1817)"
+  },
+  "abstract": "The recent assembly of the adult Drosophila melanogaster central brain connectome, containing more than 125,000 neurons and 50\u2009million synaptic connections, provides a template for examining sensory processing throughout the brain<sup>1,2</sup>. Here we create a leaky integrate-and-fire computational model of the entire Drosophila brain, on the basis of neural connectivity and neurotransmitter identity<sup>3</sup>, to study circuit properties of feeding and grooming behaviours. We show that activation of sugar-sensing or water-sensing gustatory neurons in the computational model accurately predicts neurons that respond to tastes and are required for feeding initiation<sup>4</sup>. In addition, using the model to activate neurons in the feeding region of the Drosophila brain predicts those that elicit motor neuron firing<sup>5</sup>-a testable hypothesis that we validate by optogenetic activation and behavioural studies. Activating different classes of gustatory neurons in the model makes accurate predictions of how several taste modalities interact, providing circuit-level insight into aversive and appetitive taste processing. Additionally, we applied this model to mechanosensory circuits and found that computational activation of mechanosensory neurons predicts activation of a small set of neurons comprising the antennal grooming circuit, and accurately describes the circuit response upon activation of different mechanosensory subtypes<sup>6-10</sup>. Our results demonstrate that modelling brain circuits using only synapse-level connectivity and predicted neurotransmitter identity generates experimentally testable hypotheses and can describe complete sensorimotor transformations.",
+  "authors_full": "Shiu PK, Sterne GR, Spiller N, Franconville R, Sandoval A, Zhou J, Simha N, Kang CH, Yu S, Kim JS, Dorkenwald S, Matsliah A, Schlegel P, Yu SC, McKellar CE, Sterling A, Costa M, Eichler K, Bates AS, Eckstein N, Funke J, Jefferis GSXE, Murthy M, Bidaye SS, Hampel S, Seeds AM, Scott K."
+ },
+ {
+  "item": "method",
+  "title": "Neurotransmitter classification from electron microscopy images at synaptic sites in Drosophila melanogaster.",
+  "authors": "Eckstein N, Bates AS, Champion A, Du M, Yin Y, Schlegel P, Lu AK, Rymer T, Finle",
+  "journal": null,
+  "year": "2024",
+  "doi": "10.1016/j.cell.2024.03.016",
+  "pmid": "38729112",
+  "pmcid": "PMC11106717",
+  "open_access": "Y",
+  "full_text_urls": [
+   "https://europepmc.org/articles/PMC11106717",
+   "https://europepmc.org/articles/PMC11106717?pdf=render"
+  ],
+  "fetch": {
+   "epmc_xml": "ok 516 KB application/xml",
+   "pmc_pdf": "small(1817)"
+  },
+  "abstract": "High-resolution electron microscopy of nervous systems has enabled the reconstruction of synaptic connectomes. However, we do not know the synaptic sign for each connection (i.e., whether a connection is excitatory or inhibitory), which is implied by the released transmitter. We demonstrate that artificial neural networks can predict transmitter types for presynapses from electron micrographs: a network trained to predict six transmitters (acetylcholine, glutamate, GABA, serotonin, dopamine, octopamine) achieves an accuracy of 87% for individual synapses, 94% for neurons, and 91% for known cell types across a D.\u00a0melanogaster whole brain. We visualize the ultrastructural features used for prediction, discovering subtle but significant differences between transmitter phenotypes. We also analyze transmitter distributions across the brain and find that neurons that develop together largely express only one fast-acting transmitter (acetylcholine, glutamate, or GABA). We hope that our publicly available predictions act as an accelerant for neuroscientific hypothesis generation for the fly.",
+  "authors_full": "Eckstein N, Bates AS, Champion A, Du M, Yin Y, Schlegel P, Lu AK, Rymer T, Finley-May S, Paterson T, Parekh R, Dorkenwald S, Matsliah A, Yu SC, McKellar C, Sterling A, Eichler K, Costa M, Seung S, Murthy M, Hartenstein V, Jefferis GSXE, Funke J."
+ },
+ {
+  "item": "item1-2",
+  "title": "Select Drosophila glomeruli mediate innate olfactory attraction and aversion.",
+  "authors": "Semmelhack JL, Wang JW.",
+  "journal": null,
+  "year": "2009",
+  "doi": "10.1038/nature07983",
+  "pmid": "19396157",
+  "pmcid": "PMC2702439",
+  "open_access": "Y",
+  "full_text_urls": [
+   "https://europepmc.org/articles/PMC2702439",
+   "https://europepmc.org/articles/PMC2702439?pdf=render"
+  ],
+  "fetch": {
+   "epmc_xml": "fail HTTP Error 404: Not Found",
+   "pmc_pdf": "ok 20 KB text/html"
+  },
+  "abstract": "Fruitflies show robust attraction to food odours, which usually excite several glomeruli. To understand how the representation of such odours leads to behaviour, we used genetic tools to dissect the contribution of each activated glomerulus. Apple cider vinegar triggers robust innate attraction at a relatively low concentration, which activates six glomeruli. By silencing individual glomeruli, here we show that the absence of activity in two glomeruli, DM1 and VA2, markedly reduces attraction. Conversely, when each of these two glomeruli was selectively activated, flies showed as robust an attraction to vinegar as wild-type flies. Notably, a higher concentration of vinegar excites an additional glomerulus and is less attractive to flies. We show that activation of the extra glomerulus is necessary and sufficient to mediate the behavioural switch. Together, these results indicate that individual glomeruli, rather than the entire pattern of active glomeruli, mediate innate behavioural output.",
+  "authors_full": "Semmelhack JL, Wang JW."
+ },
+ {
+  "item": "item1-2",
+  "title": "Spatial representation of odorant valence in an insect brain.",
+  "authors": "Knaden M, Strutz A, Ahsan J, Sachse S, Hansson BS.",
+  "journal": null,
+  "year": "2012",
+  "doi": "10.1016/j.celrep.2012.03.002",
+  "pmid": "22832228",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [],
+  "fetch": {},
+  "abstract": "Brains have to decide whether and how to respond to detected stimuli based on complex sensory input. The vinegar fly Drosophila melanogaster evaluates food sources based on olfactory cues. Here, we performed a behavioral screen using the vinegar fly and established the innate valence of 110 odorants. Our analysis of neuronal activation patterns evoked by attractive and aversive odorants suggests that even though the identity of odorants is coded by the set of activated receptors, the main representation of odorant valence is formed at the output level of the antennal lobe. The topographic clustering within the antennal lobe of valence-specific output neurons resembles a corresponding domain in the olfactory bulb of mice. The basal anatomical structure of the olfactory circuit between insects and vertebrates is known to be similar; our study suggests that the representation of odorant valence is as well.",
+  "authors_full": "Knaden M, Strutz A, Ahsan J, Sachse S, Hansson BS."
+ },
+ {
+  "item": "item1-2",
+  "title": "DoOR 2.0--Comprehensive Mapping of Drosophila melanogaster Odorant Responses.",
+  "authors": "M\u00fcnch D, Galizia CG.",
+  "journal": null,
+  "year": "2016",
+  "doi": "10.1038/srep21841",
+  "pmid": "26912260",
+  "pmcid": "PMC4766438",
+  "open_access": "Y",
+  "full_text_urls": [
+   "https://www.nature.com/articles/srep21841.pdf",
+   "https://europepmc.org/articles/PMC4766438",
+   "https://europepmc.org/articles/PMC4766438?pdf=render"
+  ],
+  "fetch": {
+   "epmc_xml": "ok 168 KB application/xml",
+   "pmc_pdf": "small(1816)"
+  },
+  "abstract": "Odors elicit complex patterns of activated olfactory sensory neurons. Knowing the complete olfactome, i.e. the responses in all sensory neurons for all relevant odorants, is desirable to understand olfactory coding. The DoOR project combines all available Drosophila odorant response data into a single consensus response matrix. Since its first release many studies were published: receptors were deorphanized and several response profiles were expanded. In this study, we add unpublished data to the odor-response profiles for four odorant receptors (Or10a, Or42b, Or47b, Or56a). We deorphanize Or69a, showing a broad response spectrum with the best ligands including 3-hydroxyhexanoate, alpha-terpineol, 3-octanol and linalool. We include all of these datasets into DoOR, provide a comprehensive update of both code and data, and new tools for data analyses and visualizations. The DoOR project has a web interface for quick queries (http://neuro.uni.kn/DoOR), and a downloadable, open source toolbox written in R, including all processed and original datasets. DoOR now gives reliable odorant-responses for nearly all Drosophila olfactory responding units, listing 693 odorants, for a total of 7381 data points.",
+  "authors_full": "M\u00fcnch D, Galizia CG."
+ },
+ {
+  "item": "item1-2",
+  "title": "A conserved dedicated olfactory circuit for detecting harmful microbes in Drosophila.",
+  "authors": "Stensmyr MC, Dweck HK, Farhan A, Ibba I, Strutz A, Mukunda L, Linz J, Grabe V, S",
+  "journal": null,
+  "year": "2012",
+  "doi": "10.1016/j.cell.2012.09.046",
+  "pmid": "23217715",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [],
+  "fetch": {},
+  "abstract": "Flies, like all animals, need to find suitable and safe food. Because the principal food source for Drosophila melanogaster is yeast growing on fermenting fruit, flies need to distinguish fruit with safe yeast from yeast covered with toxic microbes. We identify a functionally segregated olfactory circuit in flies that is activated exclusively by geosmin. This microbial odorant constitutes an ecologically relevant stimulus that alerts flies to the presence of harmful microbes. Geosmin activates only a single class of sensory neurons expressing the olfactory receptor Or56a. These neurons target the DA2 glomerulus and connect to projection neurons that respond exclusively to geosmin. Activation of DA2 is sufficient and necessary for aversion, overrides input from other olfactory pathways, and inhibits positive chemotaxis, oviposition, and feeding. The geosmin detection system is a conserved feature in the genus Drosophila that provides flies with a sensitive, specific means of identifying unsuitable feeding and breeding sites.",
+  "authors_full": "Stensmyr MC, Dweck HK, Farhan A, Ibba I, Strutz A, Mukunda L, Linz J, Grabe V, Steck K, Lavista-Llanos S, Wicher D, Sachse S, Knaden M, Becher PG, Seki Y, Hansson BS."
+ },
+ {
+  "item": "item3",
+  "title": "A single population of olfactory sensory neurons mediates an innate avoidance behaviour in Drosophila.",
+  "authors": "Suh GS, Wong AM, Hergarden AC, Wang JW, Simon AF, Benzer S, Axel R, Anderson DJ.",
+  "journal": null,
+  "year": "2004",
+  "doi": "10.1038/nature02980",
+  "pmid": "15372051",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [],
+  "fetch": {},
+  "abstract": "All animals exhibit innate behaviours in response to specific sensory stimuli that are likely to result from the activation of developmentally programmed neural circuits. Here we observe that Drosophila exhibit robust avoidance to odours released by stressed flies. Gas chromatography and mass spectrometry identifies one component of this 'Drosophila stress odorant (dSO)' as CO2. CO2 elicits avoidance behaviour, at levels as low as 0.1%. We used two-photon imaging with the Ca2+-sensitive fluorescent protein G-CaMP to map the primary sensory neurons governing avoidance to CO2. CO2 activates only a single glomerulus in the antennal lobe, the V glomerulus; moreover, this glomerulus is not activated by any of 26 other odorants tested. Inhibition of synaptic transmission in sensory neurons that innervate the V glomerulus, using a temperature-sensitive Shibire gene (Shi(ts)), blocks the avoidance response to CO2. Inhibition of synaptic release in the vast majority of other olfactory receptor neurons has no effect on this behaviour. These data demonstrate that the activation of a single population of sensory neurons innervating one glomerulus is responsible for an innate avoidance behaviour in Drosophila.",
+  "authors_full": "Suh GS, Wong AM, Hergarden AC, Wang JW, Simon AF, Benzer S, Axel R, Anderson DJ."
+ },
+ {
+  "item": "item3",
+  "title": "Two chemosensory receptors together mediate carbon dioxide detection in Drosophila.",
+  "authors": "Jones WD, Cayirlioglu P, Kadow IG, Vosshall LB.",
+  "journal": null,
+  "year": "2007",
+  "doi": "10.1038/nature05466",
+  "pmid": "17167414",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [],
+  "fetch": {},
+  "abstract": "Blood-feeding insects, including the malaria mosquito Anopheles gambiae, use highly specialized and sensitive olfactory systems to locate their hosts. This is accomplished by detecting and following plumes of volatile host emissions, which include carbon dioxide (CO2). CO2 is sensed by a population of olfactory sensory neurons in the maxillary palps of mosquitoes and in the antennae of the more genetically tractable fruitfly, Drosophila melanogaster. The molecular identity of the chemosensory CO2 receptor, however, remains unknown. Here we report that CO2-responsive neurons in Drosophila co-express a pair of chemosensory receptors, Gr21a and Gr63a, at both larval and adult life stages. We identify mosquito homologues of Gr21a and Gr63a, GPRGR22 and GPRGR24, and show that these are co-expressed in A. gambiae maxillary palps. We show that Gr21a and Gr63a together are sufficient for olfactory CO2-chemosensation in Drosophila. Ectopic expression of Gr21a and Gr63a together confers CO2 sensitivity on CO2-insensitive olfactory neurons, but neither gustatory receptor alone has this function. Mutant flies lacking Gr63a lose both electrophysiological and behavioural responses to CO2. Knowledge of the molecular identity of the insect olfactory CO2 receptors may spur the development of novel mosquito control strategies designed to take advantage of this unique and critical olfactory pathway. This in turn could bolster the worldwide fight against malaria and other insect-borne diseases.",
+  "authors_full": "Jones WD, Cayirlioglu P, Kadow IG, Vosshall LB."
+ },
+ {
+  "item": "item3",
+  "title": "Drosophila tracks carbon dioxide in flight.",
+  "authors": "Wasserman S, Salomon A, Frye MA.",
+  "journal": null,
+  "year": "2013",
+  "doi": "10.1016/j.cub.2012.12.038",
+  "pmid": "23352695",
+  "pmcid": "PMC3810385",
+  "open_access": "N",
+  "full_text_urls": [
+   "https://europepmc.org/articles/PMC3810385",
+   "https://europepmc.org/articles/PMC3810385?pdf=render"
+  ],
+  "fetch": {
+   "epmc_xml": "fail HTTP Error 404: Not Found",
+   "pmc_pdf": "small(1817)"
+  },
+  "abstract": "Carbon dioxide (CO(2)) elicits an attractive host-seeking response from mosquitos yet is innately aversive to Drosophila melanogaster despite being a plentiful byproduct of attractive fermenting food sources. Prior studies used walking flies exclusively, yet adults track distant food sources on the wing. Here we show that a fly tethered within a magnetic field allowing free rotation about the yaw axis actively seeks a narrow CO(2) plume during flight. Genetic disruption of the canonical CO(2)-sensing olfactory neurons does not alter in-flight attraction to CO(2); however, antennal ablation and genetic disruption of the Ir64a acid sensor do. Surprisingly, mutation of the obligate olfactory coreceptor (Orco) does not abolish CO(2) aversion during walking yet eliminates CO(2) tracking in flight. The biogenic amine octopamine regulates critical physiological processes during flight, and blocking synaptic output from octopamine neurons inverts the valence assigned to CO(2) and elicits an aversive response in flight. Combined, our results suggest that a novel Orco-mediated olfactory pathway that gains sensitivity to CO(2) in flight via changes in octopamine levels, along with Ir64a, quickly switches the valence of a key environmental stimulus in a behavioral-state-dependent manner.",
+  "authors_full": "Wasserman S, Salomon A, Frye MA."
+ },
+ {
+  "item": "item4",
+  "title": "A spike-timing mechanism for action selection.",
+  "authors": "von Reyn CR, Breads P, Peek MY, Zheng GZ, Williamson WR, Yee AL, Leonardo A, Car",
+  "journal": null,
+  "year": "2014",
+  "doi": "10.1038/nn.3741",
+  "pmid": "24908103",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [],
+  "fetch": {},
+  "abstract": "We discovered a bimodal behavior in the genetically tractable organism Drosophila melanogaster that allowed us to directly probe the neural mechanisms of an action selection process. When confronted by a predator-mimicking looming stimulus, a fly responds with either a long-duration escape behavior sequence that initiates stable flight or a distinct, short-duration sequence that sacrifices flight stability for speed. Intracellular recording of the descending giant fiber (GF) interneuron during head-fixed escape revealed that GF spike timing relative to parallel circuits for escape actions determined which of the two behavioral responses was elicited. The process was well described by a simple model in which the GF circuit has a higher activation threshold than the parallel circuits, but can override ongoing behavior to force a short takeoff. Our findings suggest a neural mechanism for action selection in which relative activation timing of parallel circuits creates the appropriate motor output.",
+  "authors_full": "von Reyn CR, Breads P, Peek MY, Zheng GZ, Williamson WR, Yee AL, Leonardo A, Card GM."
+ },
+ {
+  "item": "item4",
+  "title": "Neural Basis for Looming Size and Velocity Encoding in the Drosophila Giant Fiber Escape Pathway.",
+  "authors": "Ache JM, Polsky J, Alghailani S, Parekh R, Breads P, Peek MY, Bock DD, von Reyn ",
+  "journal": null,
+  "year": "2019",
+  "doi": "10.1016/j.cub.2019.01.079",
+  "pmid": "30827912",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [],
+  "fetch": {},
+  "abstract": "Identified neuron classes in vertebrate cortical [1-4] and subcortical [5-8] areas and invertebrate peripheral [9-11] and central [12-14] brain neuropils encode specific visual features of a panorama. How downstream neurons integrate these features to control vital behaviors, like escape, is unclear [15]. In Drosophila, the timing of a single spike in the giant fiber (GF) descending neuron [16-18] determines whether a fly uses a short or long takeoff when escaping a looming predator [13]. We previously proposed that GF spike timing results from summation of two visual features whose detection is highly conserved across animals [19]: an object's subtended angular size and its angular velocity [5-8, 11, 20, 21]. We attributed velocity encoding to input from lobula columnar type 4 (LC4) visual projection neurons, but the size-encoding\u00a0source remained unknown. Here, we show that lobula plate/lobula columnar, type 2 (LPLC2) visual projection neurons anatomically specialized to detect looming [22] provide the entire GF size component. We find LPLC2 neurons to be necessary for GF-mediated escape and show that LPLC2 and LC4 synapse directly onto the GF via reconstruction in a fly brain electron microscopy (EM) volume [23]. LPLC2 silencing eliminates the size component of the GF looming response in patch-clamp recordings, leaving only the velocity component. A model summing a linear function of angular velocity (provided by LC4) and a Gaussian function of angular size (provided by LPLC2) replicates GF looming response dynamics and predicts the peak response time. We thus present an identified circuit in which information from looming feature-detecting neurons is combined by a common post-synaptic target to determine behavioral output.",
+  "authors_full": "Ache JM, Polsky J, Alghailani S, Parekh R, Breads P, Peek MY, Bock DD, von Reyn CR, Card GM."
+ },
+ {
+  "item": "item4",
+  "title": "Visually mediated motor planning in the escape response of Drosophila.",
+  "authors": "Card G, Dickinson MH.",
+  "journal": null,
+  "year": "2008",
+  "doi": "10.1016/j.cub.2008.07.094",
+  "pmid": "18760606",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [
+   "http://www.cell.com/article/S0960982208010488/pdf"
+  ],
+  "fetch": {},
+  "abstract": "A key feature of reactive behaviors is the ability to spatially localize a salient stimulus and act accordingly. Such sensory-motor transformations must be particularly fast and well tuned in escape behaviors, in which both the speed and accuracy of the evasive response determine whether an animal successfully avoids predation [1]. We studied the escape behavior of the fruit fly, Drosophila, and found that flies can use visual information to plan a jump directly away from a looming threat. This is surprising, given the architecture of the pathway thought to mediate escape [2, 3]. Using high-speed videography, we found that approximately 200 ms before takeoff, flies begin a series of postural adjustments that determine the direction of their escape. These movements position their center of mass so that leg extension will push them away from the expanding visual stimulus. These preflight movements are not the result of a simple feed-forward motor program because their magnitude and direction depend on the flies' initial postural state. Furthermore, flies plan a takeoff direction even in instances when they choose not to jump. This sophisticated motor program is evidence for a form of rapid, visually mediated motor planning in a genetically accessible model organism.",
+  "authors_full": "Card G, Dickinson MH."
+ },
+ {
+  "item": "item5",
+  "title": "A directional tuning map of Drosophila elementary motion detectors.",
+  "authors": "Maisak MS, Haag J, Ammer G, Serbe E, Meier M, Leonhardt A, Schilling T, Bahl A, ",
+  "journal": null,
+  "year": "2013",
+  "doi": "10.1038/nature12320",
+  "pmid": "23925246",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [],
+  "fetch": {},
+  "abstract": "The extraction of directional motion information from changing retinal images is one of the earliest and most important processing steps in any visual system. In the fly optic lobe, two parallel processing streams have been anatomically described, leading from two first-order interneurons, L1 and L2, via T4 and T5 cells onto large, wide-field motion-sensitive interneurons of the lobula plate. Therefore, T4 and T5 cells are thought to have a pivotal role in motion processing; however, owing to their small size, it is difficult to obtain electrical recordings of T4 and T5 cells, leaving their visual response properties largely unknown. We circumvent this problem by means of optical recording from these cells in Drosophila, using the genetically encoded calcium indicator GCaMP5 (ref. 2). Here we find that specific subpopulations of T4 and T5 cells are directionally tuned to one of the four cardinal directions; that is, front-to-back, back-to-front, upwards and downwards. Depending on their preferred direction, T4 and T5 cells terminate in specific sublayers of the lobula plate. T4 and T5 functionally segregate with respect to contrast polarity: whereas T4 cells selectively respond to moving brightness increments (ON edges), T5 cells only respond to moving brightness decrements (OFF edges). When the output from T4 or T5 cells is blocked, the responses of postsynaptic lobula plate neurons to moving ON (T4 block) or OFF edges (T5 block) are selectively compromised. The same effects are seen in turning responses of tethered walking flies. Thus, starting with L1 and L2, the visual input is split into separate ON and OFF pathways, and motion along all four cardinal directions is computed separately within each pathway. The output of these eight different motion detectors is then sorted such that ON (T4) and OFF (T5) motion detectors with the same directional tuning converge in the same layer of the lobula plate, jointly providing the input to downstream circuits and motion-driven behaviours.",
+  "authors_full": "Maisak MS, Haag J, Ammer G, Serbe E, Meier M, Leonhardt A, Schilling T, Bahl A, Rubin GM, Nern A, Dickson BJ, Reiff DF, Hopp E, Borst A."
+ },
+ {
+  "item": "item5",
+  "title": "Optogenetic control of fly optomotor responses.",
+  "authors": "Haikala V, Joesch M, Borst A, Mauss AS.",
+  "journal": null,
+  "year": "2013",
+  "doi": "10.1523/jneurosci.0340-13.2013",
+  "pmid": "23966712",
+  "pmcid": "PMC6618655",
+  "open_access": "N",
+  "full_text_urls": [
+   "https://www.jneurosci.org/content/jneuro/33/34/13927.full.pdf",
+   "https://europepmc.org/articles/PMC6618655",
+   "https://europepmc.org/articles/PMC6618655?pdf=render"
+  ],
+  "fetch": {
+   "epmc_xml": "fail HTTP Error 404: Not Found",
+   "pmc_pdf": "ok 20 KB text/html"
+  },
+  "abstract": "When confronted with a large-field stimulus rotating around the vertical body axis, flies display a following behavior called \"optomotor response.\" As neural control elements, the large tangential horizontal system (HS) cells of the lobula plate have been prime candidates for long. Here, we applied optogenetic stimulation of HS cells to evaluate their behavioral role in Drosophila. To minimize interference of the optical activation of channelrhodopsin-2 with the visual perception of the flies, we used a bistable variant called ChR2-C128S. By applying pulses of blue and yellow light, we first demonstrate electrophysiologically that lobula plate tangential cells can be activated and deactivated repeatedly with no evident change in depolarization strength over trials. We next show that selective optogenetic activation of HS cells elicits robust yaw head movements and yaw turning responses in fixed and tethered flying flies, respectively.",
+  "authors_full": "Haikala V, Joesch M, Borst A, Mauss AS."
+ },
+ {
+  "item": "item5",
+  "title": "Processing of horizontal optic flow in three visual interneurons of the Drosophila brain.",
+  "authors": "Schnell B, Joesch M, Forstner F, Raghu SV, Otsuna H, Ito K, Borst A, Reiff DF.",
+  "journal": null,
+  "year": "2010",
+  "doi": "10.1152/jn.00950.2009",
+  "pmid": "20089816",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [
+   "http://intl-jn.physiology.org/cgi/content/full/103/3/1646"
+  ],
+  "fetch": {},
+  "abstract": "Motion vision is essential for navigating through the environment. Due to its genetic amenability, the fruit fly Drosophila has been serving for a lengthy period as a model organism for studying optomotor behavior as elicited by large-field horizontal motion. However, the neurons underlying the control of this behavior have not been studied in Drosophila so far. Here we report the first whole cell recordings from three cells of the horizontal system (HSN, HSE, and HSS) in the lobula plate of Drosophila. All three HS cells are tuned to large-field horizontal motion in a direction-selective way; they become excited by front-to-back motion and inhibited by back-to-front motion in the ipsilateral field of view. The response properties of HS cells such as contrast and velocity dependence are in accordance with the correlation-type model of motion detection. Neurobiotin injection suggests extensive coupling among ipsilateral HS cells and additional coupling to tangential cells that have their dendrites in the contralateral hemisphere of the brain. This connectivity scheme accounts for the complex layout of their receptive fields and explains their sensitivity both to ipsilateral and to contralateral motion. Thus the main response properties of Drosophila HS cells are strikingly similar to the responses of their counterparts in the blowfly Calliphora, although we found substantial differences with respect to their dendritic structure and connectivity. This long-awaited functional characterization of HS cells in Drosophila provides the basis for the future dissection of optomotor behavior and the underlying neural circuitry by combining genetics, physiology, and behavior.",
+  "authors_full": "Schnell B, Joesch M, Forstner F, Raghu SV, Otsuna H, Ito K, Borst A, Reiff DF."
+ },
+ {
+  "item": "item6",
+  "title": "Neuronal control of Drosophila courtship song.",
+  "authors": "von Philipsborn AC, Liu T, Yu JY, Masser C, Bidaye SS, Dickson BJ.",
+  "journal": null,
+  "year": "2011",
+  "doi": "10.1016/j.neuron.2011.01.011",
+  "pmid": "21315261",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [],
+  "fetch": {},
+  "abstract": "The courtship song of the Drosophila male serves as a genetically tractable model for the investigation of the neural mechanisms of decision-making, action selection, and motor pattern generation. Singing has been causally linked to the activity of the set of neurons that express the sex-specific fru transcripts, but the specific neurons involved have not been identified. Here we identify five distinct classes of fru neuron that trigger or compose the song. Our data suggest that P1 and pIP10 neurons in the brain mediate the decision to sing, and to act upon this decision, while the thoracic neurons dPR1, vPR6, and vMS11 are components of a central pattern generator that times and shapes the song's pulses. These neurons are potentially connected in a functional circuit, with the descending pIP10 neuron linking the brain and thoracic song centers. Sexual dimorphisms in each of these neurons may explain why only males sing.",
+  "authors_full": "von Philipsborn AC, Liu T, Yu JY, Masser C, Bidaye SS, Dickson BJ."
+ },
+ {
+  "item": "item6",
+  "title": "Female contact activates male-specific interneurons that trigger stereotypic courtship behavior in Drosophila.",
+  "authors": "Kohatsu S, Koganezawa M, Yamamoto D.",
+  "journal": null,
+  "year": "2011",
+  "doi": "10.1016/j.neuron.2010.12.017",
+  "pmid": "21315260",
+  "pmcid": null,
+  "open_access": "N",
+  "full_text_urls": [],
+  "fetch": {},
+  "abstract": "We determined the cellular substrate for male courtship behavior by quasinatural and artificial stimulation of brain neurons. Activation of fruitless (fru)-expressing neurons via stimulation of thermosensitive dTrpA1 channels induced an entire series of courtship acts in male Drosophila placed alone without any courting target. By reducing the number of neurons expressing dTrpA1 by MARCM, we demonstrated that the initiation of courtship behavior is significantly correlated with the activation of the transmidline P1 interneurons, the descending P2b interneurons, or both, indicating that these interneurons trigger courtship. Using an experimental paradigm in which a tethered male can be stimulated to initiate courtship by touching his foreleg tarsus to a female's abdomen, we found that P1 neurites of tethered males showed a transient Ca(2+) rise after tarsal stimulation with the female-associated sensory cues. These observations strongly suggest that P1 neurons are the prime components of the neural circuitry that initiates male courtship.",
+  "authors_full": "Kohatsu S, Koganezawa M, Yamamoto D."
+ },
+ {
+  "item": "item6",
+  "title": "Multimodal Chemosensory Circuits Controlling Male Courtship in Drosophila.",
+  "authors": "Clowney EJ, Iguchi S, Bussell JJ, Scheer E, Ruta V.",
+  "journal": null,
+  "year": "2015",
+  "doi": "10.1016/j.neuron.2015.07.025",
+  "pmid": "26279475",
+  "pmcid": "PMC4560615",
+  "open_access": "N",
+  "full_text_urls": [
+   "https://europepmc.org/articles/PMC4560615",
+   "https://europepmc.org/articles/PMC4560615?pdf=render"
+  ],
+  "fetch": {
+   "epmc_xml": "fail HTTP Error 404: Not Found",
+   "pmc_pdf": "small(1816)"
+  },
+  "abstract": "Throughout the animal kingdom, internal states generate long-lasting and self-perpetuating chains of behavior. In Drosophila, males instinctively pursue females with a lengthy and elaborate courtship ritual triggered by activation of sexually dimorphic P1 interneurons. Gustatory pheromones are thought to activate P1 neurons but the circuit mechanisms that dictate their sensory responses to gate entry into courtship remain unknown. Here, we use circuit mapping and in vivo functional imaging techniques to trace gustatory and olfactory pheromone circuits to their point of convergence onto P1 neurons and reveal how their combined input underlies selective tuning to appropriate sexual partners. We identify inhibition, even in response to courtship-promoting pheromones, as a key circuit element that tunes and tempers P1 neuron activity. Our results suggest a circuit mechanism in which balanced excitation and inhibition underlie discrimination of prospective mates and stringently regulate the transition to courtship in Drosophila.",
+  "authors_full": "Clowney EJ, Iguchi S, Bussell JJ, Scheer E, Ruta V."
+ }
+]
