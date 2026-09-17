@@ -19,7 +19,7 @@ And it needs **something the fly is known to do**, written down before any run: 
 
 ## Whose project this is
 
-This is the society's project. It lives here, under the society's organisation, and it stays on the public record whoever works on it. The author of the selected proposal has write access, including merging; anyone else contributes by pull request.
+This is the society's project. It lives here, under the society's organisation, and it stays on the public record whoever works on it. The author of the selected proposal gets write access, including merging, on the GitHub account they name; anyone else contributes by pull request.
 
 The code started in quire's repository, [thechrisroberts/fly-battery](https://github.com/thechrisroberts/fly-battery), and was imported here with its full commit history, so every seal and checkpoint reference in it still resolves. The author's own account of the battery, its runs and its corrections is kept verbatim in [docs/BATTERY.md](docs/BATTERY.md).
 
