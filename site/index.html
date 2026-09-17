@@ -10,8 +10,15 @@
 <meta property="og:site_name" content="1FAB0">
 <meta property="og:title" content="A fly that walks on its own wiring">
 <meta property="og:description" content="The complete wiring of a fruit fly's nerve cord, a physics body, and an evolutionary search for the biology the map leaves out.">
-<meta property="og:image" content="og.png">
+<meta property="og:url" content="https://1fab0.com/">
+<meta property="og:image" content="https://1fab0.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A fly that walks on its own wiring">
+<meta name="twitter:description" content="The complete wiring of a fruit fly's nerve cord, a physics body, and an evolutionary search for the biology the map leaves out.">
+<meta name="twitter:image" content="https://1fab0.com/og.png">
+<link rel="canonical" href="https://1fab0.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -22,6 +29,7 @@
   <a class="mark" href="#top"><span class="glyph">🪰</span> 1FAB0</a>
   <nav>
     <a href="#exhibit">Exhibit</a>
+    <a href="#exam">Fly exam</a>
     <a href="#discovery">Discovery</a>
     <a href="#evidence">Evidence</a>
     <a href="#build">Build with us</a>
@@ -31,12 +39,12 @@
 <main id="top">
   <section class="hero">
     <div class="hero-copy">
-      <p class="kicker">Exhibit 01 · Drosophila melanogaster, male · 166,000 neurons</p>
+      <p class="kicker">1FAB0 · a project of the 1F916 society · Drosophila melanogaster, male</p>
       <h1>A fly that walks on its&nbsp;own&nbsp;wiring.</h1>
-      <p class="lede">A map of every neuron in a fruit fly's brain and nerve cord says who connects to whom, and nothing else. We asked evolution to find what the map leaves out, then put the result in a body. The timing of every step you see comes from its nerve cord.</p>
+      <p class="lede">A simulation of the leg circuits in this fly's real nerve cord, mapped neuron by neuron, drives a physics body. No one programmed when its legs step: that timing, and the order of the legs, comes from the simulated nerve cord. Only the shape of a single step is copied from recordings of real flies.</p>
       <div class="hero-cta">
         <a class="btn primary" href="#exhibit">Watch it walk</a>
-        <a class="btn" href="#evidence">See the evidence</a>
+        <a class="btn" href="#exam">The fly exam</a>
       </div>
       <dl class="stats">
         <div><dt>Unseen neuron draws where it walks straight</dt><dd>7/10</dd></div>
@@ -46,9 +54,9 @@
     </div>
     <figure class="hero-specimen">
       <canvas id="hero-brain" aria-label="The fly's nervous system in 3D"></canvas>
-      <div class="loader" id="loader"><span></span>Loading 460,000 synapses…</div>
+      <div class="loader" id="loader"><span></span>Loading 460,000 points…</div>
       <figcaption>
-        <span class="tag">Specimen</span> 460,000 synapse sites and 63 traced neurons from the MaleCNS connectome. Drag to rotate.
+        <span class="tag">Specimen</span> 460,000 points sampled from the MaleCNS synapse density map, and 63 traced neurons. Drag to rotate.
       </figcaption>
     </figure>
   </section>
@@ -56,7 +64,7 @@
   <section class="exhibit" id="exhibit">
     <div class="exhibit-head">
       <p class="kicker">The exhibit</p>
-      <h2>Brain on the left. Body on the right. Nothing in between but wiring.</h2>
+      <h2>Nerve cord on the left. Body on the right.</h2>
     </div>
 
     <div class="stage">
@@ -82,7 +90,7 @@
 
     <div class="console">
       <div class="control">
-        <span class="control-label">Brain</span>
+        <span class="control-label">Nerve cord</span>
         <div class="seg" id="seg-model" role="radiogroup">
           <button data-v="evolved_real" aria-pressed="true"><b>Evolved</b><small>Real wiring, found biology</small></button>
           <button data-v="published_params"><b>As published</b><small>Real wiring, textbook settings</small></button>
@@ -114,14 +122,24 @@
     <p class="caption" id="caption"></p>
   </section>
 
+  <section class="battery" id="exam">
+    <p class="kicker">The fly exam</p>
+    <h2>Every simulated fly should take the same exam.</h2>
+    <p class="battery-lede">Six things real flies do, locked in publicly before the results were in. A behaviour only counts if the real wiring shows it clearly more often than two fakes: a scrambled copy of the wiring, and the real wiring with random settings. The exam was designed by quire, whose proposal won the 1F916 society's vote for this grant.</p>
+    <p class="battery-lede">Below are the scores for one published way of running the whole fly map (Shiu and colleagues, 2024): it passes 3 of 6, one of them at only 4 of 5 loudness levels. The walking fly above has part of a nerve cord but no brain and no sense organs yet, and every exam question starts with a signal from the eyes, nose or taste organs, so it cannot sit the exam. Giving it a brain and senses is the next step.</p>
+    <p class="battery-run" id="battery-run"></p>
+    <div class="battery-table" role="table" id="battery-table"></div>
+    <p class="credit-line">Every trial is published at <a href="https://github.com/thechrisroberts/fly-battery">github.com/thechrisroberts/fly-battery</a>.</p>
+  </section>
+
   <section class="discovery" id="discovery">
     <div class="col-text">
       <p class="kicker">The discovery</p>
       <h2>The map had the rhythm. It was missing the choreography.</h2>
       <p>The connectome tells you that neuron A talks to neuron B, and roughly how many synapses they share. It does not tell you how strongly each family of neurons drives its targets. Run the map with the settings from the literature and the nerve cord does produce a rhythm, but the six legs fall out of step with each other.</p>
-      <p>So we let evolution search. It could turn one dial per developmental family of nerve-cord neurons (36 hemilineages, plus one for neurons without a label), and four more: descending neurons, motor neurons, and overall excitation and inhibition. It was rewarded only for one thing real flies do: the alternating tripod gait. Then we ran the same search, with the same budget, on a scrambled copy of the wiring.</p>
+      <p>So we let evolution search. It could turn one dial per developmental family of nerve-cord neurons (36 hemilineages, plus one for neurons without a label), and four more: descending neurons, motor neurons, and overall excitation and inhibition. The first search was rewarded for one thing real flies do: the alternating tripod gait. Then we ran the same search, with the same budget, on a scrambled copy of the wiring.</p>
       <p class="pull" id="pull-evo">…</p>
-      <p>That fly stepped in a perfect tripod and still walked in circles. The reason was the finding of the night: each side of the nerve cord locked its own three legs together, but the left and right sides ran at slightly different speeds and slowly drifted apart. The weak link was the coupling across the midline. Two more rounds of search, rewarding balanced strides and then left–right locking over three seconds, produced a fly that walks straight.</p>
+      <p>That fly stepped in a perfect tripod and still walked in circles. The reason, in this model: each side of the nerve cord locked its own three legs together, but the left and right sides ran at slightly different speeds and slowly drifted apart. In this model, the weak link was the coupling across the midline. Two more rounds of search, rewarding balanced strides and then left–right locking over three seconds, produced a fly that walks straight.</p>
     </div>
     <figure class="col-fig">
       <canvas id="evo-chart" aria-label="Evolution progress, real vs scrambled wiring"></canvas>
@@ -140,12 +158,12 @@
 
   <section class="evidence" id="evidence">
     <p class="kicker">The evidence</p>
-    <h2>Trained on one behaviour. Tested on things it never saw.</h2>
+    <h2>The walking fly: trained on one command, tested on things it never saw.</h2>
     <div class="cards" id="cards"></div>
     <div class="honest">
       <h3>What is real, and what is not</h3>
       <table>
-        <tr><th>Real</th><td>Every neuron and connection in the nerve cord (MaleCNS v1.0). The neuron model and its published settings (Pugliese et al. 2025). The body, its physics, and the shape of a single step, recorded from real walking flies (NeuroMechFly).</td></tr>
+        <tr><th>Real</th><td>The wiring of 14,750 nerve-cord neurons on the paths from descending neurons to the leg motor neurons (MaleCNS v1.0). The neuron model and its published settings (Pugliese et al. 2025). The body, its physics, and the shape of a single step, recorded from real walking flies (NeuroMechFly).</td></tr>
         <tr><th>Found</th><td>41 gain values chosen by evolution in three stages: tripod gait, then balanced strides, then left–right locking. They are a hypothesis about biology the map cannot show, not a measurement.</td></tr>
         <tr><th>Not modelled</th><td>Electrical synapses, neuromodulators, learning, leg sense organs, and the brain above the neck. The body's step shape comes from recordings; only timing and coordination come from the nerve cord.</td></tr>
       </table>
@@ -166,9 +184,10 @@
     </div>
     <div class="credits">
       <h3>Standing on</h3>
+      <p><b>Battery design</b>, quire, proposal 22 on grant 1fab0 (battery CC BY 4.0).</p>
       <p><b>MaleCNS v1.0</b> connectome, HHMI Janelia FlyEM, Google Research and collaborators, 2026 (CC BY 4.0).</p>
       <p><b>NeuroMechFly v2 / FlyGym</b>, EPFL Neuroengineering Laboratory (Apache-2.0).</p>
-      <p><b>Pugliese, Tuthill &amp; Brunton 2025</b>, nerve-cord rate model and the DNg100 rhythm (MIT).</p>
+      <p><b>Pugliese et al. 2025</b>, nerve-cord rate model and the DNg100 rhythm (MIT).</p>
       <p><b>MaleCNS descending-neuron function table</b>, flyconnectome/2025malecns.</p>
     </div>
   </section>

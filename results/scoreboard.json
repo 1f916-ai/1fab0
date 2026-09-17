@@ -1,0 +1,86 @@
+{
+ "about": "Plain-language summary of battery v4, read by https://1fab0.com. Every count is generated from results/verdicts-v4-summary.json (quire's run, commit 0587d7d in thechrisroberts/fly-battery); only the wording is written by hand.",
+ "battery": "v4",
+ "seal": 6052,
+ "rows": 3150,
+ "sources": [
+  "results/verdicts-v4-summary.json"
+ ],
+ "run": "Battery v4: 30 trials for the real wiring, 30 for the scrambled wiring, and 30 for the random-settings fake at each of 5 loudness levels (1,260 simulated trials in all, 3,150 stimulus runs).",
+ "passed": 3,
+ "total": 6,
+ "items": [
+  {
+   "id": 3,
+   "plain": "Signals to walk away from CO2",
+   "real": "30/30",
+   "shuffled": "4/30",
+   "random": "4–14/30",
+   "random_levels_beaten": "5 of 5",
+   "status": "pass",
+   "label": "Passes",
+   "note": "Clearly beats both fakes at all five loudness levels.",
+   "name": "CO2 avoidance, walking state"
+  },
+  {
+   "id": 5,
+   "plain": "Steering signals reverse when the scenery reverses",
+   "real": "29/30",
+   "shuffled": "0/30",
+   "random": "0–1/30",
+   "random_levels_beaten": "5 of 5",
+   "status": "pass",
+   "label": "Passes",
+   "note": "The clearest result: the fakes almost never do it. This test was rewritten for this version, because as first written half of it could not pass.",
+   "name": "optomotor turning"
+  },
+  {
+   "id": 4,
+   "plain": "Escape neuron fires for a looming object",
+   "real": "30/30",
+   "shuffled": "3/30",
+   "random": "11–24/30",
+   "random_levels_beaten": "4 of 5",
+   "status": "edge",
+   "label": "Passes at 4 of 5 levels (not at the quietest)",
+   "note": "At the quietest setting the random-settings fake escaped too (24 of 30), because the looming-detector neurons connect almost directly to the escape neuron, so random settings produce it when activity is low. It clearly beats the fakes at the other four levels.",
+   "name": "looming escape via the giant fibre"
+  },
+  {
+   "id": 1,
+   "plain": "Prefers a good smell to a bad one",
+   "real": "5/30",
+   "shuffled": "5/30",
+   "random": "0–8/30",
+   "random_levels_beaten": "0 of 5",
+   "status": "fail",
+   "label": "Fails",
+   "note": "The model shows the preference in 5 of 30 trials, the same as the scrambled wiring.",
+   "name": "odour valence ordering"
+  },
+  {
+   "id": 2,
+   "plain": "A good smell attracts less when it is too strong",
+   "real": "1/30",
+   "shuffled": "13/30",
+   "random": "8–15/30",
+   "random_levels_beaten": "0 of 5",
+   "status": "fail",
+   "label": "Fails",
+   "note": "The model shows it in 1 of 30 trials. The fakes show it more often (8 to 15 of 30).",
+   "name": "concentration reversal"
+  },
+  {
+   "id": 6,
+   "plain": "Male courtship neurons switch on at a female's taste, not a male's scent",
+   "real": "0/30",
+   "shuffled": "0/30",
+   "random": "0–4/30",
+   "random_levels_beaten": "0 of 5",
+   "status": "fail",
+   "label": "Fails",
+   "note": "The model never shows it.",
+   "name": "male courtship song pathway"
+  }
+ ]
+}

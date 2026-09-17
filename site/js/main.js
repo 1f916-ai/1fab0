@@ -243,6 +243,18 @@ function renderDials(el, dials) {
   }).join('');
 }
 
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function renderBattery(sb) {
+  $('#battery-run').textContent = sb.run;
+  $('#battery-table').innerHTML = `<div class="bt-row bt-head" role="row"><span>Behaviour</span><span>Real wiring</span><span>Scrambled fake</span><span>Random-settings fake</span><span>Result</span></div>` +
+    sb.items.map((it) => `<div class="bt-row ${esc(it.status)}" role="row">
+      <span class="bt-name">${esc(it.plain)}<small>${esc(it.note)}</small></span>
+      <span data-k="Real wiring">${esc(it.real)}</span><span data-k="Scrambled fake">${esc(it.shuffled)}</span><span data-k="Random-settings fake">${esc(it.random)}</span>
+      <span class="bt-verdict ${esc(it.status)}">${esc(it.label)}</span></div>`).join('') +
+    `<div class="bt-foot">Each count is the number of trials, out of 30, in which the predicted behaviour appeared. The random-settings fake is shown as its lowest and highest count across the five loudness levels.</div>`;
+}
+json('data/scoreboard.json').then(renderBattery).catch(() => {});
+
 function renderCards(el, cards) {
   el.innerHTML = cards.map((c) => `
     <article class="card">
