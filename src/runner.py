@@ -16,7 +16,9 @@ ann = f.read_table(f'{DATA}/body-annotations-male-cns-v1.0-minconf-0.5.feather',
 ann = ann.filter(pc.equal(ann.column('status'), 'Traced')).to_pandas().set_index('bodyId').reindex(ids)
 typ = ann['type'].fillna('').to_numpy(); side = ann['somaSide'].fillna('').to_numpy(); rec = ann['receptorType'].fillna('').to_numpy()
 def cls(spec):
-    """Resolve a stimulus/readout spec to an index array."""
+    """Resolve a stimulus/readout spec to an index array. A list of dicts is the union (v4 rotation stimuli)."""
+    if isinstance(spec, list) and spec and isinstance(spec[0], dict):
+        return np.unique(np.concatenate([cls(x) for x in spec]))
     if isinstance(spec, dict):
         if 'receptorType' in spec: m = np.char.find(rec.astype(str), spec['receptorType']) >= 0
         else: m = np.isin(typ, spec['classes'])
