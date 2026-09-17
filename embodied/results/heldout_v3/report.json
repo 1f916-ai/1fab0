@@ -1,0 +1,2176 @@
+{
+ "A_robustness_heldout_seeds": {
+  "published_params": {
+   "tripod": [
+    0.089,
+    0.248
+   ],
+   "alternation": [
+    -0.086,
+    0.381
+   ],
+   "rhythm": [
+    0.222,
+    0.117
+   ],
+   "moving": [
+    0.74,
+    0.194
+   ],
+   "freq": [
+    5.5,
+    0.645
+   ],
+   "sat": [
+    0.048,
+    0.006
+   ],
+   "score": [
+    -0.013,
+    0.141
+   ]
+  },
+  "evolved_real": {
+   "tripod": [
+    0.747,
+    0.466
+   ],
+   "alternation": [
+    0.092,
+    0.141
+   ],
+   "rhythm": [
+    0.939,
+    0.04
+   ],
+   "moving": [
+    0.97,
+    0.094
+   ],
+   "freq": [
+    6.875,
+    0.659
+   ],
+   "sat": [
+    0.0,
+    0.0
+   ],
+   "score": [
+    0.674,
+    0.236
+   ]
+  },
+  "evolved_scrambled": {
+   "tripod": [
+    0.148,
+    0.21
+   ],
+   "alternation": [
+    -0.006,
+    0.259
+   ],
+   "rhythm": [
+    0.298,
+    0.072
+   ],
+   "moving": [
+    0.95,
+    0.064
+   ],
+   "freq": [
+    5.0,
+    0.0
+   ],
+   "sat": [
+    0.002,
+    0.001
+   ],
+   "score": [
+    0.159,
+    0.13
+   ]
+  },
+  "published_params_scrambled": {
+   "tripod": [
+    -0.04,
+    0.134
+   ],
+   "alternation": [
+    -0.13,
+    0.288
+   ],
+   "rhythm": [
+    0.187,
+    0.03
+   ],
+   "moving": [
+    0.979,
+    0.034
+   ],
+   "freq": [
+    5.25,
+    0.527
+   ],
+   "sat": [
+    0.239,
+    0.002
+   ],
+   "score": [
+    -0.456,
+    0.072
+   ]
+  }
+ },
+ "B_dn_screen": {
+  "published_params": {
+   "auc_walking_vs_not": 0.593,
+   "walking_mean": 0.129,
+   "nonwalking_mean": 0.103,
+   "per_type": {
+    "DNp01": {
+     "function": "escape takeoff, electrical",
+     "walking": false,
+     "stepping": 0.115
+    },
+    "DNp20": {
+     "function": "flight (tuned to rotational flow fields), electrical",
+     "walking": false,
+     "stepping": 0.143
+    },
+    "DNp27": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.175
+    },
+    "DNb05": {
+     "function": "fast locomotion (+ wing MNs), ipsiversive steering",
+     "walking": true,
+     "stepping": 0.182
+    },
+    "DNp30": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "aSP22": {
+     "function": "courtship: proboscis extension, front leg reaching, abdomen bending",
+     "walking": false,
+     "stepping": 0.065
+    },
+    "DNp11": {
+     "function": "escape_takeoff",
+     "walking": false,
+     "stepping": 0.104
+    },
+    "DNp02": {
+     "function": "escape_takeoff",
+     "walking": false,
+     "stepping": 0.179
+    },
+    "DNg30": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg75": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.129
+    },
+    "DNp29": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp06": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.124
+    },
+    "DNp35": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.322
+    },
+    "DNp36": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg34": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge050": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.132
+    },
+    "DNg22": {
+     "function": "neuromodulatory, reproduction?",
+     "walking": false,
+     "stepping": 0.211
+    },
+    "DNc02": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNa02": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.144
+    },
+    "DNp13": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.132
+    },
+    "DNp10": {
+     "function": "landing",
+     "walking": false,
+     "stepping": 0.099
+    },
+    "DNa01": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.242
+    },
+    "DNge138": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp62": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge011": {
+     "function": "antennal grooming?",
+     "walking": false,
+     "stepping": 0.12
+    },
+    "DNb01": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp42": {
+     "function": "walking?",
+     "walking": true,
+     "stepping": 0.207
+    },
+    "DNp03": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.251
+    },
+    "MDN": {
+     "function": "backwards walking",
+     "walking": true,
+     "stepping": 0.139
+    },
+    "pMP2": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.156
+    },
+    "DNp09": {
+     "function": "defensive responses, forwards turning, halting ",
+     "walking": true,
+     "stepping": 0.149
+    },
+    "DNb02": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNa15": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.235
+    },
+    "DNge053": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.173
+    },
+    "DNb06": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.193
+    },
+    "DNa11": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.121
+    },
+    "DNa03": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.154
+    },
+    "DNp05": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.162
+    },
+    "DNp14": {
+     "function": "reproduction?",
+     "walking": false,
+     "stepping": 0.183
+    },
+    "DNg13": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.188
+    },
+    "pIP10": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.094
+    },
+    "DNp04": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.082
+    },
+    "DNd02": {
+     "function": "walking related, slow locomotion, octopamine",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNp15": {
+     "function": "steering/walking",
+     "walking": true,
+     "stepping": 0.193
+    },
+    "DNg104": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNae003": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.128
+    },
+    "DNc01": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg60": {
+     "function": "halting",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge149": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNd03": {
+     "function": "walking related,octopamine",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNp07": {
+     "function": "landing",
+     "walking": false,
+     "stepping": 0.165
+    },
+    "DNge152": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg26": {
+     "function": "terminate mating",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge142": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNa05": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.16
+    },
+    "DNp22": {
+     "function": "ocellar",
+     "walking": false,
+     "stepping": 0.127
+    },
+    "DNg14": {
+     "function": "abdominal movement",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge150": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg66": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg62": {
+     "function": "antennal grooming",
+     "walking": false,
+     "stepping": 0.125
+    },
+    "DNg97": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.146
+    },
+    "DNge172": {
+     "function": "reproduction",
+     "walking": false,
+     "stepping": 0.237
+    },
+    "DNge078": {
+     "function": "antennal grooming",
+     "walking": false,
+     "stepping": 0.171
+    },
+    "DNg11": {
+     "function": "front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg55": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNge012": {
+     "function": "antennal grooming?",
+     "walking": false,
+     "stepping": 0.079
+    },
+    "DNg02_d": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.136
+    },
+    "DNg12_d": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.212
+    },
+    "DNg02_f": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.155
+    },
+    "DNg12_a": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.167
+    },
+    "DNg12_c": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.192
+    },
+    "DNg12_h": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.158
+    },
+    "DNg02_g": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.092
+    },
+    "DNg12_e": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.217
+    },
+    "DNg02_b": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.102
+    },
+    "DNp17": {
+     "function": "steering?",
+     "walking": true,
+     "stepping": 0.094
+    },
+    "DNg02_a": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.144
+    },
+    "DNg12_g": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.151
+    },
+    "DNg12_f": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.174
+    },
+    "DNg07": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.247
+    },
+    "DNg12_b": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.149
+    },
+    "DNg02_e": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.172
+    },
+    "DNpe048": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp32": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    }
+   }
+  },
+  "evolved_real": {
+   "auc_walking_vs_not": 0.744,
+   "walking_mean": 0.188,
+   "nonwalking_mean": 0.018,
+   "per_type": {
+    "DNp01": {
+     "function": "escape takeoff, electrical",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp20": {
+     "function": "flight (tuned to rotational flow fields), electrical",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp27": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNb05": {
+     "function": "fast locomotion (+ wing MNs), ipsiversive steering",
+     "walking": true,
+     "stepping": 0.028
+    },
+    "DNp30": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "aSP22": {
+     "function": "courtship: proboscis extension, front leg reaching, abdomen bending",
+     "walking": false,
+     "stepping": 0.008
+    },
+    "DNp11": {
+     "function": "escape_takeoff",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp02": {
+     "function": "escape_takeoff",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg30": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg75": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.032
+    },
+    "DNp29": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp06": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp35": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp36": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg34": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge050": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.313
+    },
+    "DNg22": {
+     "function": "neuromodulatory, reproduction?",
+     "walking": false,
+     "stepping": 0.14
+    },
+    "DNc02": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNa02": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.002
+    },
+    "DNp13": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.441
+    },
+    "DNp10": {
+     "function": "landing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNa01": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.007
+    },
+    "DNge138": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp62": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge011": {
+     "function": "antennal grooming?",
+     "walking": false,
+     "stepping": 0.07
+    },
+    "DNb01": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp42": {
+     "function": "walking?",
+     "walking": true,
+     "stepping": 0.11
+    },
+    "DNp03": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "MDN": {
+     "function": "backwards walking",
+     "walking": true,
+     "stepping": 0.344
+    },
+    "pMP2": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp09": {
+     "function": "defensive responses, forwards turning, halting ",
+     "walking": true,
+     "stepping": 0.678
+    },
+    "DNb02": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNa15": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge053": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNb06": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.184
+    },
+    "DNa11": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.244
+    },
+    "DNa03": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.117
+    },
+    "DNp05": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp14": {
+     "function": "reproduction?",
+     "walking": false,
+     "stepping": 0.015
+    },
+    "DNg13": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.917
+    },
+    "pIP10": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp04": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNd02": {
+     "function": "walking related, slow locomotion, octopamine",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNp15": {
+     "function": "steering/walking",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNg104": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNae003": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNc01": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg60": {
+     "function": "halting",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge149": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNd03": {
+     "function": "walking related,octopamine",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNp07": {
+     "function": "landing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge152": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg26": {
+     "function": "terminate mating",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge142": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNa05": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp22": {
+     "function": "ocellar",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg14": {
+     "function": "abdominal movement",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge150": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg66": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg62": {
+     "function": "antennal grooming",
+     "walking": false,
+     "stepping": 0.108
+    },
+    "DNg97": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.966
+    },
+    "DNge172": {
+     "function": "reproduction",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge078": {
+     "function": "antennal grooming",
+     "walking": false,
+     "stepping": 0.063
+    },
+    "DNg11": {
+     "function": "front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg55": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNge012": {
+     "function": "antennal grooming?",
+     "walking": false,
+     "stepping": 0.001
+    },
+    "DNg02_d": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_d": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg02_f": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_a": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_c": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.143
+    },
+    "DNg12_h": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg02_g": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_e": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.016
+    },
+    "DNg02_b": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp17": {
+     "function": "steering?",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNg02_a": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_g": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_f": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg07": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.161
+    },
+    "DNg12_b": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg02_e": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNpe048": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp32": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    }
+   }
+  },
+  "evolved_scrambled": {
+   "auc_walking_vs_not": 0.625,
+   "walking_mean": 0.215,
+   "nonwalking_mean": 0.123,
+   "per_type": {
+    "DNp01": {
+     "function": "escape takeoff, electrical",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp20": {
+     "function": "flight (tuned to rotational flow fields), electrical",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp27": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNb05": {
+     "function": "fast locomotion (+ wing MNs), ipsiversive steering",
+     "walking": true,
+     "stepping": 0.39
+    },
+    "DNp30": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "aSP22": {
+     "function": "courtship: proboscis extension, front leg reaching, abdomen bending",
+     "walking": false,
+     "stepping": 0.485
+    },
+    "DNp11": {
+     "function": "escape_takeoff",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp02": {
+     "function": "escape_takeoff",
+     "walking": false,
+     "stepping": 0.399
+    },
+    "DNg30": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg75": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.315
+    },
+    "DNp29": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp06": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.379
+    },
+    "DNp35": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.38
+    },
+    "DNp36": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg34": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge050": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.317
+    },
+    "DNg22": {
+     "function": "neuromodulatory, reproduction?",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNc02": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNa02": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.213
+    },
+    "DNp13": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.356
+    },
+    "DNp10": {
+     "function": "landing",
+     "walking": false,
+     "stepping": 0.337
+    },
+    "DNa01": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.249
+    },
+    "DNge138": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp62": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge011": {
+     "function": "antennal grooming?",
+     "walking": false,
+     "stepping": 0.385
+    },
+    "DNb01": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp42": {
+     "function": "walking?",
+     "walking": true,
+     "stepping": 0.308
+    },
+    "DNp03": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "MDN": {
+     "function": "backwards walking",
+     "walking": true,
+     "stepping": 0.292
+    },
+    "pMP2": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.296
+    },
+    "DNp09": {
+     "function": "defensive responses, forwards turning, halting ",
+     "walking": true,
+     "stepping": 0.31
+    },
+    "DNb02": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNa15": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.293
+    },
+    "DNge053": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNb06": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.244
+    },
+    "DNa11": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.375
+    },
+    "DNa03": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.284
+    },
+    "DNp05": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.288
+    },
+    "DNp14": {
+     "function": "reproduction?",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg13": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.295
+    },
+    "pIP10": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.328
+    },
+    "DNp04": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.356
+    },
+    "DNd02": {
+     "function": "walking related, slow locomotion, octopamine",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNp15": {
+     "function": "steering/walking",
+     "walking": true,
+     "stepping": 0.267
+    },
+    "DNg104": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNae003": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.384
+    },
+    "DNc01": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg60": {
+     "function": "halting",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge149": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNd03": {
+     "function": "walking related,octopamine",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNp07": {
+     "function": "landing",
+     "walking": false,
+     "stepping": 0.483
+    },
+    "DNge152": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg26": {
+     "function": "terminate mating",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge142": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNa05": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.213
+    },
+    "DNp22": {
+     "function": "ocellar",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg14": {
+     "function": "abdominal movement",
+     "walking": false,
+     "stepping": 0.312
+    },
+    "DNge150": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg66": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg62": {
+     "function": "antennal grooming",
+     "walking": false,
+     "stepping": 0.279
+    },
+    "DNg97": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.268
+    },
+    "DNge172": {
+     "function": "reproduction",
+     "walking": false,
+     "stepping": 0.35
+    },
+    "DNge078": {
+     "function": "antennal grooming",
+     "walking": false,
+     "stepping": 0.32
+    },
+    "DNg11": {
+     "function": "front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg55": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNge012": {
+     "function": "antennal grooming?",
+     "walking": false,
+     "stepping": 0.31
+    },
+    "DNg02_d": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.371
+    },
+    "DNg12_d": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg02_f": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_a": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.315
+    },
+    "DNg12_c": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_h": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg02_g": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.18
+    },
+    "DNg12_e": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.31
+    },
+    "DNg02_b": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp17": {
+     "function": "steering?",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNg02_a": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_g": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_f": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg07": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg12_b": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg02_e": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNpe048": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp32": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    }
+   }
+  },
+  "published_params_scrambled": {
+   "auc_walking_vs_not": 0.606,
+   "walking_mean": 0.167,
+   "nonwalking_mean": 0.13,
+   "per_type": {
+    "DNp01": {
+     "function": "escape takeoff, electrical",
+     "walking": false,
+     "stepping": 0.157
+    },
+    "DNp20": {
+     "function": "flight (tuned to rotational flow fields), electrical",
+     "walking": false,
+     "stepping": 0.179
+    },
+    "DNp27": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.205
+    },
+    "DNb05": {
+     "function": "fast locomotion (+ wing MNs), ipsiversive steering",
+     "walking": true,
+     "stepping": 0.274
+    },
+    "DNp30": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "aSP22": {
+     "function": "courtship: proboscis extension, front leg reaching, abdomen bending",
+     "walking": false,
+     "stepping": 0.149
+    },
+    "DNp11": {
+     "function": "escape_takeoff",
+     "walking": false,
+     "stepping": 0.221
+    },
+    "DNp02": {
+     "function": "escape_takeoff",
+     "walking": false,
+     "stepping": 0.154
+    },
+    "DNg30": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg75": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.177
+    },
+    "DNp29": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp06": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.15
+    },
+    "DNp35": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.226
+    },
+    "DNp36": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg34": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge050": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.117
+    },
+    "DNg22": {
+     "function": "neuromodulatory, reproduction?",
+     "walking": false,
+     "stepping": 0.194
+    },
+    "DNc02": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNa02": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.299
+    },
+    "DNp13": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.172
+    },
+    "DNp10": {
+     "function": "landing",
+     "walking": false,
+     "stepping": 0.198
+    },
+    "DNa01": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.173
+    },
+    "DNge138": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp62": {
+     "function": "feeding/hunger",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge011": {
+     "function": "antennal grooming?",
+     "walking": false,
+     "stepping": 0.202
+    },
+    "DNb01": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp42": {
+     "function": "walking?",
+     "walking": true,
+     "stepping": 0.196
+    },
+    "DNp03": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.21
+    },
+    "MDN": {
+     "function": "backwards walking",
+     "walking": true,
+     "stepping": 0.241
+    },
+    "pMP2": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.226
+    },
+    "DNp09": {
+     "function": "defensive responses, forwards turning, halting ",
+     "walking": true,
+     "stepping": 0.148
+    },
+    "DNb02": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNa15": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.198
+    },
+    "DNge053": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.163
+    },
+    "DNb06": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.159
+    },
+    "DNa11": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.228
+    },
+    "DNa03": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.228
+    },
+    "DNp05": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.207
+    },
+    "DNp14": {
+     "function": "reproduction?",
+     "walking": false,
+     "stepping": 0.215
+    },
+    "DNg13": {
+     "function": "turning during forwards walking",
+     "walking": true,
+     "stepping": 0.279
+    },
+    "pIP10": {
+     "function": "song",
+     "walking": false,
+     "stepping": 0.189
+    },
+    "DNp04": {
+     "function": "escape takeoff",
+     "walking": false,
+     "stepping": 0.259
+    },
+    "DNd02": {
+     "function": "walking related, slow locomotion, octopamine",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNp15": {
+     "function": "steering/walking",
+     "walking": true,
+     "stepping": 0.154
+    },
+    "DNg104": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNae003": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.274
+    },
+    "DNc01": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg60": {
+     "function": "halting",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge149": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNd03": {
+     "function": "walking related,octopamine",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNp07": {
+     "function": "landing",
+     "walking": false,
+     "stepping": 0.17
+    },
+    "DNge152": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg26": {
+     "function": "terminate mating",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNge142": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNa05": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.228
+    },
+    "DNp22": {
+     "function": "ocellar",
+     "walking": false,
+     "stepping": 0.208
+    },
+    "DNg14": {
+     "function": "abdominal movement",
+     "walking": false,
+     "stepping": 0.172
+    },
+    "DNge150": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg66": {
+     "function": "octopamine",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg62": {
+     "function": "antennal grooming",
+     "walking": false,
+     "stepping": 0.193
+    },
+    "DNg97": {
+     "function": "walking",
+     "walking": true,
+     "stepping": 0.214
+    },
+    "DNge172": {
+     "function": "reproduction",
+     "walking": false,
+     "stepping": 0.226
+    },
+    "DNge078": {
+     "function": "antennal grooming",
+     "walking": false,
+     "stepping": 0.16
+    },
+    "DNg11": {
+     "function": "front leg rubbing",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNg55": {
+     "function": "steering",
+     "walking": true,
+     "stepping": 0.0
+    },
+    "DNge012": {
+     "function": "antennal grooming?",
+     "walking": false,
+     "stepping": 0.259
+    },
+    "DNg02_d": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.151
+    },
+    "DNg12_d": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.225
+    },
+    "DNg02_f": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.222
+    },
+    "DNg12_a": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.185
+    },
+    "DNg12_c": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.161
+    },
+    "DNg12_h": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.163
+    },
+    "DNg02_g": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.239
+    },
+    "DNg12_e": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.154
+    },
+    "DNg02_b": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.248
+    },
+    "DNp17": {
+     "function": "steering?",
+     "walking": true,
+     "stepping": 0.193
+    },
+    "DNg02_a": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.178
+    },
+    "DNg12_g": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.18
+    },
+    "DNg12_f": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.165
+    },
+    "DNg07": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.176
+    },
+    "DNg12_b": {
+     "function": "ventral head grooming and front leg rubbing",
+     "walking": false,
+     "stepping": 0.237
+    },
+    "DNg02_e": {
+     "function": "flight",
+     "walking": false,
+     "stepping": 0.147
+    },
+    "DNpe048": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    },
+    "DNp32": {
+     "function": "neuromodulatory",
+     "walking": false,
+     "stepping": 0.0
+    }
+   }
+  }
+ },
+ "C_dna02_turning": {
+  "published_params": {
+   "fraction_ipsilateral_smaller": 0.5,
+   "trials": [
+    {
+     "seed": 100,
+     "side": "L",
+     "left": 17.289670944213867,
+     "right": 63.937259674072266,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 100,
+     "side": "R",
+     "left": 23.358802795410156,
+     "right": 114.86627960205078,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 101,
+     "side": "L",
+     "left": 13.987326622009277,
+     "right": 56.66450881958008,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 101,
+     "side": "R",
+     "left": 102.7544937133789,
+     "right": 191.55055236816406,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 102,
+     "side": "L",
+     "left": 35.79525375366211,
+     "right": 90.58121490478516,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 102,
+     "side": "R",
+     "left": 94.4393081665039,
+     "right": 99.08943939208984,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 103,
+     "side": "L",
+     "left": 27.26375389099121,
+     "right": 70.74700164794922,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 103,
+     "side": "R",
+     "left": 93.87905883789062,
+     "right": 160.20997619628906,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 104,
+     "side": "L",
+     "left": 14.516899108886719,
+     "right": 76.48143005371094,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 104,
+     "side": "R",
+     "left": 99.68453216552734,
+     "right": 116.76150512695312,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    }
+   ]
+  },
+  "evolved_real": {
+   "fraction_ipsilateral_smaller": 0.8,
+   "trials": [
+    {
+     "seed": 100,
+     "side": "L",
+     "left": 8.771431922912598,
+     "right": 80.04705810546875,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 100,
+     "side": "R",
+     "left": 94.59452056884766,
+     "right": 60.95247268676758,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 101,
+     "side": "L",
+     "left": 67.96138000488281,
+     "right": 67.78723907470703,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 101,
+     "side": "R",
+     "left": 93.69186401367188,
+     "right": 65.70948028564453,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 102,
+     "side": "L",
+     "left": 7.057815074920654,
+     "right": 77.24275970458984,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 102,
+     "side": "R",
+     "left": 78.76783752441406,
+     "right": 73.96687316894531,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 103,
+     "side": "L",
+     "left": 70.8211669921875,
+     "right": 68.8362045288086,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 103,
+     "side": "R",
+     "left": 76.0526123046875,
+     "right": 63.8996467590332,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 104,
+     "side": "L",
+     "left": 73.44617462158203,
+     "right": 83.71398162841797,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 104,
+     "side": "R",
+     "left": 78.4043960571289,
+     "right": 67.00945281982422,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    }
+   ]
+  },
+  "evolved_scrambled": {
+   "fraction_ipsilateral_smaller": 0.4,
+   "trials": [
+    {
+     "seed": 100,
+     "side": "L",
+     "left": 32.15482711791992,
+     "right": 59.5997314453125,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 100,
+     "side": "R",
+     "left": 46.37516784667969,
+     "right": 49.34565353393555,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 101,
+     "side": "L",
+     "left": 37.46132278442383,
+     "right": 37.703125,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 101,
+     "side": "R",
+     "left": 49.28810501098633,
+     "right": 35.625606536865234,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 102,
+     "side": "L",
+     "left": 77.14553833007812,
+     "right": 55.88584518432617,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 102,
+     "side": "R",
+     "left": 35.20030212402344,
+     "right": 87.48155975341797,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 103,
+     "side": "L",
+     "left": 47.65898132324219,
+     "right": 45.251285552978516,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 103,
+     "side": "R",
+     "left": 43.3858642578125,
+     "right": 51.19707107543945,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 104,
+     "side": "L",
+     "left": 51.6298828125,
+     "right": 55.84260177612305,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 104,
+     "side": "R",
+     "left": 32.42097091674805,
+     "right": 44.82160568237305,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    }
+   ]
+  },
+  "published_params_scrambled": {
+   "fraction_ipsilateral_smaller": 0.5,
+   "trials": [
+    {
+     "seed": 100,
+     "side": "L",
+     "left": 56.180721282958984,
+     "right": 72.10430145263672,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 100,
+     "side": "R",
+     "left": 50.2607307434082,
+     "right": 65.37247467041016,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 101,
+     "side": "L",
+     "left": 38.69818878173828,
+     "right": 105.25505828857422,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 101,
+     "side": "R",
+     "left": 53.61309814453125,
+     "right": 86.57028198242188,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 102,
+     "side": "L",
+     "left": 90.37570190429688,
+     "right": 51.27294921875,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 102,
+     "side": "R",
+     "left": 61.4727897644043,
+     "right": 47.19389343261719,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 103,
+     "side": "L",
+     "left": 60.443603515625,
+     "right": 80.39550018310547,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 103,
+     "side": "R",
+     "left": 32.9345817565918,
+     "right": 102.18270874023438,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    },
+    {
+     "seed": 104,
+     "side": "L",
+     "left": 57.00654983520508,
+     "right": 74.03705596923828,
+     "ipsi_smaller": true,
+     "n_dna02": 1
+    },
+    {
+     "seed": 104,
+     "side": "R",
+     "left": 67.50214385986328,
+     "right": 90.53766632080078,
+     "ipsi_smaller": false,
+     "n_dna02": 1
+    }
+   ]
+  }
+ }
+}
