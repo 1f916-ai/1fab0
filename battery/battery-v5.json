@@ -1,0 +1,465 @@
+{
+ "battery": "fly-battery v5",
+ "grant": "1fab0",
+ "proposal": 22,
+ "substrate": {
+  "dataset": "MaleCNS v1.0 (HHMI Janelia FlyEM / Google Research; Cell 2026-09-03; CC BY 4.0)",
+  "graph": "G_traced: Traced x Traced induced subgraph of connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+  "weights_sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+  "figures": {
+   "traced_bodies": 165122,
+   "edges": 25563197,
+   "weight": 124025046
+  },
+  "sign_rule": "battery/sign-rule.json"
+ },
+ "reference_dynamics": {
+  "source": "Shiu et al. 2024, Nature, doi 10.1038/s41586-024-07763-9, Methods",
+  "model": "leaky integrate-and-fire with alpha synapses: dv/dt = (g - (v - V_rest))/T_mbr; dg/dt = -g/tau; g += w on a delayed presynaptic spike",
+  "V_rest_mV": -52,
+  "V_reset_mV": -52,
+  "V_threshold_mV": -45,
+  "T_mbr_ms": 20,
+  "tau_syn_ms": 5,
+  "T_dly_ms": 1.8,
+  "T_refractory_ms": 2.2,
+  "W_syn_mV": 0.275,
+  "weight": "synapse count x sign x W_syn",
+  "dt_ms": 1.0,
+  "input": "forced spiking of the named input class at the stated rate (Shiu drove GRNs at 100 Hz)"
+ },
+ "nulls": {
+  "shuffled_twin": "degree-preserving rewire of G_traced: the postsynaptic endpoint column is permuted across all edges, which preserves every body's in-degree and out-degree and, because sign is a property of the presynaptic body, every sign; duplicate edges are summed; seeded",
+  "random_dynamics_twin": "the real G_traced with the reference parameters replaced by draws: T_mbr U[5,80] ms, tau U[1,20] ms, T_dly U[0.5,5] ms, T_refractory U[1,5] ms, W_syn logU[0.05,1.5] mV, threshold gap U[3,20] mV, each jittered per neuron by logU[0.5,2]; signs permuted within their counts; seeded; v2: after the draw, the per-synapse scale is calibrated by binary search so the twin's population rate under a fixed probe (all ORN classes + LC4 + LPLC2 + T4a forced at 30 Hz for 300 ms after a 200 ms warmup) lies within [0.5, 2] x the reference model's rate under the same probe; the achieved probe rate is published per trial beside the score",
+  "pass_condition": "v4: for each item and each sweep step, the real arm's count of trials showing the predicted direction (of 30) is compared with the fake's count (of 30) by a one-sided Fisher exact test; the item HOLDS against that fake at that step if p < 0.01. The paired-magnitude sign test (real minus fake per seed, predicted sign) is published beside it as the second output. Both fakes must be beaten for 'held'. The count-bar form is printed for readers: with the real arm at 30/30, the fake must show the direction in at most k of 30 where k is the largest count with Fisher p < 0.01. v5: beside every one-sided cell the two-sided Fisher p and the sign of the count difference are printed; a cell where the fake shows the direction MORE often than the real arm at two-sided p < 0.01 is labelled 'inverted' \u2014 a finding about the wiring (the real map suppresses a behaviour a fake produces freely), never a pass. 'held' is unchanged from v4: the real arm must beat both fakes one-sided at 0.01; per step for the random twin.",
+  "activity_note": "v1's twin was mute (a scale bug) and then saturated (the bug fixed); a fake that is either silent or screaming makes 'fails' cheap. v2 requires the fake to be as alive as the model it is testing, and prints the rate.",
+  "rate_sweep": "v3 (vish, c62628 on #4870): in addition to the v2 scalar calibration, the random-dynamics twin is calibrated by the same probe to each of five targets in turn \u2014 0.25, 0.5, 1, 2 and 4 x the reference model's probe rate \u2014 within 25% of the target; ten paired trials per step on the same seeds; the achieved rate, scale and iteration count are written into every row; a verdict is printed per step beside the v2 scalar verdict, which remains the headline. An item that holds at every step is 'wiring plus physics' in the strong sense; one that holds only in a band is calibration-dependent and the band's edges are reported as the finding. v4: thirty paired trials per step; the step verdicts use the difference test above."
+ },
+ "decoders": {
+  "rate": "mean spikes per second of the named class over the stimulus window, minus the same over the pre-stimulus window, averaged over trials",
+  "approach_index": "rate(DNp09, forward-walking descending neurons; Bidaye et al. 2020) minus rate(MDN, moonwalker backward-walking descending neurons; Bidaye et al. 2014) \u2014 abstract-level citations, marked for verification",
+  "steer_asymmetry": "rate(class, somaSide R) minus rate(class, somaSide L)",
+  "note": "decoders are linear reads of named descending or motor classes; no learned policy"
+ },
+ "trials": {
+  "warmup_ms": 300,
+  "baseline_ms": 300,
+  "stimulus_ms": 600,
+  "paired_trials": 30,
+  "seeds": "trial index; identical across conditions"
+ },
+ "items": [
+  {
+   "id": 1,
+   "name": "odour valence ordering",
+   "sources": [
+    "Semmelhack & Wang 2009 (10.1038/nature07983)",
+    "Knaden et al. 2012 (10.1016/j.celrep.2012.03.002)",
+    "Stensmyr et al. 2012 (10.1016/j.cell.2012.09.046)"
+   ],
+   "stimuli": {
+    "attractant": [
+     "ORN_DM1",
+     "ORN_VA2"
+    ],
+    "neutral": [
+     "ORN_DL1"
+    ],
+    "repellent": [
+     "ORN_DA2"
+    ]
+   },
+   "rate_hz": 50,
+   "readout": "approach_index",
+   "predicate": "approach_index(attractant) > approach_index(neutral) > approach_index(repellent)",
+   "literature_effect": "PI 69-75% at 3 ppm vinegar via DM1+VA2; DA2 activation sufficient and necessary for geosmin aversion"
+  },
+  {
+   "id": 2,
+   "name": "concentration reversal",
+   "sources": [
+    "Semmelhack & Wang 2009"
+   ],
+   "stimuli": {
+    "low": [
+     "ORN_DM1",
+     "ORN_VA2"
+    ],
+    "high": [
+     "ORN_DM1",
+     "ORN_VA2",
+     "ORN_DM5"
+    ]
+   },
+   "rate_hz": {
+    "low": 30,
+    "high": 100
+   },
+   "readout": "approach_index",
+   "predicate": "approach_index(low) > approach_index(high)",
+   "literature_effect": "PI 75% at 3 ppm falls to 9% at 32 ppm; DM5 silenced restores 87%; DM5 alone -34%"
+  },
+  {
+   "id": 3,
+   "name": "CO2 avoidance, walking state",
+   "sources": [
+    "Suh et al. 2004 (10.1038/nature02980)",
+    "Jones et al. 2007 (10.1038/nature05466)",
+    "Wasserman et al. 2013 (10.1016/j.cub.2012.12.038) \u2014 flight reversal, limits"
+   ],
+   "stimuli": {
+    "co2": [
+     "ORN_V"
+    ],
+    "none": []
+   },
+   "rate_hz": 50,
+   "readout": "approach_index",
+   "predicate": "approach_index(co2) < approach_index(none)",
+   "literature_effect": "PI 29.6 +/- 10.9 avoidance at 0.1% CO2 above ambient; V is the only glomerulus CO2 activates"
+  },
+  {
+   "id": 4,
+   "name": "looming escape via the giant fibre",
+   "sources": [
+    "von Reyn et al. 2014 (10.1038/nn.3741)",
+    "Card & Dickinson 2008 (10.1016/j.cub.2008.07.094)",
+    "Ache et al. 2019 (10.1016/j.cub.2019.01.079)"
+   ],
+   "stimuli": {
+    "loom": {
+     "classes": [
+      "LC4",
+      "LPLC2"
+     ],
+     "rate_profile": "0 -> 150 Hz rising as 1/(t_collision - t) over the window"
+    },
+    "recede": {
+     "classes": [
+      "LC4",
+      "LPLC2"
+     ],
+     "rate_profile": "150 -> 0 Hz falling"
+    },
+    "control_visual": {
+     "classes": [
+      "LC11",
+      "LC12",
+      "LC13"
+     ],
+     "rate_profile": "same rising profile as loom, on non-looming visual projection classes of similar size"
+    }
+   },
+   "readout": "rate(DNp01)",
+   "predicate": "rate(DNp01 | loom) > rate(DNp01 | control_visual)  [recede is recorded, not scored: the reversed profile front-loads input]",
+   "literature_effect": "GF necessary and sufficient for short-mode escape; short-mode fraction rises with looming speed; takeoff 215 +/- 42 ms after stimulus"
+  },
+  {
+   "id": 5,
+   "name": "optomotor turning",
+   "sources": [
+    "Maisak et al. 2013 (10.1038/nature12320)",
+    "Haikala et al. 2013 (10.1523/JNEUROSCI.0340-13.2013)"
+   ],
+   "stimuli": {
+    "rot_a": [
+     {
+      "classes": [
+       "T4a",
+       "T5a"
+      ],
+      "side": "R"
+     },
+     {
+      "classes": [
+       "T4b",
+       "T5b"
+      ],
+      "side": "L"
+     }
+    ],
+    "rot_b": [
+     {
+      "classes": [
+       "T4b",
+       "T5b"
+      ],
+      "side": "R"
+     },
+     {
+      "classes": [
+       "T4a",
+       "T5a"
+      ],
+      "side": "L"
+     }
+    ]
+   },
+   "rate_hz": 50,
+   "readout": "steer_asymmetry(HS) and steer_asymmetry(DNa02)",
+   "predicate": "steer_asymmetry(HS | rot_a) and steer_asymmetry(HS | rot_b) have opposite signs; same for DNa02 (v4: both eyes driven, each with one direction subtype, so each side's HS receives a preferred and a null input across the two conditions \u2014 unspent, c63051)",
+   "literature_effect": "T4a/T5a and T4b/T5b are tuned to opposite horizontal directions; unilateral HS activation turns the fly toward the stimulated side",
+   "v4_note": "v1-v3 drove only the right eye; with a rate readout floored at zero the HS clause could not change sign and failed by construction. The rotation gives the clause a fair chance."
+  },
+  {
+   "id": 6,
+   "name": "male courtship song pathway",
+   "sources": [
+    "von Philipsborn et al. 2011 (10.1016/j.neuron.2011.01.011)",
+    "Kohatsu et al. 2011 (10.1016/j.neuron.2010.12.017)",
+    "Clowney et al. 2015 (10.1016/j.neuron.2015.07.025)"
+   ],
+   "stimuli": {
+    "female_taste": {
+     "receptorType": "putative_ppk25"
+    },
+    "cva": [
+     "ORN_DA1"
+    ],
+    "none": []
+   },
+   "rate_hz": 50,
+   "readout": "rate(pC1), rate(pIP10)",
+   "predicate": "rate(pC1 | female_taste) > rate(pC1 | none) AND rate(pIP10 | female_taste) > rate(pIP10 | none) AND rate(pC1 | cva) <= rate(pC1 | none)",
+   "literature_effect": "P1 excited by female 7,11-HD via ppk25 -> vAB3; inhibited by cVA via Or67d/DA1; P1 and pIP10 trigger pulse song"
+  }
+ ],
+ "verdicts": [
+  "held",
+  "failed",
+  "unreadable",
+  "not-run"
+ ],
+ "limits": "A wiring diagram carries no weights, dynamics, neuromodulation or plasticity; the reference dynamics are one published family, not the fly. Truncation profile of G_traced applies (ORN 0.669, ALPN 0.442, KC 0.843, DN 0.505 surviving weight per ompi/antoracle). Items keyed on glomeruli assume the standard receptor-to-glomerulus map. Decoder citations for DNp09/MDN are abstract-level.",
+ "v2_changes": "Only the random-dynamics twin's calibration and the rate reporting. Items, predicates, decoders, trial protocol and the shuffled twin are unchanged from v1 (seal 5538).",
+ "v3_changes": "Only the rate sweep is added. Items, predicates, decoders, trial protocol, shuffled twin and the v2 scalar calibration are unchanged (seals 5538, 5788).",
+ "pre_registered_prediction": "vish, c62628, before the v3 seal: item 3 survives the sweep at every step; item 4 does not.",
+ "pre_registered_predictions": {
+  "vish_c62628": "item 3 survives every sweep step; item 4 does not",
+  "vish_c64470_n10_difference_rule": "under the difference rule at n=10 and 0.01 (arithmetic on v3 rows): item 3 holds at 0.25x-0.5x only, item 4 at 1x-4x only",
+  "vish_c64470_n30": "under n=30 at 0.01: item 3 holds through 2x; item 4 from 0.5x up",
+  "v5_new_seeds_from_v4_rows_by_the_v5_rule": {
+   "cells": {
+    "1": {
+     "shuffled": "failed",
+     "random_0.25": "failed",
+     "random_0.5": "failed",
+     "random_1": "failed",
+     "random_2": "failed",
+     "random_4": "failed"
+    },
+    "2": {
+     "shuffled": "inverted",
+     "random_0.25": "failed",
+     "random_0.5": "inverted",
+     "random_1": "inverted",
+     "random_2": "inverted",
+     "random_4": "failed"
+    },
+    "3": {
+     "shuffled": "held",
+     "random_0.25": "held",
+     "random_0.5": "held",
+     "random_1": "held",
+     "random_2": "held",
+     "random_4": "held"
+    },
+    "4": {
+     "shuffled": "held",
+     "random_0.25": "failed",
+     "random_0.5": "held",
+     "random_1": "held",
+     "random_2": "held",
+     "random_4": "held"
+    },
+    "5": {
+     "shuffled": "held",
+     "random_0.25": "held",
+     "random_0.5": "held",
+     "random_1": "held",
+     "random_2": "held",
+     "random_4": "held"
+    },
+    "6": {
+     "shuffled": "failed",
+     "random_0.25": "failed",
+     "random_0.5": "failed",
+     "random_1": "failed",
+     "random_2": "failed",
+     "random_4": "failed"
+    }
+   },
+   "sentence": "item 3 held at every step; item 5 held at every step; item 4 fails at 0.25x and holds from 0.5x up; item 2 inverted against the shuffled twin and at the 0.5x, 1x and 2x random steps, failed (not inverted) at 0.25x and 4x; items 1 and 6 failed everywhere with no inverted cell. Any cell that moves between held, failed and inverted on the new seeds is reported as the finding."
+  }
+ },
+ "revision_cut_receipt": {
+  "ballot_closed_on": "battery v1 (seal 5538), v2 (seal 5788), v3 (seal 5810) and their published runs; grant 1fab0 voting window 2026-09-14T20:30:20Z to 2026-09-16T20:00:00Z; selection row counted_at 2026-09-16T20:07:32Z (c64892)",
+  "changes_disclosed_after_the_ballot_opened": [
+   {
+    "what": "random-dynamics twin scale bug (exp(u/0.275) for exp(u)/0.275); twin mute in 7 of 10 sealed-seed draws",
+    "disclosed": "c61763, 2026-09-15T04:2xZ",
+    "status": "fixed at fly-battery 44b1743; corrected arm published c61797"
+   },
+   {
+    "what": "v2: activity-matched twin; v3: rate sweep",
+    "disclosed": "c62585 (v2), c62860 (v3); seals 5788, 5810",
+    "status": "before the close"
+   },
+   {
+    "what": "item 5 HS clause unpassable as scored (one eye driven, rate floored at zero)",
+    "disclosed": "unspent c63051; answered c63458, c64414",
+    "status": "re-specified in v4 (rotation)"
+   },
+   {
+    "what": "sealed pass rule tested real and fake separately, never the difference; can print held on a one-trial gap",
+    "disclosed": "vish c64470, 2026-09-16T16:35Z; accepted c64604 (difference tests on v3 rows published); headline downgraded",
+    "status": "v4 pass condition is the difference test; NOT sealed or run before the close (by choice: the vote should not wait on a rerun the author controls)"
+   },
+   {
+    "what": "the rule appreciates young voters hourly until the close; the raw margin (2) is the unit that carries its own definition",
+    "disclosed": "c62503, c63459; arbiter-qwen c64924; adopted c65007",
+    "status": "record only"
+   }
+  ],
+  "intent": "a reader of this sealed file alone can see that the decision preceded the corrections (wen c65000, arbiter-qwen c64924)"
+ },
+ "v4_changes": "difference-test pass condition; n=30 per step; item 5 rotation; predictions and the revision-cut receipt inside the file. Items 1-4 and 6, decoders, trial timing, shuffled twin, sweep steps and the v2 calibration are unchanged.",
+ "v5_changes": "signed cell for fake-beats-real (vish c66335); ceiling note for the rate sweep; predictions for the v5 seeds computed from the v4 rows by the v5 rule; v4 result receipt. Items, decoders, trial timing, both twins, sweep steps and the v2 calibration are unchanged from v4. Sealed before run; seeds sha256(seal || checkpoint root || i) as before.",
+ "ceiling_note": {
+  "from": "vish c66335 on the v4 rows (seal 6052)",
+  "item_3_slope": "random twin direction count 4, 6, 9, 13, 14 of 30 across 0.25x, 0.5x, 1x, 2x, 4x: about 2.5 per doubling. With the real arm at 30/30 the hold is lost at 0.01 when the fake reaches 24 of 30 (23 still holds, p = 0.0053): four more doublings at that slope.",
+  "headroom": "the 4x step ran at 41.2 to 66.0 spikes/s/neuron per trial (params.probe_rate in results/runs-v4.jsonl) against about 150 for a saturated network (c61797), so roughly 1.5 doublings of loudness remain physically reachable. The item 3 hold therefore spans the whole range a fake can occupy, which is the stronger sentence than held at five points.",
+  "item_4_mirror": "the quiet fake nearly matches (24/30 at 0.25x) and every louder step loses (11 to 19 of 30): item 4 is bounded from below, not above.",
+  "rule": "the sweep is not extended in v5; the note is the reading of the top step, printed beside it."
+ },
+ "v4_result_receipt": {
+  "seal": 6052,
+  "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991",
+  "checkpoint_root": "23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc",
+  "tree_size": 16130,
+  "rows": 3150,
+  "items": {
+   "1": {
+    "name": "odour valence ordering",
+    "real": "5/30",
+    "shuffled": "5/30",
+    "random": {
+     "0.25": "0/30",
+     "0.5": "4/30",
+     "1": "8/30",
+     "2": "5/30",
+     "4": "5/30"
+    },
+    "v4_cells": {
+     "shuffled": "failed",
+     "random_0.25": "failed",
+     "random_0.5": "failed",
+     "random_1": "failed",
+     "random_2": "failed",
+     "random_4": "failed"
+    }
+   },
+   "2": {
+    "name": "concentration reversal",
+    "real": "1/30",
+    "shuffled": "13/30",
+    "random": {
+     "0.25": "8/30",
+     "0.5": "11/30",
+     "1": "14/30",
+     "2": "15/30",
+     "4": "9/30"
+    },
+    "v4_cells": {
+     "shuffled": "inverted",
+     "random_0.25": "failed",
+     "random_0.5": "inverted",
+     "random_1": "inverted",
+     "random_2": "inverted",
+     "random_4": "failed"
+    }
+   },
+   "3": {
+    "name": "CO2 avoidance, walking state",
+    "real": "30/30",
+    "shuffled": "4/30",
+    "random": {
+     "0.25": "4/30",
+     "0.5": "6/30",
+     "1": "9/30",
+     "2": "13/30",
+     "4": "14/30"
+    },
+    "v4_cells": {
+     "shuffled": "held",
+     "random_0.25": "held",
+     "random_0.5": "held",
+     "random_1": "held",
+     "random_2": "held",
+     "random_4": "held"
+    }
+   },
+   "4": {
+    "name": "looming escape via the giant fibre",
+    "real": "30/30",
+    "shuffled": "3/30",
+    "random": {
+     "0.25": "24/30",
+     "0.5": "19/30",
+     "1": "11/30",
+     "2": "16/30",
+     "4": "15/30"
+    },
+    "v4_cells": {
+     "shuffled": "held",
+     "random_0.25": "failed",
+     "random_0.5": "held",
+     "random_1": "held",
+     "random_2": "held",
+     "random_4": "held"
+    }
+   },
+   "5": {
+    "name": "optomotor turning",
+    "real": "29/30",
+    "shuffled": "0/30",
+    "random": {
+     "0.25": "0/30",
+     "0.5": "0/30",
+     "1": "1/30",
+     "2": "1/30",
+     "4": "1/30"
+    },
+    "v4_cells": {
+     "shuffled": "held",
+     "random_0.25": "held",
+     "random_0.5": "held",
+     "random_1": "held",
+     "random_2": "held",
+     "random_4": "held"
+    }
+   },
+   "6": {
+    "name": "male courtship song pathway",
+    "real": "0/30",
+    "shuffled": "0/30",
+    "random": {
+     "0.25": "1/30",
+     "0.5": "3/30",
+     "1": "4/30",
+     "2": "4/30",
+     "4": "0/30"
+    },
+    "v4_cells": {
+     "shuffled": "failed",
+     "random_0.25": "failed",
+     "random_0.5": "failed",
+     "random_1": "failed",
+     "random_2": "failed",
+     "random_4": "failed"
+    }
+   }
+  },
+  "published": "c66018 on #4870; PR #6 on 1f916-ai/1fab0"
+ }
+}

@@ -7,6 +7,7 @@ Verdicts per item: held | failed | unreadable (a needed row is missing) | not-ru
 import json, sys, math, collections
 from itertools import groupby
 ALL = [json.loads(l) for l in open(sys.argv[1] if len(sys.argv) > 1 else 'results/runs.jsonl')]
+OUT = sys.argv[3] if len(sys.argv) > 3 else 'results/verdicts'   # v5: output prefix, so a rerun never overwrites an earlier version's verdict files
 STEP = float(sys.argv[2]) if len(sys.argv) > 2 else None   # v3: score the random arm at one sweep step (multiplier); real/shuffled rows have step None
 runs = [r for r in ALL if r.get('condition') != 'random' or r.get('step') == STEP or (STEP is None and r.get('step') is None)]
 import os
@@ -47,8 +48,14 @@ for it in B['items']:
         if s is None or not s[0]: rec['conditions'][cond] = {'verdict': 'unreadable' if s is None else 'not-run'}; continue
         k, m, p = sign_test(s[0]); rec['conditions'][cond] = {'direction_observed': f'{k}/{m}', 'p_one_sided': round(p, 4), 'holds': p < 0.01, 'mean_stats': [round(sum(v[j] for v in s[1]) / m, 3) for j in range(len(s[1][0]))]}
     c = rec['conditions']
-    if B.get('battery','').endswith('v4') or 'v4' in B.get('battery',''):
+    V5 = 'v5' in B.get('battery', '')
+    if 'v4' in B.get('battery','') or V5:
         # v4: one-sided Fisher on counts (real vs fake) at 0.01, both fakes; paired-magnitude sign test beside
+        # v5: two-sided p and the sign printed beside; fake-beats-real at two-sided 0.01 is labelled 'inverted' (vish c66335)
+        def fisher2(a, na, b, nb):
+            tot = a + b; N = na + nb; lo = max(0, tot - nb); hi = min(na, tot)
+            pr = {x: math.comb(na, x) * math.comb(nb, tot - x) / math.comb(N, tot) for x in range(lo, hi + 1)}
+            return sum(p for x, p in pr.items() if p <= pr[a] * (1 + 1e-9))
         def fisher(a, na, b, nb):
             tot = a + b; N = na + nb
             return sum(math.comb(na, x) * math.comb(nb, tot - x) / math.comb(N, tot) for x in range(a, min(na, tot) + 1))
@@ -61,6 +68,9 @@ for it in B['items']:
                 kb, nb = sum(sf[0]), len(sf[0]); pf = fisher(ka, na, kb, nb)
                 paired = [1 if (float(sum(v)) if False else 0) else 0 for v in []]  # placeholder, magnitudes below
                 rec['difference_tests'][cond] = {'real': f'{ka}/{na}', 'fake': f'{kb}/{nb}', 'fisher_p': round(pf, 5), 'holds': pf < 0.01}
+                if V5:
+                    p2 = fisher2(ka, na, kb, nb); sign = 'real>fake' if ka > kb else ('fake>real' if kb > ka else 'equal')
+                    rec['difference_tests'][cond].update({'two_sided_p': round(p2, 5), 'sign': sign, 'cell': 'held' if pf < 0.01 else ('inverted' if (kb > ka and p2 < 0.01) else 'failed')})
             bar = max([k for k in range(0, na + 1) if fisher(ka, na, k, na) < 0.01] or [-1])
             rec['count_bar'] = f'with real at {ka}/{na}, the fake must show the direction in at most {bar} of {na}'
             rec['verdict'] = 'held' if all(rec['difference_tests'][x].get('holds') for x in ('shuffled', 'random')) else ('unreadable' if any(rec['difference_tests'][x].get('verdict') == 'unreadable' for x in ('shuffled', 'random')) else 'failed')
@@ -70,5 +80,5 @@ for it in B['items']:
     else: rec['verdict'] = 'held' if (c['real']['holds'] and not c['shuffled']['holds'] and not c['random']['holds']) else 'failed'
     rec['real_only'] = bool(c.get('real', {}).get('holds'))
     out[str(i)] = rec
-json.dump(out, open('results/verdicts.json' if STEP is None else 'results/verdicts-step-%g.json' % STEP, 'w'), indent=1)
+json.dump(out, open(OUT + '.json' if STEP is None else OUT + '-step-%g.json' % STEP, 'w'), indent=1)
 for i, r in out.items(): print(i, r['name'], '->', r['verdict'], {k: (v.get('direction_observed'), v.get('holds')) for k, v in r['conditions'].items()})
