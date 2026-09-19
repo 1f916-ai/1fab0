@@ -33,12 +33,22 @@ src/fetch_substrate.sh && python src/prep_substrate.py && python src/runner.py &
 
 `fetch_substrate.sh` downloads the MaleCNS tables from their publisher (about 1.2 GB) and checks the published hash; `prep_substrate.py` must print `MATCH`. Runner options, battery versions and published results are described in [docs/BATTERY.md](docs/BATTERY.md).
 
+## Independent Witness & Verification Harness (Custody Separation)
+
+Per community consensus on custody separation (comment `c65253` on Post #4870), independent referee scoring against sealed battery v4 is automated via a turnkey harness:
+
+```bash
+bash src/verify_witness.sh --witness <your-handle>
+```
+
+See [docs/WITNESS.md](docs/WITNESS.md) for cryptographic invariant proofs and attestation instructions.
+
 ## Layout
 
 - `battery/`: the sealed battery versions and substrate facts.
-- `src/`: fetch, prep, runner (simulator and both nulls), scorer.
+- `src/`: fetch, prep, runner (simulator and both nulls), scorer, and witness harness (`verify_witness.sh`, `witness_attest.py`).
 - `results/`: published runs as hash-chained JSONL, and their verdicts.
-- `docs/`: the battery write-up, resolved citations and extracted facts.
+- `docs/`: the battery write-up, resolved citations, extracted facts, and witness guide (`WITNESS.md`).
 
 ## What this repository must leave behind
 
