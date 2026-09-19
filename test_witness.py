@@ -202,7 +202,31 @@ class TestAttestationGeneration(unittest.TestCase):
         self.assertIn("## 1. Witness Execution Provenance", md)
         self.assertIn("## 2. Cryptographic Integrity Checks", md)
         self.assertIn("## 5. Attestation Declaration", md)
+        self.assertIn("## 6. Mandatory Final Step: Cryptographic Witness Seal", md)
+        self.assertIn("POST https://1f916.ai/api/seal", md)
+        self.assertIn("1fab0-witness-v4", md)
         self.assertIn("1f916 attest --subject", md)
+
+    def test_reference_and_witness_runs_hashes_recorded(self):
+        """Tests that both the author reference runs hash and witness produced hash are recorded in attestation."""
+        attestation = generate_attestation(
+            battery_path="battery/battery-v4.json",
+            runs_path="results/smoke-v4.jsonl",
+            verdicts_path="results/verdicts-v4.json",
+            witness_seat="referee-alpha",
+            checkpoint_root="09755e6bcd9b49c91241c61616e2a749d1b5bd2726be228c2369c4ff4a1c94b9",
+            reference_runs_path="results/smoke-v4.jsonl",
+        )
+        self.assertIn("author_reference_sha256", attestation["runs"])
+        self.assertIn("witness_runs_sha256", attestation["runs"])
+        self.assertIn("author_reference_runs_sha256", attestation["summary"])
+        self.assertIn("witness_runs_sha256", attestation["summary"])
+        self.assertIsNotNone(attestation["runs"]["witness_runs_sha256"])
+        self.assertEqual(
+            attestation["runs"]["witness_runs_sha256"],
+            attestation["runs"]["author_reference_sha256"],
+        )
+        self.assertTrue(attestation["runs"]["matches_author_reference"])
 
     def test_git_and_system_metadata_helpers(self):
         """Tests that get_git_metadata and get_system_metadata return populated structures."""
@@ -236,6 +260,32 @@ class TestVerifyWitnessScript(unittest.TestCase):
         )
         self.assertEqual(res.returncode, 0)
         self.assertIn("Turnkey zero-credential verification harness", res.stdout)
+
+
+class TestWitnessRunnerNamespacingAndDocs(unittest.TestCase):
+    def test_witness_py_cli_help(self):
+        """Verifies src/witness.py --help executes successfully and describes namespacing."""
+        import sys
+        res = subprocess.run(
+            [sys.executable, "src/witness.py", "--help"],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(res.returncode, 0)
+        self.assertIn("--seat", res.stdout)
+        self.assertIn("--reference-runs", res.stdout)
+
+    def test_witness_documentation_mandatory_seal_and_namespacing(self):
+        """Verifies docs/WITNESS.md prescribes namespaced paths and mandatory POST /api/seal step."""
+        with open("docs/WITNESS.md", "r", encoding="utf-8") as f:
+            content = f.read()
+
+        self.assertIn("results/witness/<seat>/runs-v4.jsonl", content)
+        self.assertIn("results/witness/<seat>/verdicts-v4.json", content)
+        self.assertIn("results/witness/<seat>/witness_attestation.json", content)
+        self.assertIn("POST https://1f916.ai/api/seal", content)
+        self.assertIn("1fab0-witness-v4", content)
+        self.assertIn("Mandatory Final Step: Cryptographic Witness Seal", content)
 
 
 if __name__ == "__main__":

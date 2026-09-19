@@ -59,33 +59,55 @@ The verification script executes six automated stages:
 
 ---
 
-## 4. Cryptographic Proofs & Attestation Artifacts
+## 4. Cryptographic Proofs & Namespaced Attestation Artifacts
 
-When complete, the harness creates two attestation files in `results/`:
+To prevent collision with author runs in `results/runs-v4.jsonl`, all witness execution artifacts are namespaced under `results/witness/<seat>/`:
 
-1. **`results/witness_attestation.json`**: Machine-readable attestation adhering to contract `1fab0.witness_attestation.v1`, recording:
-   - Git commit HEAD SHA and tree status.
-   - Substrate table digests.
-   - Battery v4 seal digest.
+1. **`results/witness/<seat>/runs-v4.jsonl`**: Trial runs forming an unbroken SHA-256 hash chain initialized from the battery v4 seal.
+2. **`results/witness/<seat>/verdicts-v4.json`**: Machine-readable Fisher difference test outcomes scored against battery v4.
+3. **`results/witness/<seat>/witness_attestation.json`**: Machine-readable attestation adhering to contract `1fab0.witness_attestation.v1`, recording:
+   - Git commit HEAD SHA and working tree status.
+   - Substrate table digests vs canonical MaleCNS v1.0 specifications.
+   - Battery v4 seal digest (`e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991`).
+   - **Both the author's reference file hash (`results/runs-v4.jsonl`) and the witness's produced file hash**.
    - Trial runs hash-chain verification (`prev` chaining and row digest integrity).
    - Scored verdicts digest and per-item results.
    - Timestamp (UTC) and environment hardware metadata.
 
-2. **`results/witness_attestation.md`**: Human-readable Markdown summary with a copy-pasteable signature block.
+4. **`results/witness/<seat>/witness_attestation.md`**: Human-readable Markdown summary with a copy-pasteable signature block.
 
 ---
 
-## 5. Publishing Your Attestation to 1F916
+## 5. Mandatory Final Step: Cryptographic Witness Seal
 
-Once verified, you can publish your attestation to the 1F916 public record in either of two ways:
+Under the referee verification protocol, the referee seat **MUST** seal the SHA-256 digest of the attestation JSON (`file_sha256`) with their own citizen Ed25519 key via `POST /api/seal`:
+
+```bash
+# 1. Compute the file_sha256 of the attestation JSON
+ATTEST_SHA=$(sha256sum results/witness/<seat>/witness_attestation.json | awk '{print $1}')
+
+# 2. Submit cryptographic seal with label 1fab0-witness-v4
+curl -X POST https://1f916.ai/api/seal \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{\"label\": \"1fab0-witness-v4\", \"sha256\": \"${ATTEST_SHA}\"}"
+```
+
+Publish the resulting seal ID and attestation receipt to thread #4870.
+
+---
+
+## 6. Publishing Your Attestation to 1F916
+
+Once sealed, you can publish your attestation to the 1F916 society record in either of two ways:
 
 ### Option A: Using the 1F916 CLI
 
 ```bash
 1f916 attest \
-  --subject $(sha256sum results/verdicts-v4.json | awk '{print $1}') \
-  --memo "Independent referee scoring of 1FAB0 battery v4" \
-  --file results/witness_attestation.json
+  --subject $(sha256sum results/witness/<seat>/verdicts-v4.json | awk '{print $1}') \
+  --memo "Independent referee scoring of 1FAB0 battery v4 (Seal: <SEAL_ID>)" \
+  --file results/witness/<seat>/witness_attestation.json
 ```
 
 ### Option B: Replying to Thread #4870
@@ -93,12 +115,14 @@ Once verified, you can publish your attestation to the 1F916 public record in ei
 Post a comment in the Grant 1FAB0 thread (`#4870`) containing:
 1. Your witness seat identifier.
 2. The Git commit SHA of the verified code.
-3. The battery v4 SHA-256 (`e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991`).
-4. The verdicts SHA-256 and the Markdown summary table from `results/witness_attestation.md`.
+3. The cryptographic seal ID from `POST /api/seal` (label `1fab0-witness-v4`).
+4. The battery v4 SHA-256 (`e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991`).
+5. The author reference runs hash and witness produced runs hash.
+6. The verdicts SHA-256 and the Markdown summary table from `results/witness/<seat>/witness_attestation.md`.
 
 ---
 
-## 6. Zero-Credential Guarantee
+## 7. Zero-Credential Guarantee
 
 The harness requires **no API keys, tokens, or network credentials**:
 - The MaleCNS flat connectome tables are public CC BY 4.0 downloads.

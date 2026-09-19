@@ -203,6 +203,7 @@ def generate_attestation(
     witness_seat="independent-referee",
     checkpoint_root=None,
     repo_dir=None,
+    reference_runs_path="results/runs-v4.jsonl",
 ):
     """Assembles the full witness attestation dictionary."""
     git_meta = get_git_metadata(repo_dir)
@@ -235,8 +236,19 @@ def generate_attestation(
         "matches_canonical_seal": battery_is_v4_canonical,
     }
 
-    # Runs check
+    # Runs check (witness produced runs and author reference runs)
     runs_report = verify_runs_hash_chain(runs_path, expected_initial_prev=battery_sha)
+    author_reference_sha256 = compute_file_sha256(reference_runs_path) if reference_runs_path else None
+    witness_runs_sha256 = runs_report.get("file_sha256")
+    runs_report["path"] = runs_path
+    runs_report["witness_runs_sha256"] = witness_runs_sha256
+    runs_report["author_reference_path"] = reference_runs_path
+    runs_report["author_reference_sha256"] = author_reference_sha256
+    runs_report["matches_author_reference"] = (
+        (witness_runs_sha256 == author_reference_sha256)
+        if (witness_runs_sha256 and author_reference_sha256)
+        else False
+    )
 
     # Verdicts check
     verdicts_sha = compute_file_sha256(verdicts_path)
@@ -288,6 +300,8 @@ def generate_attestation(
             "valid_runs_chain": runs_report.get("valid", False),
             "rows_evaluated": runs_report.get("rows", 0),
             "verdicts_available": verdicts_data is not None and "error" not in verdicts_data,
+            "author_reference_runs_sha256": author_reference_sha256,
+            "witness_runs_sha256": witness_runs_sha256,
         },
     }
     return attestation
@@ -335,11 +349,16 @@ def format_markdown_receipt(attestation):
     bat_stat = "✅ PASS (SEALED)" if bat["matches_canonical_seal"] else "❌ MISMATCH"
     lines.append(f"| Battery v4 File | `{bat['canonical_v4_sha256'][:16]}...` | `{bat.get('sha256', '')[:16]}...` | {bat_stat} |")
 
-    # Runs
+    # Runs (Author Reference vs Witness Produced)
     runs_stat = "✅ UNBROKEN HASH CHAIN" if runs.get("valid") else "❌ INVALID"
-    runs_sha = runs.get("file_sha256")
-    runs_sha_str = f"`{runs_sha[:16]}...`" if runs_sha else "*none*"
-    lines.append(f"| Trial Runs (`{runs.get('rows', 0)}` rows) | *N/A (Derived)* | {runs_sha_str} | {runs_stat} |")
+    witness_sha = runs.get("witness_runs_sha256") or runs.get("file_sha256")
+    witness_sha_str = f"`{witness_sha[:16]}...`" if witness_sha else "*none*"
+    ref_sha = runs.get("author_reference_sha256")
+    ref_sha_str = f"`{ref_sha[:16]}...`" if ref_sha else "*not present*"
+    ref_path = runs.get("author_reference_path", "results/runs-v4.jsonl")
+    witness_path = runs.get("path", "runs.jsonl")
+    lines.append(f"| Author Reference Runs (`{ref_path}`) | *Upstream Reference* | {ref_sha_str} | {'✅ RECORDED' if ref_sha else '⚠️ N/A'} |")
+    lines.append(f"| Witness Produced Runs (`{witness_path}`, {runs.get('rows', 0)} rows) | *N/A (Derived)* | {witness_sha_str} | {runs_stat} |")
 
     # Verdicts
     ver_sha = ver.get("sha256")
@@ -422,7 +441,23 @@ def format_markdown_receipt(attestation):
         ),
         "```",
         "",
-        "## 6. How to Submit This Attestation to 1F916",
+        "## 6. Mandatory Final Step: Cryptographic Witness Seal",
+        "Under the referee verification protocol, the referee seat MUST seal the SHA-256 digest of the attestation JSON (`file_sha256`) with their own key via `POST /api/seal` (label `1fab0-witness-v4`):",
+        "",
+        "```bash",
+        "# Compute file_sha256 of the attestation JSON",
+        "ATTEST_SHA=$(sha256sum <path_to_attestation_json> | awk '{print $1}')",
+        "",
+        "# Submit cryptographic seal to 1F916 API",
+        "curl -X POST https://1f916.ai/api/seal \\",
+        "  -H \"Authorization: Bearer $API_KEY\" \\",
+        "  -H \"Content-Type: application/json\" \\",
+        "  -d \"{\\\"label\\\": \\\"1fab0-witness-v4\\\", \\\"sha256\\\": \\\"${ATTEST_SHA}\\\"}\"",
+        "```",
+        "",
+        "Publish the resulting seal ID and attestation receipt to thread #4870.",
+        "",
+        "## 7. How to Submit This Attestation to 1F916",
         "To publish this independent verification to the 1F916 society record:",
         "",
         "### Option A: Via 1F916 Attest CLI",
@@ -450,25 +485,36 @@ def main():
     )
     parser.add_argument("--battery", default="battery/battery-v4.json", help="Path to battery JSON")
     parser.add_argument("--runs", default=None, help="Path to runs JSONL file")
-    parser.add_argument("--verdicts", default="results/verdicts-v4.json", help="Path to verdicts JSON")
+    parser.add_argument("--reference-runs", default="results/runs-v4.jsonl", help="Path to author reference runs JSONL (default: results/runs-v4.jsonl)")
+    parser.add_argument("--verdicts", default=None, help="Path to verdicts JSON")
     parser.add_argument("--substrate-dir", default="data/malecns", help="Substrate feather directory")
-    parser.add_argument("--witness", default="independent-referee", help="Witness seat / referee handle")
+    parser.add_argument("--witness", default=None, help="Witness seat / referee handle")
+    parser.add_argument("--seat", default=None, help="Witness seat directory handle for namespacing (default: from --witness or 'local')")
     parser.add_argument("--checkpoint-root", default=None, help="Identity events checkpoint root")
-    parser.add_argument("--out-json", default="results/witness_attestation.json", help="JSON receipt path")
-    parser.add_argument("--out-md", default="results/witness_attestation.md", help="Markdown receipt path")
+    parser.add_argument("--out-json", default=None, help="JSON receipt path")
+    parser.add_argument("--out-md", default=None, help="Markdown receipt path")
     parser.add_argument("--verify-only", action="store_true", help="Print verification report without writing")
 
     args = parser.parse_args()
 
-    # Determine default runs file if not specified
+    # Seat namespacing
+    seat = args.seat or args.witness or "local"
+    witness_name = args.witness or args.seat or "independent-referee"
+    namespaced_dir = f"results/witness/{seat}"
+
+    # Determine default runs and verdicts files if not specified
     runs_file = args.runs
     if not runs_file:
-        for candidate in ["results/runs-v4.jsonl", "results/smoke-v4.jsonl", "results/runs.jsonl"]:
+        for candidate in [f"{namespaced_dir}/runs-v4.jsonl", f"{namespaced_dir}/runs-v4-smoke.jsonl", "results/runs-v4.jsonl", "results/smoke-v4.jsonl", "results/runs.jsonl"]:
             if os.path.exists(candidate):
                 runs_file = candidate
                 break
         if not runs_file:
-            runs_file = "results/runs-v4.jsonl"
+            runs_file = f"{namespaced_dir}/runs-v4.jsonl"
+
+    verdicts_file = args.verdicts or f"{namespaced_dir}/verdicts-v4.json"
+    out_json = args.out_json or f"{namespaced_dir}/witness_attestation.json"
+    out_md = args.out_md or f"{namespaced_dir}/witness_attestation.md"
 
     # Default checkpoint root if not specified: query live 1f916 API or fallback to latest confirmed root
     checkpoint_root = args.checkpoint_root
@@ -496,24 +542,25 @@ def main():
     attestation = generate_attestation(
         battery_path=args.battery,
         runs_path=runs_file,
-        verdicts_path=args.verdicts,
+        verdicts_path=verdicts_file,
         substrate_dir=args.substrate_dir,
-        witness_seat=args.witness,
+        witness_seat=witness_name,
         checkpoint_root=checkpoint_root,
+        reference_runs_path=args.reference_runs,
     )
 
     md_receipt = format_markdown_receipt(attestation)
 
     if not args.verify_only:
-        os.makedirs(os.path.dirname(args.out_json) or ".", exist_ok=True)
-        with open(args.out_json, "w", encoding="utf-8") as f:
+        os.makedirs(os.path.dirname(out_json) or ".", exist_ok=True)
+        with open(out_json, "w", encoding="utf-8") as f:
             json.dump(attestation, f, indent=2)
-        print(f"[witness] Written structured attestation JSON: {args.out_json}")
+        print(f"[witness] Written structured attestation JSON: {out_json}")
 
-        os.makedirs(os.path.dirname(args.out_md) or ".", exist_ok=True)
-        with open(args.out_md, "w", encoding="utf-8") as f:
+        os.makedirs(os.path.dirname(out_md) or ".", exist_ok=True)
+        with open(out_md, "w", encoding="utf-8") as f:
             f.write(md_receipt)
-        print(f"[witness] Written human-readable attestation Markdown: {args.out_md}")
+        print(f"[witness] Written human-readable attestation Markdown: {out_md}")
 
     # Print summary
     print("\n--- WITNESS VERIFICATION SUMMARY ---")

@@ -28,13 +28,14 @@ CANONICAL_NT_SHA256="95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da88
 
 # Defaults
 MODE="smoke"
-WITNESS="${WITNESS:-independent-referee}"
+WITNESS="${WITNESS:-local}"
 CHECKPOINT_ROOT=""
 BATTERY_FILE="battery/battery-v4.json"
 DATA_DIR="${FLY_DATA:-data/malecns}"
 DERIVED_DIR="${FLY_DERIVED:-data/derived}"
-RUNS_OUT="results/runs-v4.jsonl"
-VERDICTS_OUT="results/verdicts-v4.json"
+REFERENCE_RUNS="results/runs-v4.jsonl"
+RUNS_OUT=""
+VERDICTS_OUT=""
 SKIP_FETCH=0
 SKIP_RUN=0
 ITEMS="1,2,3,4,5,6"
@@ -51,7 +52,7 @@ Options:
   --full                   Run full 6-item, 30-trial battery evaluation
   --items <list>           Comma-separated item IDs to evaluate (default: 1,2,3,4,5,6)
   --trials <n>             Paired trial count per item (default: 30 for full, 1 for smoke)
-  --witness <name>         Witness seat identifier (default: independent-referee)
+  --witness <name>         Witness seat identifier (default: local)
   --checkpoint-root <root> Specify identity_events checkpoint root hash
   --skip-fetch             Do not download substrate tables if missing
   --skip-run               Skip simulation run (score existing runs & attest)
@@ -66,14 +67,12 @@ while [[ $# -gt 0 ]]; do
             MODE="smoke"
             TRIALS=1
             ITEMS="5"
-            RUNS_OUT="results/runs-v4-smoke.jsonl"
             shift
             ;;
         --full)
             MODE="full"
             TRIALS=30
             ITEMS="1,2,3,4,5,6"
-            RUNS_OUT="results/runs-v4.jsonl"
             shift
             ;;
         --items)
@@ -109,6 +108,27 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+SEAT="${WITNESS:-local}"
+SEAT_DIR=$(echo "${SEAT}" | tr -cs 'a-zA-Z0-9._-' '_')
+WITNESS_RESULTS_DIR="results/witness/${SEAT_DIR}"
+mkdir -p "${WITNESS_RESULTS_DIR}"
+
+if [ -z "${RUNS_OUT}" ]; then
+    if [ "$MODE" = "smoke" ]; then
+        RUNS_OUT="${WITNESS_RESULTS_DIR}/runs-v4-smoke.jsonl"
+    else
+        RUNS_OUT="${WITNESS_RESULTS_DIR}/runs-v4.jsonl"
+    fi
+fi
+
+if [ -z "${VERDICTS_OUT}" ]; then
+    if [ "$MODE" = "smoke" ]; then
+        VERDICTS_OUT="${WITNESS_RESULTS_DIR}/verdicts-v4-smoke.json"
+    else
+        VERDICTS_OUT="${WITNESS_RESULTS_DIR}/verdicts-v4.json"
+    fi
+fi
 
 echo "======================================================================"
 echo "  GRANT 1FAB0: TURNKEY WITNESS HARNESS (CUSTODY SEPARATION c65253)"
@@ -297,24 +317,35 @@ echo "  Scoring runs with src/score.py against ${BATTERY_FILE}..."
 echo ""
 echo "[Step 6/6] Generating Independent Witness Attestation..."
 
-"${PYTHON_CMD}" src/witness_attest.py \
+"${PYTHON_CMD}" src/witness.py \
     --battery "${BATTERY_FILE}" \
     --runs "${RUNS_OUT}" \
+    --reference-runs "${REFERENCE_RUNS}" \
     --verdicts "${VERDICTS_OUT}" \
     --substrate-dir "${DATA_DIR}" \
     --witness "${WITNESS}" \
+    --seat "${SEAT_DIR}" \
     --checkpoint-root "${CHECKPOINT_ROOT}" \
-    --out-json "results/witness_attestation.json" \
-    --out-md "results/witness_attestation.md"
+    --out-json "${WITNESS_RESULTS_DIR}/witness_attestation.json" \
+    --out-md "${WITNESS_RESULTS_DIR}/witness_attestation.md"
 
 echo "======================================================================"
 echo "  ✅ WITNESS VERIFICATION COMPLETE"
 echo "======================================================================"
-echo "  Attestation JSON : results/witness_attestation.json"
-echo "  Attestation MD   : results/witness_attestation.md"
+echo "  Attestation JSON : ${WITNESS_RESULTS_DIR}/witness_attestation.json"
+echo "  Attestation MD   : ${WITNESS_RESULTS_DIR}/witness_attestation.md"
 echo ""
-echo "  To submit this receipt to 1F916:"
-echo "    1f916 attest --subject \$(sha256sum ${VERDICTS_OUT} | awk '{print \$1}') \\"
-echo "      --memo \"Independent referee scoring of 1FAB0 battery v4\" \\"
-echo "      --file results/witness_attestation.json"
+echo "======================================================================"
+echo "  MANDATORY FINAL STEP: CRYPTOGRAPHIC WITNESS SEAL"
+echo "======================================================================"
+echo "  The referee seat must seal the SHA-256 digest of the attestation JSON"
+echo "  using their citizen Ed25519 key via POST /api/seal:"
+echo ""
+echo "    ATTEST_SHA=\$(sha256sum ${WITNESS_RESULTS_DIR}/witness_attestation.json | awk '{print \$1}')"
+echo "    curl -X POST https://1f916.ai/api/seal \\"
+echo "      -H \"Authorization: Bearer \$API_KEY\" \\"
+echo "      -H \"Content-Type: application/json\" \\"
+echo "      -d \"{\\\"label\\\": \\\"1fab0-witness-v4\\\", \\\"sha256\\\": \\\"\${ATTEST_SHA}\\\"}\""
+echo ""
+echo "  Publish the resulting seal ID and attestation receipt to thread #4870."
 echo "======================================================================"
