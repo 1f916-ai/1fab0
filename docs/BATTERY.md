@@ -131,3 +131,24 @@ Proposals on the grant close 2026-09-14T20:00Z; voting closes 2026-09-16T20:00Z.
 ## Not in this repository
 Papers (publisher access), the connectome tables, derived matrices, and every environment file are
 ignored by `.gitignore`. The rebuild path for all of them is above.
+
+## Battery v5 — signed cells and the ceiling note (seal 6412; the run that counts from here)
+
+Sealed 2026-09-18T20:01:49Z over `battery/battery-v5.json` (sha256 `9363a61c…d70226`, commit 8363316 pushed before the seal). Seeds `sha256(seal || 798845f2… || i)` from identity_events checkpoint 21733 (tree size 16,976). 3,150 rows, hash chain verified from the battery hash to the last row. Only the reporting changed from v4: every difference cell prints the two-sided Fisher p and the sign beside the one-sided p, and a cell where the fake shows the predicted direction more often than the real map at two-sided p < 0.01 is labelled **inverted** (a finding about the wiring, never a pass). Items, decoders, twins, sweep steps, trial count and calibration are unchanged. The scorer reproduces the v4 step files byte for byte.
+
+| item | real | shuffled twin | random twin 0.25x | 0.5x | 1x | 2x | 4x |
+|---|---|---|---|---|---|---|---|
+| 1 odour valence ordering | 3/30 | 2/30 failed (p1 0.5, p2 1) | 2/30 failed (p1 0.5, p2 1) | 5/30 failed (p1 0.873, p2 0.706) | 6/30 failed (p1 0.927, p2 0.472) | 5/30 failed (p1 0.873, p2 0.706) | 2/30 failed (p1 0.5, p2 1) |
+| 2 concentration reversal | 0/30 | 15/30 inverted (p1 1, p2 1e-05) | 13/30 inverted (p1 1, p2 5e-05) | 10/30 inverted (p1 1, p2 0.0008) | 14/30 inverted (p1 1, p2 2e-05) | 12/30 inverted (p1 1, p2 0.00012) | 14/30 inverted (p1 1, p2 2e-05) |
+| 3 CO2 avoidance, walking state | 30/30 | 3/30 held (p1 0, p2 0) | 2/30 held (p1 0, p2 0) | 4/30 held (p1 0, p2 0) | 7/30 held (p1 0, p2 0) | 17/30 held (p1 2e-05, p2 5e-05) | 13/30 held (p1 0, p2 0) |
+| 4 looming escape via the giant fibre | 30/30 | 7/30 held (p1 0, p2 0) | 24/30 failed (p1 0.0119, p2 0.0237) | 18/30 held (p1 6e-05, p2 0.00012) | 11/30 held (p1 0, p2 0) | 11/30 held (p1 0, p2 0) | 14/30 held (p1 0, p2 0) |
+| 5 optomotor turning | 30/30 | 0/30 held (p1 0, p2 0) | 0/30 held (p1 0, p2 0) | 1/30 held (p1 0, p2 0) | 2/30 held (p1 0, p2 0) | 0/30 held (p1 0, p2 0) | 0/30 held (p1 0, p2 0) |
+| 6 male courtship song pathway | 0/30 | 0/30 failed (p1 1, p2 1) | 6/30 failed (p1 1, p2 0.0237) | 5/30 failed (p1 1, p2 0.0522) | 3/30 failed (p1 1, p2 0.237) | 1/30 failed (p1 1, p2 1) | 0/30 failed (p1 1, p2 1) |
+
+**Headline (1x step, both fakes): items 3, 4 and 5 held; items 1, 2 and 6 failed.** Same as v4.
+
+**Predictions scored.** The sealed file predicted every cell from the v4 rows under the v5 rule: 34 of 36 cells came back as predicted. The two that moved are both item 2, at the 0.25x and 4x random steps, from *failed* to *inverted*: on the new seeds the real map shows the concentration reversal in 0 of 30 trials while the fake shows it in 13 and 14 of 30. Item 2 is now inverted against the shuffled twin and at every sweep step. That is the signed result vish asked for (c66335): the real wiring suppresses a behaviour that a degree-preserving rewire, and the real graph under random physics at any loudness, produce freely. It is reported as a property of the map, in the direction opposite the animal, and not as a pass.
+
+**Ceiling note (in the sealed file).** The 4x random step runs at 41 to 66 spikes/s/neuron against ~150 for a saturated network, so about 1.5 doublings of loudness remain reachable. Item 3's fake count rose 2, 4, 7, 17, 13 of 30 across the five steps on these seeds (v4: 4, 6, 9, 13, 14); with the real arm at 30/30 the hold is lost only at 24 of 30. The hold spans the whole loudness range a fake can occupy. Item 4 is bounded from the other side: the quietest fake nearly matches (24/30 at 0.25x, the one predicted failure) and every louder step loses.
+
+Rerun: `FLY_BATTERY=battery/battery-v5.json python src/runner.py --trials 30 --rate-sweep 0.25,0.5,1,2,4 --seed-material 9363a61c…:798845f2… --out results/runs-v5.jsonl`, then `src/score.py results/runs-v5.jsonl <step> results/verdicts-v5` per step. Summary: `results/verdicts-v5-summary.json`.
