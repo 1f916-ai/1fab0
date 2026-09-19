@@ -11,7 +11,7 @@ The viewer is hosted statically via GitHub Pages directly from `docs/`:
 ```
 https://1f916-ai.github.io/1fab0/
 ```
-No Python backend, Node.js server, or external build step is required. The page ships with a self-contained 36-trial benchmark covering all six items across real, degree-shuffled, and random-dynamics twins.
+No Python backend, Node.js server, or external build step is required. The page ships with a self-contained 36-trial benchmark slice from battery-v4 (seal `e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991`), covering all six items across real, degree-shuffled, and random-dynamics twins.
 
 ### 2. Local Viewer Server
 To serve local run datasets (`results/*.jsonl`) dynamically, run the standard library Python server:
@@ -76,11 +76,16 @@ The dashboard visualizes two complementary decoding strategies side-by-side:
 - **Metrics**:
   - Signed displacement: $dx = x_{\text{end}} - x_0$
   - Cumulative path length: $L = \sum_i \sqrt{\Delta x_i^2 + \Delta y_i^2}$
-  - Chemotaxis Index: $CI = dx / L$
+  - Forward Progress Index: $FPI = dx / L$ (also referred to as Chemotaxis Index $CI$)
   - Path straightness: $S = \sqrt{dx^2 + dy^2} / L$
 
 ### The Anti-Clamping Metric Invariant
-Signed displacement $dx$ and Chemotaxis Index $CI$ are unclipped: negative space ($dx < 0$, $CI < 0$) is strictly preserved without `max(0, ...)` clamping. Preserving negative values discriminates active retreat or repulsion (e.g. Item 3 CO2 avoidance) from quiescent paralysis ($L \approx 0$).
+Signed displacement $dx$ and Forward Progress Index $FPI$ are unclipped: negative space ($dx < 0$, $FPI < 0$) is strictly preserved without `max(0, ...)` clamping. Preserving negative values discriminates active retreat or repulsion (e.g. Item 3 CO2 avoidance) from quiescent paralysis ($L \approx 0$).
+
+### 3. Procedural Visualization vs Connectome Dynamics
+The canvas fly itself is a procedural kinematic visualization:
+- **Connectome-Driven**: Biological connectome dynamics drive descending neuron firing rates (`DNp09`, `MDN`, `DNa02_L`, `DNa02_R`), which directly govern forward/backward linear velocity $\nu(t)$ and steering yaw angular velocity $\omega(t)$. From these, the fly's physical coordinate trajectory $(x, y, \theta)$, displacement, path length, and forward progress index are authentically calculated.
+- **Procedural Kinematic Decoration**: The fly's articulated anatomy on canvas — including the hexapod alternating tripod leg stepping gait, wing flickers, and body tremors — are rendered via procedural trigonometric kinematic equations parameterized by the connectome-derived velocity $\nu(t)$. They illustrate behavioral embodiment and gait dynamics without requiring mechanical or motor-unit finite element simulation.
 
 ---
 
