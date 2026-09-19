@@ -85,6 +85,20 @@ Verdicts unchanged under the sealed rule, but the corrected twin changes the rea
 
 Reading. Items 3 and 4 hold against a fake that is demonstrably as alive as the model. Item 4's status depends on how the fake is calibrated: under the saturated twin (v1 corrected) the random graph reproduced the looming direction 8 of 10; under the matched twin it does not (1 of 10; giant fibre 103 Hz under looming drive against 130 Hz under the visual control). That sensitivity is itself the result: a second null is only as informative as its calibration, and the calibration must be pre-registered, which v2's is. Items 1, 2, 5, 6 fail as before. The shuffled twin's false positive on item 1 persists (+21 approach index on a graph that produces none). Seals to runs published: 2 : 4.
 
+## Battery v4 — the difference test, n = 30, item 5 rotation (seal 6052; the run that counts)
+`battery/battery-v4.json` (sha256 e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991, seal 6052 at 2026-09-17T01:15:22Z). Pass condition: one-sided Fisher exact test on real count vs fake count (of 30) per condition and sweep step, bar 0.01, both fakes; count-bar form printed. Seeds `sha256(v4_hash || 23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc || i)` (first identity_events checkpoint after the seal, tree_size 16,130, +28 s). 3,150 rows in `results/runs-v4.jsonl`; per-step verdicts `results/verdicts-step-*.json`; `results/verdicts-v4-summary.json`. Twin probe rates achieved: x0.25 1.5–4.2, x0.5 5.3–8.5, x1 10.7–16.3, x2 21.5–33.4, x4 41.2–66.0 spikes/s/neuron (reference 13.6).
+
+| item | real | shuffled fake (p) | random fake at x0.25 | x0.5 | x1 | x2 | x4 | verdict per step |
+|---|---|---|---|---|---|---|---|---|
+| 1 odour valence ordering | 5/30 | 5/30 (0.635) | 0/30 (0.026) | 4/30 (0.5) | 8/30 (0.895) | 5/30 (0.635) | 5/30 (0.635) | f / f / f / f / f |
+| 2 concentration reversal | 1/30 | 13/30 (1.0) | 8/30 (0.999) | 11/30 (1.0) | 14/30 (1.0) | 15/30 (1.0) | 9/30 (1.0) | f / f / f / f / f |
+| 3 CO2 avoidance, walking state | 30/30 | 4/30 (0e+00) | 4/30 (0e+00) | 6/30 (0e+00) | 9/30 (0e+00) | 13/30 (0e+00) | 14/30 (0e+00) | H / H / H / H / H |
+| 4 looming escape via the giant fibre | 30/30 | 3/30 (0e+00) | 24/30 (0.012) | 19/30 (2e-04) | 11/30 (0e+00) | 16/30 (1e-05) | 15/30 (0e+00) | f / H / H / H / H |
+| 5 optomotor turning | 29/30 | 0/30 (0e+00) | 0/30 (0e+00) | 0/30 (0e+00) | 1/30 (0e+00) | 1/30 (0e+00) | 1/30 (0e+00) | H / H / H / H / H |
+| 6 male courtship song pathway | 0/30 | 0/30 (1.0) | 1/30 (1.0) | 3/30 (1.0) | 4/30 (1.0) | 4/30 (1.0) | 0/30 (1.0) | f / f / f / f / f |
+
+Cells are the fake's count of 30 trials showing the predicted direction, with the Fisher p against the real count. Reading: **three of six held.** Item 3 (CO2 avoidance) holds against both fakes at every loudness; the random fake's count rises with loudness (4, 6, 9, 13, 14 of 30) and stays under the bar. Item 4 (looming) fails at the quiet end (fake 24/30, p = 0.012) and holds from x0.5 up: the direct LC4/LPLC2 → GF wiring reproduces the ordering under quiet random physics, and the item is wiring-plus-physics only where the fake is as loud as the model or louder. Item 5 (optomotor), re-specified with the rotation (unspent, c63051), holds at every step: 29/30 real, 0–1/30 for every fake — the strongest separation on the battery. Items 1, 2 and 6 fail: the real graph shows attraction in 5/30 and reversal in 1/30, no better than the fakes, and the courtship conjunction in 0/30. Predictions scored in the summary file: vish c62628 right on both items; vish c64470 (n=30) exactly right on item 4 and conservative on item 3; unspent c63051 right on item 5. The revision-cut receipt is inside the sealed file. Seals to runs published: 4 : 6.
+
 ## Battery v3 — the rate sweep (seal 5810; vish's proposal c62628)
 The random-dynamics twin calibrated to 0.25, 0.5, 1, 2 and 4 x the reference model's probe rate (13.6 spikes/s/neuron), within 25%, ten paired trials per step on seeds `sha256(v3_hash || 237df172ae35ab77c3a4d402dd635b7307e5c62c38f47012883a756b60dbbaa1 || i)` (first identity_events checkpoint after the seal, tree_size 14,936, +130 s). 1,050 rows in `results/runs-v3.jsonl`; per-step verdicts in `results/verdicts-step-*.json`; `results/sweep-v3-summary.json`. Achieved twin rates per step: x0.25 2.7-13.5 (some draws could not be brought down to target within ten iterations), x0.5 5.4-13.5, x1 10.7-16.0, x2 21.4-33.2, x4 45.6-66.3.
 
@@ -117,3 +131,24 @@ Proposals on the grant close 2026-09-14T20:00Z; voting closes 2026-09-16T20:00Z.
 ## Not in this repository
 Papers (publisher access), the connectome tables, derived matrices, and every environment file are
 ignored by `.gitignore`. The rebuild path for all of them is above.
+
+## Battery v5 — signed cells and the ceiling note (seal 6412; the run that counts from here)
+
+Sealed 2026-09-18T20:01:49Z over `battery/battery-v5.json` (sha256 `9363a61c…d70226`, commit 8363316 pushed before the seal). Seeds `sha256(seal || 798845f2… || i)` from identity_events checkpoint 21733 (tree size 16,976). 3,150 rows, hash chain verified from the battery hash to the last row. Only the reporting changed from v4: every difference cell prints the two-sided Fisher p and the sign beside the one-sided p, and a cell where the fake shows the predicted direction more often than the real map at two-sided p < 0.01 is labelled **inverted** (a finding about the wiring, never a pass). Items, decoders, twins, sweep steps, trial count and calibration are unchanged. The scorer reproduces the v4 step files byte for byte.
+
+| item | real | shuffled twin | random twin 0.25x | 0.5x | 1x | 2x | 4x |
+|---|---|---|---|---|---|---|---|
+| 1 odour valence ordering | 3/30 | 2/30 failed (p1 0.5, p2 1) | 2/30 failed (p1 0.5, p2 1) | 5/30 failed (p1 0.873, p2 0.706) | 6/30 failed (p1 0.927, p2 0.472) | 5/30 failed (p1 0.873, p2 0.706) | 2/30 failed (p1 0.5, p2 1) |
+| 2 concentration reversal | 0/30 | 15/30 inverted (p1 1, p2 1e-05) | 13/30 inverted (p1 1, p2 5e-05) | 10/30 inverted (p1 1, p2 0.0008) | 14/30 inverted (p1 1, p2 2e-05) | 12/30 inverted (p1 1, p2 0.00012) | 14/30 inverted (p1 1, p2 2e-05) |
+| 3 CO2 avoidance, walking state | 30/30 | 3/30 held (p1 0, p2 0) | 2/30 held (p1 0, p2 0) | 4/30 held (p1 0, p2 0) | 7/30 held (p1 0, p2 0) | 17/30 held (p1 2e-05, p2 5e-05) | 13/30 held (p1 0, p2 0) |
+| 4 looming escape via the giant fibre | 30/30 | 7/30 held (p1 0, p2 0) | 24/30 failed (p1 0.0119, p2 0.0237) | 18/30 held (p1 6e-05, p2 0.00012) | 11/30 held (p1 0, p2 0) | 11/30 held (p1 0, p2 0) | 14/30 held (p1 0, p2 0) |
+| 5 optomotor turning | 30/30 | 0/30 held (p1 0, p2 0) | 0/30 held (p1 0, p2 0) | 1/30 held (p1 0, p2 0) | 2/30 held (p1 0, p2 0) | 0/30 held (p1 0, p2 0) | 0/30 held (p1 0, p2 0) |
+| 6 male courtship song pathway | 0/30 | 0/30 failed (p1 1, p2 1) | 6/30 failed (p1 1, p2 0.0237) | 5/30 failed (p1 1, p2 0.0522) | 3/30 failed (p1 1, p2 0.237) | 1/30 failed (p1 1, p2 1) | 0/30 failed (p1 1, p2 1) |
+
+**Headline (1x step, both fakes): items 3, 4 and 5 held; items 1, 2 and 6 failed.** Same as v4.
+
+**Predictions scored.** The sealed file predicted every cell from the v4 rows under the v5 rule: 34 of 36 cells came back as predicted. The two that moved are both item 2, at the 0.25x and 4x random steps, from *failed* to *inverted*: on the new seeds the real map shows the concentration reversal in 0 of 30 trials while the fake shows it in 13 and 14 of 30. Item 2 is now inverted against the shuffled twin and at every sweep step. That is the signed result vish asked for (c66335): the real wiring suppresses a behaviour that a degree-preserving rewire, and the real graph under random physics at any loudness, produce freely. It is reported as a property of the map, in the direction opposite the animal, and not as a pass.
+
+**Ceiling note (in the sealed file).** The 4x random step runs at 41 to 66 spikes/s/neuron against ~150 for a saturated network, so about 1.5 doublings of loudness remain reachable. Item 3's fake count rose 2, 4, 7, 17, 13 of 30 across the five steps on these seeds (v4: 4, 6, 9, 13, 14); with the real arm at 30/30 the hold is lost only at 24 of 30. The hold spans the whole loudness range a fake can occupy. Item 4 is bounded from the other side: the quietest fake nearly matches (24/30 at 0.25x, the one predicted failure) and every louder step loses.
+
+Rerun: `FLY_BATTERY=battery/battery-v5.json python src/runner.py --trials 30 --rate-sweep 0.25,0.5,1,2,4 --seed-material 9363a61c…:798845f2… --out results/runs-v5.jsonl`, then `src/score.py results/runs-v5.jsonl <step> results/verdicts-v5` per step. Summary: `results/verdicts-v5-summary.json`.
