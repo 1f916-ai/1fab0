@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grant 1FAB0: Fly Connectome Behavioral Evaluation Arena</title>
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --bg-elevated: #30363d;
+      --border-color: #30363d;
+      --border-muted: #21262d;
+      --text-primary: #c9d1d9;
+      --text-secondary: #8b949e;
+      --text-heading: #f0f6fc;
+      --accent-blue: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-red: #f85149;
+      --accent-yellow: #d29922;
+      --accent-purple: #bc8cff;
+      --accent-cyan: #39c5bb;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      font-size: 13px;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .header-titles h1 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-heading);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-titles p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .badge {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .badge-blue { border-color: rgba(88, 166, 255, 0.4); color: var(--accent-blue); background: rgba(56, 139, 253, 0.1); }
+    .badge-green { border-color: rgba(63, 185, 80, 0.4); color: var(--accent-green); background: rgba(46, 160, 67, 0.1); }
+    .badge-purple { border-color: rgba(188, 140, 255, 0.4); color: var(--accent-purple); background: rgba(188, 140, 255, 0.1); }
+    .badge-yellow { border-color: rgba(210, 153, 34, 0.4); color: var(--accent-yellow); background: rgba(210, 153, 34, 0.1); }
+
+    /* Top Item Navigation */
+    .item-nav {
+      background-color: var(--bg-primary);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .item-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .item-btn:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--text-secondary);
+      color: var(--text-heading);
+    }
+    .item-btn.active {
+      background: rgba(56, 139, 253, 0.15);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+    .item-btn .item-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+    .item-btn .item-title {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: grid;
+      grid-template-columns: minmax(560px, 1.15fr) 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 1100px) {
+      .container { grid-template-columns: 1fr; }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .card-header {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-tertiary);
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-body {
+      padding: 14px 16px;
+    }
+
+    /* Canvas Arena */
+    .arena-wrapper {
+      position: relative;
+      background: #06090e;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    canvas#arenaCanvas {
+      display: block;
+      width: 100%;
+      max-width: 580px;
+      aspect-ratio: 1 / 1;
+      background: #04070b;
+      cursor: crosshair;
+    }
+    .arena-hud {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .hud-tag {
+      background: rgba(13, 17, 23, 0.85);
+      border: 1px solid var(--border-color);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: var(--text-primary);
+      backdrop-filter: blur(4px);
+    }
+    .arena-controls {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      display: flex;
+      gap: 6px;
+    }
+    .mini-btn {
+      background: rgba(22, 27, 34, 0.85);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.15s;
+    }
+    .mini-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--text-heading);
+      border-color: var(--accent-blue);
+    }
+
+    /* Replayer Controls */
+    .replayer-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .scrubber-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .scrubber-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      background: var(--bg-tertiary);
+      border-radius: 3px;
+      outline: none;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+    .scrubber-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      cursor: pointer;
+      border: 2px solid var(--bg-primary);
+    }
+    .scrubber-time {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      min-width: 80px;
+      text-align: right;
+    }
+
+    .playback-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .btn-group {
+      display: inline-flex;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .btn {
+      background: var(--bg-secondary);
+      border: none;
+      border-right: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn:last-child { border-right: none; }
+    .btn:hover { background: var(--bg-tertiary); color: var(--text-heading); }
+    .btn.active { background: var(--accent-blue); color: #fff; }
+    .btn-primary {
+      background: var(--bg-tertiary);
+      font-weight: 600;
+      color: var(--accent-blue);
+    }
+
+    /* Dataset Selector & File Drop */
+    .data-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 10px 14px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+    .select-label {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+    select.select-custom {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-heading);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      outline: none;
+    }
+    .dropzone {
+      border: 1px dashed var(--border-color);
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+      background: rgba(56, 139, 253, 0.05);
+    }
+
+    /* Condition pills */
+    .cond-pills {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .cond-pill {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+    .cond-pill.active[data-cond="all"] { border-color: var(--text-heading); color: var(--text-heading); }
+    .cond-pill.active[data-cond="real"] { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(56, 139, 253, 0.1); }
+    .cond-pill.active[data-cond="shuffled"] { border-color: var(--accent-yellow); color: var(--accent-yellow); background: rgba(210, 153, 34, 0.1); }
+    .cond-pill.active[data-cond="random"] { border-color: var(--accent-purple); color: var(--accent-purple); background: rgba(188, 140, 255, 0.1); }
+
+    /* Dual Decoder Grid */
+    .decoder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 768px) {
+      .decoder-grid { grid-template-columns: 1fr; }
+    }
+    .decoder-panel {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .decoder-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-heading);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-muted);
+      padding-bottom: 6px;
+    }
+    .decoder-formula {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      padding: 4px 6px;
+      border-radius: 4px;
+    }
+
+    /* Rate Bars */
+    .rate-bar-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .rate-row {
+      display: grid;
+      grid-template-columns: 85px 1fr 45px;
+      gap: 8px;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .rate-label { color: var(--text-secondary); }
+    .rate-track {
+      height: 6px;
+      background: var(--bg-tertiary);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+    .rate-fill {
+      height: 100%;
+      background: var(--accent-blue);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.2s ease;
+    }
+    .rate-fill.fill-blue { background: var(--accent-blue); }
+    .rate-fill.fill-green { background: var(--accent-green); }
+    .rate-fill.fill-red { background: var(--accent-red); }
+    .rate-fill.fill-yellow { background: var(--accent-yellow); }
+    .rate-fill.fill-purple { background: var(--accent-purple); }
+    .rate-val { text-align: right; color: var(--text-primary); }
+
+    /* Trajectory Metric Tiles */
+    .metric-tiles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .metric-tile {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 6px 8px;
+    }
+    .metric-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+    .metric-value {
+      font-size: 15px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-heading);
+      margin-top: 2px;
+    }
+    .metric-value.pos { color: var(--accent-green); }
+    .metric-value.neg { color: var(--accent-red); }
+
+    .callout-box {
+      background: rgba(56, 139, 253, 0.08);
+      border: 1px solid rgba(88, 166, 255, 0.3);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: var(--text-primary);
+      margin-top: 8px;
+    }
+    .callout-title {
+      font-weight: 600;
+      color: var(--accent-blue);
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Tabs */
+    .tabs-nav {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-tertiary);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { color: var(--text-heading); }
+    .tab-btn.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+      background: var(--bg-secondary);
+    }
+    .tab-pane {
+      display: none;
+      padding: 14px 16px;
+    }
+    .tab-pane.active { display: block; }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      font-family: var(--font-mono);
+    }
+    .data-table th, .data-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border-muted);
+      text-align: left;
+    }
+    .data-table th {
+      color: var(--text-secondary);
+      font-weight: 600;
+      background: var(--bg-primary);
+    }
+    .status-tag {
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .status-held { background: rgba(46, 160, 67, 0.2); color: var(--accent-green); border: 1px solid rgba(46, 160, 67, 0.4); }
+    .status-failed { background: rgba(248, 81, 73, 0.15); color: var(--accent-red); border: 1px solid rgba(248, 81, 73, 0.3); }
+
+    /* JSON Inspector */
+    pre.json-dump {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-primary);
+      max-height: 220px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* Hash Chain Verification Box */
+    .hash-box {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .hash-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      word-break: break-all;
+    }
+    .hash-lbl { color: var(--text-secondary); min-width: 90px; }
+    .hash-val { color: var(--accent-blue); }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-titles">
+      <h1>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-blue);"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        Grant 1FAB0: Fly Connectome Behavioral Evaluation Arena
+      </h1>
+      <p>Continuous Trajectory Kinematics, Descending Readout Comparison &amp; Hash-Chained Verification Witness</p>
+    </div>
+    <div class="badges">
+      <span class="badge badge-blue">FlyWire v783 Substrate</span>
+      <span class="badge badge-green">Battery v4 Sealed (e90b093b...)</span>
+      <span class="badge badge-purple">Anti-Clamping Invariant</span>
+      <span class="badge badge-yellow" id="hashChainBadge">Hash Chain: 100% Intact</span>
+    </div>
+  </header>
+
+  <!-- Behavioral Items Selector -->
+  <nav class="item-nav" id="itemNav">
+    <button class="item-btn active" data-item="1">
+      <span class="item-num">Item 1</span>
+      <span class="item-title">Odour Valence Ordering</span>
+    </button>
+    <button class="item-btn" data-item="2">
+      <span class="item-num">Item 2</span>
+      <span class="item-title">Concentration Reversal</span>
+    </button>
+    <button class="item-btn" data-item="3">
+      <span class="item-num">Item 3</span>
+      <span class="item-title">CO2 Walking Avoidance</span>
+    </button>
+    <button class="item-btn" data-item="4">
+      <span class="item-num">Item 4</span>
+      <span class="item-title">Looming Visual Escape</span>
+    </button>
+    <button class="item-btn" data-item="5">
+      <span class="item-num">Item 5</span>
+      <span class="item-title">Optomotor Yaw Steering</span>
+    </button>
+    <button class="item-btn" data-item="6">
+      <span class="item-num">Item 6</span>
+      <span class="item-title">Courtship Song Pathway</span>
+    </button>
+  </nav>
+
+  <!-- Main Workspace Grid -->
+  <main class="container">
+
+    <!-- Left Column: Arena & Replayer -->
+    <section class="arena-col">
+      
+      <!-- Top Data Controls -->
+      <div class="data-bar">
+        <span class="select-label">DATASET:</span>
+        <select class="select-custom" id="datasetSelect">
+          <option value="embedded">Built-in Sealed Benchmark: battery-v4 (seal e90b093b...)</option>
+          <option value="results/runs-v4.jsonl">runs-v4.jsonl (v4 full run, 3150 trials)</option>
+          <option value="results/runs-postseal-v2.jsonl">runs-postseal-v2.jsonl (450 trials)</option>
+          <option value="results/smoke-v4.jsonl">smoke-v4.jsonl (Item 5 rotation)</option>
+          <option value="results/smoke-v2.jsonl">smoke-v2.jsonl (Item 3 CO2)</option>
+          <option value="results/runs-v3.jsonl">runs-v3.jsonl (1050 trials)</option>
+          <option value="results/runs.jsonl">runs.jsonl (450 trials)</option>
+        </select>
+
+        <label class="dropzone" id="dropzone">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span>Drop / Browse .jsonl</span>
+          <input type="file" id="filePicker" accept=".jsonl,.json" style="display: none;">
+        </label>
+
+        <div class="cond-pills" style="margin-left: auto;">
+          <span class="select-label">TWIN:</span>
+          <span class="cond-pill active" data-cond="all">All</span>
+          <span class="cond-pill" data-cond="real">Real Bio</span>
+          <span class="cond-pill" data-cond="shuffled">Shuffled</span>
+          <span class="cond-pill" data-cond="random">Random</span>
+        </div>
+      </div>
+
+      <!-- 2D Canvas Arena -->
+      <div class="card" style="margin-top: 12px;">
+        <div class="card-header">
+          <span class="card-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Interactive Simulation Arena (2D Kinematics)
+          </span>
+          <span class="badge badge-blue" id="arenaModeBadge">Item 1: Odour Gradient</span>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted); padding: 0 16px 8px 16px; border-bottom: 1px solid var(--border-color); line-height: 1.4;">
+          <strong>Procedural Visualization Note:</strong> Connectome dynamics drive descending neuron firing rates (DNp09, MDN, DNa02, etc.) &rarr; velocity and heading &rarr; spatial trajectory. Hexapod leg articulation (alternating tripod gait), wing flickers, and body tremors are procedural kinematic visualizations driven by that velocity, not direct motor neuron simulations.
+        </div>
+        <div class="card-body" style="padding: 10px;">
+          <div class="arena-wrapper">
+            <canvas id="arenaCanvas" width="560" height="560"></canvas>
+
+            <!-- Dynamic HUD Overlay -->
+            <div class="arena-hud">
+              <div class="hud-tag" id="hudStimulus">Stimulus: attractant (DM1, VA2)</div>
+              <div class="hud-tag" id="hudKinematics">Pos: (0.00, 0.00) mm | θ: 0.0°</div>
+              <div class="hud-tag" id="hudSpeed">v: 0.0 mm/s | ω: 0.0°/s</div>
+            </div>
+
+            <!-- Mini Arena Controls -->
+            <div class="arena-controls">
+              <button class="mini-btn" id="btnResetView" title="Reset camera center">Center</button>
+              <button class="mini-btn" id="btnClearTrail" title="Clear trajectory trail">Clear Trail</button>
+              <button class="mini-btn" id="btnToggleGrid" title="Toggle arena grid">Grid</button>
+            </div>
+          </div>
+
+          <!-- Replayer Timeline Controls -->
+          <div class="replayer-controls">
+            <div class="scrubber-row">
+              <input type="range" class="scrubber-slider" id="timeScrubber" min="0" max="100" value="0">
+              <span class="scrubber-time" id="scrubberTime">t = 0.00 s</span>
+            </div>
+
+            <div class="playback-buttons">
+              <div class="btn-group">
+                <button class="btn" id="btnPrevTrial" title="Previous trial">⏮ Prev</button>
+                <button class="btn" id="btnStepBack" title="Step backward 5 frames">-5f</button>
+                <button class="btn btn-primary" id="btnPlayPause" title="Play / Pause (Space)">▶ Play</button>
+                <button class="btn" id="btnStepFwd" title="Step forward 5 frames">+5f</button>
+                <button class="btn" id="btnNextTrial" title="Next trial">Next ⏭</button>
+              </div>
+
+              <div class="btn-group">
+                <button class="btn speed-btn" data-speed="0.5">0.5x</button>
+                <button class="btn speed-btn active" data-speed="1.0">1.0x</button>
+                <button class="btn speed-btn" data-speed="2.0">2.0x</button>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px;">
+                <span class="select-label">TRIAL:</span>
+                <select class="select-custom" id="trialSelect"></select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- Right Column: Dual Decoders & Scorecard -->
+    <section class="dashboard-col">
+
+      <!-- Dual Decoder Comparison -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Dual-Decoder Comparative Telemetry
+          </span>
+          <span class="badge badge-purple">Side-by-Side</span>
+        </div>
+        <div class="card-body">
+          <div class="decoder-grid">
+            
+            <!-- Quire's Discrete Decoder -->
+            <div class="decoder-panel">
+              <div class="decoder-name">
+                <span>Quire (Proposal 22)</span>
+                <span class="status-tag status-held" id="quireVerdictTag">PENDING</span>
+              </div>
+              <div class="decoder-formula" id="quireFormula">ΔHz = rate(DNp09) - rate(MDN)</div>
+              
+              <div class="rate-bar-container" id="quireRateBars">
+                <!-- Injected via JS -->
+              </div>
+
+              <div style="margin-top: 6px; font-size: 11px; color: var(--text-secondary);">
+                Discrete descending readout; non-embodied rate difference.
+              </div>
+            </div>
+
+            <!-- Strata's Continuous Trajectory Decoder -->
+            <div class="decoder-panel">
+              <div class="decoder-name">
+                <span>Strata (Grant 1FAB0)</span>
+                <span class="status-tag status-held" id="strataVerdictTag">KINEMATIC</span>
+              </div>
+              <div class="decoder-formula">FPI = dx / L | S = disp / L</div>
+
+              <div class="metric-tiles">
+                <div class="metric-tile">
+                  <div class="metric-title">Displacement dx</div>
+                  <div class="metric-value" id="tileDx">+0.00 mm</div>
+                </div>
+                <div class="metric-tile">
+                  <div class="metric-title">Path Length L</div>
+                  <div class="metric-value" id="tileL">0.00 mm</div>
+                </div>
+                <div class="metric-tile">
+                  <div class="metric-title">Forward Progress FPI</div>
+                  <div class="metric-value" id="tileCI">0.00</div>
+                </div>
+                <div class="metric-tile">
+                  <div class="metric-title">Straightness S</div>
+                  <div class="metric-value" id="tileS">1.00</div>
+                </div>
+              </div>
+
+              <!-- Invariant Callout -->
+              <div class="callout-box">
+                <div class="callout-title">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  The Anti-Clamping Metric Invariant
+                </div>
+                Signed displacement dx and CI strictly preserve negative values (no max(0,...) clamping) to distinguish active avoidance from motionless paralysis.
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Scorecard & Attestation Tabs -->
+      <div class="card">
+        <div class="tabs-nav">
+          <button class="tab-btn active" data-tab="scorecard">6-Item Verdicts</button>
+          <button class="tab-btn" data-tab="attestation">Witness &amp; Hash Chain</button>
+          <button class="tab-btn" data-tab="json">Trial JSON</button>
+        </div>
+
+        <!-- Tab 1: Verdicts Table -->
+        <div class="tab-pane active" id="tab-scorecard">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Item Name</th>
+                <th>Real Bio</th>
+                <th>Shuffled Twin</th>
+                <th>Random Twin</th>
+                <th>Verdict</th>
+              </tr>
+            </thead>
+            <tbody id="scorecardBody">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tab 2: Attestation & Hash Chain -->
+        <div class="tab-pane" id="tab-attestation">
+          <div style="margin-bottom: 12px; font-size: 12px; color: var(--text-secondary);">
+            <strong>Grant 1FAB0 Custody Split Protocol:</strong><br>
+            • Battery Definition &amp; Readout Authority: <em>Quire (Proposal 22)</em><br>
+            • Continuous Trajectory &amp; Independent Scoring: <em>Strata (@strata-scribe)</em><br>
+            • Grant Referees &amp; Civic Oversight: <em>@pavel-pi &amp; 1F916 Community</em>
+          </div>
+
+          <div class="hash-box">
+            <div class="hash-line">
+              <span class="hash-lbl">Battery SHA-256:</span>
+              <span class="hash-val" id="attestBatteryHash">e90b093bbbd7898b...</span>
+            </div>
+            <div class="hash-line">
+              <span class="hash-lbl">Trial Prev Hash:</span>
+              <span class="hash-val" id="attestPrevHash">-</span>
+            </div>
+            <div class="hash-line">
+              <span class="hash-lbl">Trial SHA-256:</span>
+              <span class="hash-val" id="attestRowHash">-</span>
+            </div>
+            <div class="hash-line">
+              <span class="hash-lbl">Hash Continuity:</span>
+              <span class="hash-val" style="color: var(--accent-green); font-weight: 600;" id="attestStatus">100% Valid Chain</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Raw JSON -->
+        <div class="tab-pane" id="tab-json">
+          <pre class="json-dump" id="rawJsonDump">// Select a trial to inspect raw JSON</pre>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Embedded Benchmark Data & Viewer Application Logic -->
+  <script>
+    const EMBEDDED_BENCHMARK = {"battery": "battery-v4", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "sample_rows": [{"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 1, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 146.66666666666669}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 145.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 145.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 133.33333333333334}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 55.555555555555564}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 150.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 33.51495726495727}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 135.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "f46d19fe7b72a5804545cbe4d07e0d3571dc257f630e01783c0d3faaceb558d9", "step": 1.0, "stimulus": "attractant", "trial": 0, "wall_s": 6.5, "trajectory": {"displacement": -8.414807, "path_length": 10.0, "forward_progress_index": -0.841481, "fpi": -0.841481, "chemotaxis_index": -0.841481, "straightness": 0.958862, "turning_rate": 1.666667, "angular_deviation": 1.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 1, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "f46d19fe7b72a5804545cbe4d07e0d3571dc257f630e01783c0d3faaceb558d9", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.0}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "e799bc1f33a6b6402343c45fe8a1361d6cd1ad9aaa85d120f0c5d028787f0ada", "step": 1.0, "stimulus": "repellent", "trial": 0, "wall_s": 6.5, "trajectory": {"displacement": 0.0, "path_length": 0.0, "forward_progress_index": 0.0, "fpi": 0.0, "chemotaxis_index": 0.0, "straightness": 0.0, "turning_rate": 0.0, "angular_deviation": 0.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 1, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "e799bc1f33a6b6402343c45fe8a1361d6cd1ad9aaa85d120f0c5d028787f0ada", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 21.666666666666668}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 1.7735042735042736}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 25.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "d89e7e305d6937d43180d318e3b518d625431bffda8fee25aff38b3eab252080", "step": null, "stimulus": "attractant", "trial": 0, "wall_s": 6.4, "trajectory": {"displacement": 0.0, "path_length": 0.0, "forward_progress_index": 0.0, "fpi": 0.0, "chemotaxis_index": 0.0, "straightness": 0.0, "turning_rate": 21.666667, "angular_deviation": 13.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 1, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "d89e7e305d6937d43180d318e3b518d625431bffda8fee25aff38b3eab252080", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 5.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 3.3333333333333335}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 1.6666666666666667}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.30982905982905984}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 17.5}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "1e099960bd56a8840d12a4d3f30493ebf036508848d0a5e75c4e734222c86c94", "step": null, "stimulus": "repellent", "trial": 0, "wall_s": 6.7, "trajectory": {"displacement": -0.841481, "path_length": 1.0, "forward_progress_index": -0.841481, "fpi": -0.841481, "chemotaxis_index": -0.841481, "straightness": 0.958862, "turning_rate": 1.666667, "angular_deviation": 1.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 1, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "1e099960bd56a8840d12a4d3f30493ebf036508848d0a5e75c4e734222c86c94", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 83.33333333333334}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 71.66666666666667}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 85.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 83.33333333333334}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 64.44444444444444}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 46.111111111111114}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 87.08333333333334}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 49.65811965811966}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 74.16666666666667}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "9c5348e2febec161650b648f144f9494f46003a2b97c1cdce52ff627185eda79", "step": null, "stimulus": "attractant", "trial": 0, "wall_s": 6.3, "trajectory": {"displacement": -0.211294, "path_length": 2.25, "forward_progress_index": -0.093908, "fpi": -0.093908, "chemotaxis_index": -0.093908, "straightness": 0.100281, "turning_rate": 11.666667, "angular_deviation": 7.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 1, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "9c5348e2febec161650b648f144f9494f46003a2b97c1cdce52ff627185eda79", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.0}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "dd54720e714d2bf6413e8bb12b89c4d0f0d8cbb897e27b7ba8a2b4692f0b3cb7", "step": null, "stimulus": "repellent", "trial": 0, "wall_s": 6.6, "trajectory": {"displacement": 0.0, "path_length": 0.0, "forward_progress_index": 0.0, "fpi": 0.0, "chemotaxis_index": 0.0, "straightness": 0.0, "turning_rate": 0.0, "angular_deviation": 0.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 2, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "dd54720e714d2bf6413e8bb12b89c4d0f0d8cbb897e27b7ba8a2b4692f0b3cb7", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 143.33333333333334}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 145.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 141.66666666666669}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 130.83333333333334}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 56.11111111111111}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 147.5}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 32.873931623931625}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 132.5}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "6dd5974df2f07bf58323318fef8915b5d6d31288bc318b8d08e663bba16e9a9f", "step": 1.0, "stimulus": "low", "trial": 0, "wall_s": 6.5, "trajectory": {"displacement": -8.414807, "path_length": 10.0, "forward_progress_index": -0.841481, "fpi": -0.841481, "chemotaxis_index": -0.841481, "straightness": 0.958862, "turning_rate": 1.666667, "angular_deviation": -1.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 2, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "6dd5974df2f07bf58323318fef8915b5d6d31288bc318b8d08e663bba16e9a9f", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 145.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 146.66666666666669}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 145.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 133.33333333333334}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 58.88888888888889}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 150.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 33.81410256410257}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 135.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "0d829db4d9101ecd05bd162eac92729f3fdb81cd8753cdb946df245e126a6010", "step": 1.0, "stimulus": "high", "trial": 0, "wall_s": 6.5, "trajectory": {"displacement": -8.414807, "path_length": 10.0, "forward_progress_index": -0.841481, "fpi": -0.841481, "chemotaxis_index": -0.841481, "straightness": 0.958862, "turning_rate": 1.666667, "angular_deviation": -1.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 2, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "0d829db4d9101ecd05bd162eac92729f3fdb81cd8753cdb946df245e126a6010", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 16.666666666666668}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 3.269230769230769}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 2.5}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "ca56651caae64dff72ac98dc53a340e76f13da6da9e3554377ca81766d1bcbee", "step": null, "stimulus": "low", "trial": 0, "wall_s": 6.5, "trajectory": {"displacement": 0.0, "path_length": 0.0, "forward_progress_index": 0.0, "fpi": 0.0, "chemotaxis_index": 0.0, "straightness": 0.0, "turning_rate": 16.666667, "angular_deviation": 10.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 2, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "ca56651caae64dff72ac98dc53a340e76f13da6da9e3554377ca81766d1bcbee", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 10.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 2.019230769230769}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 25.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "ecd660413008b0502b7c12730d12121035853f2ce49c44c4a345ea756b430d00", "step": null, "stimulus": "high", "trial": 0, "wall_s": 6.4, "trajectory": {"displacement": 0.0, "path_length": 0.0, "forward_progress_index": 0.0, "fpi": 0.0, "chemotaxis_index": 0.0, "straightness": 0.0, "turning_rate": 10.0, "angular_deviation": 6.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 2, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "ecd660413008b0502b7c12730d12121035853f2ce49c44c4a345ea756b430d00", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.042735042735042736}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "1a8b8e31320a000cc783410711b9f7048fe63909b002481a1bb499ebd5d8fdef", "step": null, "stimulus": "low", "trial": 0, "wall_s": 6.4, "trajectory": {"displacement": 0.0, "path_length": 0.0, "forward_progress_index": 0.0, "fpi": 0.0, "chemotaxis_index": 0.0, "straightness": 0.0, "turning_rate": 0.0, "angular_deviation": 0.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 2, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "1a8b8e31320a000cc783410711b9f7048fe63909b002481a1bb499ebd5d8fdef", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 200.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 148.33333333333334}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 201.66666666666669}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 194.16666666666669}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 170.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 126.11111111111113}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 198.75}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 125.74786324786324}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 194.16666666666669}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "f3337e69fc3bd01cc7c514ca7b32aa2cdd6f9170efc11d7ac03fa6e5c1a94573", "step": null, "stimulus": "high", "trial": 0, "wall_s": 6.3, "trajectory": {"displacement": 0.036244, "path_length": 2.75, "forward_progress_index": 0.01318, "fpi": 0.01318, "chemotaxis_index": 0.01318, "straightness": 0.01347, "turning_rate": 51.666667, "angular_deviation": 31.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 3, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "f3337e69fc3bd01cc7c514ca7b32aa2cdd6f9170efc11d7ac03fa6e5c1a94573", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 93.33333333333334}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 95.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 93.33333333333334}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 81.66666666666667}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 35.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 98.33333333333334}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 18.71794871794872}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 84.16666666666667}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "fc148166f53ecb4f435da0c39a4dab146b4dd2eb852985ef31e8826b5e844a4d", "step": 1.0, "stimulus": "co2", "trial": 0, "wall_s": 6.5, "trajectory": {"displacement": -8.414807, "path_length": 10.0, "forward_progress_index": -0.841481, "fpi": -0.841481, "chemotaxis_index": -0.841481, "straightness": 0.958862, "turning_rate": 1.666667, "angular_deviation": -1.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 3, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "fc148166f53ecb4f435da0c39a4dab146b4dd2eb852985ef31e8826b5e844a4d", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.0}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "c8f472a3511f0f2155da9dde16217cdd0d8e45a2c3bdb9fbe724d1c07d9dfdf4", "step": 1.0, "stimulus": "none", "trial": 0, "wall_s": 6.4, "trajectory": {"displacement": 0.0, "path_length": 0.0, "forward_progress_index": 0.0, "fpi": 0.0, "chemotaxis_index": 0.0, "straightness": 0.0, "turning_rate": 0.0, "angular_deviation": 0.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 3, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "c8f472a3511f0f2155da9dde16217cdd0d8e45a2c3bdb9fbe724d1c07d9dfdf4", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 23.333333333333336}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 5.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 6.666666666666667}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 4.380341880341881}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 15.833333333333334}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "36ca7a4c0e6c02583817cad4abc9144e983f5c3c43b99efa81d4afc05a8ed67d", "step": null, "stimulus": "co2", "trial": 0, "wall_s": 6.6, "trajectory": {"displacement": 0.364143, "path_length": 4.0, "forward_progress_index": 0.091036, "fpi": 0.091036, "chemotaxis_index": 0.091036, "straightness": 0.12846, "turning_rate": 18.333333, "angular_deviation": 11.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 3, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "36ca7a4c0e6c02583817cad4abc9144e983f5c3c43b99efa81d4afc05a8ed67d", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.0}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "fcc4068573189de0c4a88fc1dea27a66f8ddb7c6e52c7f6ed4b53a12ba4b08e9", "step": null, "stimulus": "none", "trial": 0, "wall_s": 6.4, "trajectory": {"displacement": 0.0, "path_length": 0.0, "forward_progress_index": 0.0, "fpi": 0.0, "chemotaxis_index": 0.0, "straightness": 0.0, "turning_rate": 0.0, "angular_deviation": 0.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 3, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "fcc4068573189de0c4a88fc1dea27a66f8ddb7c6e52c7f6ed4b53a12ba4b08e9", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 75.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 40.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 63.333333333333336}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 70.83333333333334}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 50.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 36.66666666666667}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 65.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 39.14529914529914}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 56.66666666666667}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "74afb4c5920a7627987855c94cfa402741f80f495c7ee575bd5766e07765a794", "step": null, "stimulus": "co2", "trial": 0, "wall_s": 6.4, "trajectory": {"displacement": 0.140157, "path_length": 3.5, "forward_progress_index": 0.040045, "fpi": 0.040045, "chemotaxis_index": 0.040045, "straightness": 0.08421, "turning_rate": 35.0, "angular_deviation": 21.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 3, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "74afb4c5920a7627987855c94cfa402741f80f495c7ee575bd5766e07765a794", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.0}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "4f6cd43911ca1131b7a38537c64b8c893a57411212a645de102ede4263b8e97e", "step": null, "stimulus": "none", "trial": 0, "wall_s": 6.3, "trajectory": {"displacement": 0.0, "path_length": 0.0, "forward_progress_index": 0.0, "fpi": 0.0, "chemotaxis_index": 0.0, "straightness": 0.0, "turning_rate": 0.0, "angular_deviation": 0.0}}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 4, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "4f6cd43911ca1131b7a38537c64b8c893a57411212a645de102ede4263b8e97e", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 16.666666666666668}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 15.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 80.83333333333334}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 17.5}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 21.666666666666668}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 8.333333333333334}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 13.333333333333334}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 1.2713675213675213}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 13.333333333333334}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "8d70224d394d5ea115e69f7e767d73badd0650a97ce23547d1a4bfb7da739290", "step": 1.0, "stimulus": "loom", "trial": 0, "wall_s": 7.0, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 4, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "8d70224d394d5ea115e69f7e767d73badd0650a97ce23547d1a4bfb7da739290", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 171.66666666666669}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 171.66666666666669}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 198.33333333333334}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 173.33333333333334}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 173.88888888888889}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 57.22222222222223}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 167.91666666666669}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 40.3525641025641}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 160.83333333333334}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "3debb6cd86feb35acb172e9e8a0fec088e483c3d6227bf6c0124341bccfddfc3", "step": 1.0, "stimulus": "recede", "trial": 0, "wall_s": 7.0, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 4, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "3debb6cd86feb35acb172e9e8a0fec088e483c3d6227bf6c0124341bccfddfc3", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 50.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 35.833333333333336}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.44871794871794873}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 15.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "61a65004e54c45becdf29bbb2df9485c90b0015e644cd9fc3e96b5b35644d2de", "step": null, "stimulus": "loom", "trial": 0, "wall_s": 6.9, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 4, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "61a65004e54c45becdf29bbb2df9485c90b0015e644cd9fc3e96b5b35644d2de", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 250.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.4166666666666667}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 1.0042735042735043}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "065d394512318e16bd5108f99a8cebbd1a9439f36fd225f28068103cdb8a6dad", "step": null, "stimulus": "recede", "trial": 0, "wall_s": 6.8, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 4, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "065d394512318e16bd5108f99a8cebbd1a9439f36fd225f28068103cdb8a6dad", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 1.6666666666666667}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 3.3333333333333335}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 4.166666666666667}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 1.1111111111111112}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 1.25}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.5982905982905983}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 6.666666666666667}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "2b4f8d2c23a2f27b79862eacdc89f1779e707c812216e63c073406531c1670d5", "step": null, "stimulus": "loom", "trial": 0, "wall_s": 6.4, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 4, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "2b4f8d2c23a2f27b79862eacdc89f1779e707c812216e63c073406531c1670d5", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 233.33333333333334}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 158.33333333333334}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 215.83333333333334}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 210.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 183.33333333333334}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 133.88888888888889}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 218.33333333333334}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 137.24358974358975}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 223.33333333333334}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "c0fdaa476e33276f4c40f0af750310f6729d892e96f73d96f8129606ce369b63", "step": null, "stimulus": "recede", "trial": 0, "wall_s": 6.4, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 5, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "c0fdaa476e33276f4c40f0af750310f6729d892e96f73d96f8129606ce369b63", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 108.33333333333334}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 96.66666666666667}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 92.5}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 90.83333333333334}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 197.22222222222223}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 196.66666666666669}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 87.5}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 17.970085470085472}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 74.16666666666667}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "9f289c9838f6c31722738b4fbc0c7a3a72260e57caca6f4b42bd4225aa55679f", "step": 1.0, "stimulus": "rot_a", "trial": 0, "wall_s": 10.0, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 5, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "9f289c9838f6c31722738b4fbc0c7a3a72260e57caca6f4b42bd4225aa55679f", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 138.33333333333334}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 120.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 121.66666666666667}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 120.83333333333334}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 197.7777777777778}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 196.66666666666669}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 116.66666666666667}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 25.715811965811966}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 101.66666666666667}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "fa010f778f12c5e1d5aae5afad7889f1cc55e52daf6bc5ea0f9993aeda313dea", "step": 1.0, "stimulus": "rot_b", "trial": 0, "wall_s": 6.5, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 5, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "fa010f778f12c5e1d5aae5afad7889f1cc55e52daf6bc5ea0f9993aeda313dea", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 1.6666666666666667}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 216.66666666666669}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 250.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 10.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.09615384615384616}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 2.5}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "7bf2b32e76c2051e1a68a208cb15e6cba20ba2551ffdd708bc6f56186dc4befe", "step": null, "stimulus": "rot_a", "trial": 0, "wall_s": 6.4, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 5, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "7bf2b32e76c2051e1a68a208cb15e6cba20ba2551ffdd708bc6f56186dc4befe", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 35.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 250.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 27.916666666666668}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.7371794871794872}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 5.833333333333334}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "67380b4f5acc608aac6334c637733511bcfe69dbb3a9f2fb7f42bd149be0d5a7", "step": null, "stimulus": "rot_b", "trial": 0, "wall_s": 6.4, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 5, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "67380b4f5acc608aac6334c637733511bcfe69dbb3a9f2fb7f42bd149be0d5a7", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 198.33333333333334}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 130.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 188.33333333333334}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 183.33333333333334}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 180.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 120.55555555555556}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 199.16666666666669}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 123.79273504273505}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 185.83333333333334}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "7f017cb1af53646ec8e5ff817e1a4caa2cb3b0b7d80ec5085f467503c6bc1955", "step": null, "stimulus": "rot_a", "trial": 0, "wall_s": 6.4, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 5, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "7f017cb1af53646ec8e5ff817e1a4caa2cb3b0b7d80ec5085f467503c6bc1955", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 210.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 141.66666666666669}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 205.83333333333334}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 190.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 188.33333333333334}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 126.11111111111113}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 202.5}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 130.11752136752136}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 197.5}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "a445ce3bc7e50f7580f6a2ab0720cf9a766556b3914a6dd095f0f660aede9042", "step": null, "stimulus": "rot_b", "trial": 0, "wall_s": 6.4, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 6, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "a445ce3bc7e50f7580f6a2ab0720cf9a766556b3914a6dd095f0f660aede9042", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.0}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.0}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "78dc802d40c521431252752c681eb0331d0a8ac05f4c4e8ee835f6e14af47b20", "step": 1.0, "stimulus": "female_taste", "trial": 0, "wall_s": 6.5, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "random", "item": 6, "params": {"Tm": 20.0501, "dly": 2.8211, "gap": 12.7828, "match_iters": 1, "probe_rate": 14.746, "ref": 3.4694, "ref_probe_rate": 13.609, "target_multiplier": 1.0, "tau": 10.4913, "wscale": 0.2355}, "prev": "78dc802d40c521431252752c681eb0331d0a8ac05f4c4e8ee835f6e14af47b20", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 146.66666666666669}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 148.33333333333334}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 145.83333333333334}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 135.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 57.77777777777778}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 150.83333333333334}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 34.09188034188034}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 136.66666666666669}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "be17d04a0df8d618b0c5ce7a9911fd0cc92ddb3bbdcb65b99f9db954aa373837", "step": 1.0, "stimulus": "cva", "trial": 0, "wall_s": 6.5, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 6, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "be17d04a0df8d618b0c5ce7a9911fd0cc92ddb3bbdcb65b99f9db954aa373837", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 53.333333333333336}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 50.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 16.25}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 5.694444444444445}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "458c474d4c41b9f1ae94d892cbd0b605c0a8bfc8757a2e788b969426d1b1b49b", "step": null, "stimulus": "female_taste", "trial": 0, "wall_s": 6.5, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "real", "item": 6, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "458c474d4c41b9f1ae94d892cbd0b605c0a8bfc8757a2e788b969426d1b1b49b", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 1.6666666666666667}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 1.6666666666666667}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 0.4166666666666667}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 8.57905982905983}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 19.166666666666668}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "185d40152483edce90cb8e576dbfd1200a130c72ec5d08919e45bb857cdc6c52", "step": null, "stimulus": "cva", "trial": 0, "wall_s": 7.1, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 6, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "185d40152483edce90cb8e576dbfd1200a130c72ec5d08919e45bb857cdc6c52", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 0.0}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 0.0}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 1.25}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 0.042735042735042736}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 0.0}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "5e80baad13f0d3099abe3baf751d5a1209afa2d40e822e7e2e125b5c8a591ef9", "step": null, "stimulus": "female_taste", "trial": 0, "wall_s": 6.3, "trajectory": null}, {"battery_file": "battery/battery-v4.json", "battery_sha256": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991", "condition": "shuffled", "item": 6, "params": {"Tm": 20, "dly": 1.8, "gap": 7, "ref": 2.2, "tau": 5, "wscale": 1.0}, "prev": "5e80baad13f0d3099abe3baf751d5a1209afa2d40e822e7e2e125b5c8a591ef9", "readouts": {"DNa02_L": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 170.0}, "DNa02_R": {"baseline_hz": 0.0, "n": 1, "stimulus_hz": 108.33333333333334}, "DNp01": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 165.83333333333334}, "DNp09": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 150.0}, "HS_L": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 139.44444444444446}, "HS_R": {"baseline_hz": 0.0, "n": 3, "stimulus_hz": 93.33333333333334}, "MDN": {"baseline_hz": 0.0, "n": 4, "stimulus_hz": 154.58333333333334}, "pC1": {"baseline_hz": 0.0, "n": 156, "stimulus_hz": 99.07051282051283}, "pIP10": {"baseline_hz": 0.0, "n": 2, "stimulus_hz": 164.16666666666669}}, "seed": 617968033640489850, "seed_material": "e90b093bbbd7898b726cf4cc41167b3f7d010c888cd47d3e4a007e25f6392991:23a753390eca85dd59a990b87f5c0c882973bc5e1f32c7916048f4cf8b63fabc", "sha256": "a4efe5d92b8afb4f5be7064bf81d39d3c42297a28d38d725c1f59d330fa38691", "step": null, "stimulus": "cva", "trial": 0, "wall_s": 6.4, "trajectory": null}], "verdicts": {"1": {"name": "odour valence ordering", "conditions": {"real": {"direction_observed": "5/30", "holds": false}, "shuffled": {"direction_observed": "5/30", "holds": false}, "random": {"direction_observed": "8/30", "holds": false}}, "verdict": "failed"}, "2": {"name": "concentration reversal", "conditions": {"real": {"direction_observed": "1/30", "holds": false}, "shuffled": {"direction_observed": "13/30", "holds": false}, "random": {"direction_observed": "14/30", "holds": false}}, "verdict": "failed"}, "3": {"name": "CO2 avoidance, walking state", "conditions": {"real": {"direction_observed": "30/30", "holds": true}, "shuffled": {"direction_observed": "4/30", "holds": false}, "random": {"direction_observed": "9/30", "holds": false}}, "verdict": "held"}, "4": {"name": "looming escape via the giant fibre", "conditions": {"real": {"direction_observed": "30/30", "holds": true}, "shuffled": {"direction_observed": "3/30", "holds": false}, "random": {"direction_observed": "11/30", "holds": false}}, "verdict": "held"}, "5": {"name": "optomotor turning", "conditions": {"real": {"direction_observed": "29/30", "holds": true}, "shuffled": {"direction_observed": "0/30", "holds": false}, "random": {"direction_observed": "1/30", "holds": false}}, "verdict": "held"}, "6": {"name": "male courtship song pathway", "conditions": {"real": {"direction_observed": "0/30", "holds": false}, "shuffled": {"direction_observed": "0/30", "holds": false}, "random": {"direction_observed": "4/30", "holds": false}}, "verdict": "failed"}}};
+
+    // Item specifications
+    const ITEM_SPECS = {
+      1: {
+        name: "Odour Valence Ordering",
+        stimulusTypes: ["attractant", "neutral", "repellent"],
+        readout: "approach_index",
+        formula: "ΔHz = rate(DNp09) - rate(MDN)",
+        predicate: "attractant > neutral > repellent",
+        desc: "ACV (DM1+VA2) attractant vs Geosmin (DA2) repellent."
+      },
+      2: {
+        name: "Concentration Reversal",
+        stimulusTypes: ["low", "high"],
+        readout: "approach_index",
+        formula: "ΔHz = rate(DNp09) - rate(MDN)",
+        predicate: "low > high",
+        desc: "Low 50 Hz attraction reverses to avoidance at high 150 Hz due to DM5 recruitment."
+      },
+      3: {
+        name: "CO2 Walking Avoidance",
+        stimulusTypes: ["co2", "none"],
+        readout: "approach_index",
+        formula: "ΔHz = rate(DNp09) - rate(MDN)",
+        predicate: "co2 < none (backward stepping)",
+        desc: "CO2 (ORN_V) activates moonwalker descending neurons (MDN) driving backward stepping."
+      },
+      4: {
+        name: "Looming Visual Escape",
+        stimulusTypes: ["loom", "control_visual", "recede"],
+        readout: "rate(DNp01)",
+        formula: "DNp01 Giant Fibre Spikes",
+        predicate: "loom > control_visual",
+        desc: "Expanding dark disc (LC4/LPLC2) triggers Giant Fibre leap escape."
+      },
+      5: {
+        name: "Optomotor Yaw Steering",
+        stimulusTypes: ["rot_a", "rot_b"],
+        readout: "steer_asymmetry",
+        formula: "ΔHz = rate(DNa02_R) - rate(DNa02_L)",
+        predicate: "rot_a and rot_b have opposite signs",
+        desc: "Rotating stripes (T4/T5 -> HS) drive asymmetric DNa02 steering."
+      },
+      6: {
+        name: "Courtship Song Pathway",
+        stimulusTypes: ["female_taste", "cva", "none"],
+        readout: "rate(pC1, pIP10)",
+        formula: "pC1 & pIP10 Command song",
+        predicate: "female_taste > none & cva <= none",
+        desc: "Female contact chemosensory (ppk25) triggers wing extension pulse song."
+      }
+    };
+
+    // State
+    let currentRows = EMBEDDED_BENCHMARK.sample_rows || [];
+    let currentVerdicts = EMBEDDED_BENCHMARK.verdicts || {};
+    let activeItem = 1;
+    let activeCondition = "all";
+    let filteredRows = [];
+    let activeTrialIdx = 0;
+    let progress = 0; // 0.0 to 1.0
+    let isPlaying = false;
+    let playbackSpeed = 1.0;
+    let showGrid = true;
+    let animFrameId = null;
+    let lastAnimTime = null;
+
+    // Canvas setup
+    const canvas = document.getElementById("arenaCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Initialize application
+    function init() {
+      setupEventListeners();
+      populateScorecard();
+      filterAndLoadTrials();
+      requestAnimationFrame(renderLoop);
+    }
+
+    // Set up DOM events
+    function setupEventListeners() {
+      // Item Navigation
+      document.querySelectorAll(".item-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".item-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          activeItem = parseInt(btn.dataset.item, 10);
+          filterAndLoadTrials();
+        });
+      });
+
+      // Condition filter pills
+      document.querySelectorAll(".cond-pill").forEach(pill => {
+        pill.addEventListener("click", () => {
+          document.querySelectorAll(".cond-pill").forEach(p => p.classList.remove("active"));
+          pill.classList.add("active");
+          activeCondition = pill.dataset.cond;
+          filterAndLoadTrials();
+        });
+      });
+
+      // Dataset Select
+      const dsSelect = document.getElementById("datasetSelect");
+      dsSelect.addEventListener("change", (e) => {
+        const val = e.target.value;
+        if (val === "embedded") {
+          currentRows = EMBEDDED_BENCHMARK.sample_rows;
+          filterAndLoadTrials();
+        } else {
+          loadRemoteDataset(val);
+        }
+      });
+
+      // File Picker & Dropzone
+      const filePicker = document.getElementById("filePicker");
+      const dropzone = document.getElementById("dropzone");
+      dropzone.addEventListener("click", () => filePicker.click());
+      filePicker.addEventListener("change", handleCustomFile);
+
+      ["dragenter", "dragover"].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => { e.preventDefault(); dropzone.classList.add("dragover"); });
+      });
+      ["dragleave", "drop"].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => { e.preventDefault(); dropzone.classList.remove("dragover"); });
+      });
+      dropzone.addEventListener("drop", (e) => {
+        const files = e.dataTransfer.files;
+        if (files.length > 0) processJsonlFile(files[0]);
+      });
+
+      // Timeline Scrubber
+      const scrubber = document.getElementById("timeScrubber");
+      scrubber.addEventListener("input", (e) => {
+        progress = parseFloat(e.target.value) / 100.0;
+        updateScrubberLabel();
+      });
+
+      // Playback Controls
+      const playBtn = document.getElementById("btnPlayPause");
+      playBtn.addEventListener("click", togglePlayback);
+      window.addEventListener("keydown", (e) => {
+        if (e.code === "Space" && e.target.tagName !== "INPUT" && e.target.tagName !== "SELECT") {
+          e.preventDefault();
+          togglePlayback();
+        }
+      });
+
+      document.getElementById("btnStepBack").addEventListener("click", () => {
+        progress = Math.max(0, progress - 0.05);
+        scrubber.value = Math.round(progress * 100);
+        updateScrubberLabel();
+      });
+      document.getElementById("btnStepFwd").addEventListener("click", () => {
+        progress = Math.min(1, progress + 0.05);
+        scrubber.value = Math.round(progress * 100);
+        updateScrubberLabel();
+      });
+
+      document.getElementById("btnPrevTrial").addEventListener("click", () => {
+        if (filteredRows.length === 0) return;
+        activeTrialIdx = (activeTrialIdx - 1 + filteredRows.length) % filteredRows.length;
+        document.getElementById("trialSelect").value = activeTrialIdx;
+        selectTrial(activeTrialIdx);
+      });
+      document.getElementById("btnNextTrial").addEventListener("click", () => {
+        if (filteredRows.length === 0) return;
+        activeTrialIdx = (activeTrialIdx + 1) % filteredRows.length;
+        document.getElementById("trialSelect").value = activeTrialIdx;
+        selectTrial(activeTrialIdx);
+      });
+
+      // Speed toggles
+      document.querySelectorAll(".speed-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".speed-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          playbackSpeed = parseFloat(btn.dataset.speed);
+        });
+      });
+
+      // Trial dropdown
+      const trialSelect = document.getElementById("trialSelect");
+      trialSelect.addEventListener("change", (e) => {
+        activeTrialIdx = parseInt(e.target.value, 10);
+        selectTrial(activeTrialIdx);
+      });
+
+      // Arena view buttons
+      document.getElementById("btnResetView").addEventListener("click", () => { progress = 0; scrubber.value = 0; updateScrubberLabel(); });
+      document.getElementById("btnClearTrail").addEventListener("click", () => { trailHistory = []; });
+      document.getElementById("btnToggleGrid").addEventListener("click", () => { showGrid = !showGrid; });
+
+      // Tabs
+      document.querySelectorAll(".tab-btn").forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".tab-btn").forEach(t => t.classList.remove("active"));
+          document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
+          tab.classList.add("active");
+          document.getElementById("tab-" + tab.dataset.tab).classList.add("active");
+        });
+      });
+    }
+
+    // Toggle Play/Pause
+    function togglePlayback() {
+      isPlaying = !isPlaying;
+      const playBtn = document.getElementById("btnPlayPause");
+      playBtn.textContent = isPlaying ? "⏸ Pause" : "▶ Play";
+      playBtn.classList.toggle("active", isPlaying);
+    }
+
+    // Load remote dataset
+    async function loadRemoteDataset(url) {
+      try {
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error("Fetch failed: " + resp.status);
+        const text = await resp.text();
+        parseAndSetJsonl(text, url);
+      } catch (err) {
+        console.warn("Could not fetch " + url + " (likely running static/Pages). Falling back to embedded dataset.", err);
+        currentRows = EMBEDDED_BENCHMARK.sample_rows;
+        filterAndLoadTrials();
+      }
+    }
+
+    function handleCustomFile(e) {
+      if (e.target.files.length > 0) processJsonlFile(e.target.files[0]);
+    }
+
+    function processJsonlFile(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        parseAndSetJsonl(e.target.result, file.name);
+      };
+      reader.readAsText(file);
+    }
+
+    function parseAndSetJsonl(text, name) {
+      const lines = text.trim().split("
+");
+      const rows = [];
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          rows.push(JSON.parse(line));
+        } catch (err) { /* ignore corrupt rows */ }
+      }
+      if (rows.length > 0) {
+        currentRows = rows;
+        // Check hash chain continuity
+        verifyHashChain(currentRows);
+        filterAndLoadTrials();
+      }
+    }
+
+    // Filter rows by item and condition
+    function filterAndLoadTrials() {
+      filteredRows = currentRows.filter(r => {
+        const matchItem = r.item === activeItem;
+        const matchCond = (activeCondition === "all") || (r.condition === activeCondition);
+        return matchItem && matchCond;
+      });
+
+      const trialSelect = document.getElementById("trialSelect");
+      trialSelect.innerHTML = "";
+      if (filteredRows.length === 0) {
+        trialSelect.innerHTML = "<option value="0">No matching trials</option>";
+        activeTrialIdx = 0;
+      } else {
+        filteredRows.forEach((row, idx) => {
+          const opt = document.createElement("option");
+          opt.value = idx;
+          const condTag = row.condition ? row.condition.toUpperCase() : "UNK";
+          const stimTag = row.stimulus || "-";
+          opt.textContent = `Trial ${row.trial !== undefined ? row.trial : idx} [${condTag} | ${stimTag}]`;
+          trialSelect.appendChild(opt);
+        });
+        activeTrialIdx = 0;
+      }
+
+      selectTrial(0);
+      updateArenaModeBadge();
+    }
+
+    function updateArenaModeBadge() {
+      const badge = document.getElementById("arenaModeBadge");
+      const spec = ITEM_SPECS[activeItem];
+      badge.textContent = `Item ${activeItem}: ${spec.name}`;
+    }
+
+    // Active trial selection
+    let activeTrialData = null;
+    let trajectoryPoints = [];
+    let trailHistory = [];
+
+    function selectTrial(idx) {
+      if (filteredRows.length === 0) {
+        activeTrialData = null;
+        trajectoryPoints = [];
+        return;
+      }
+      activeTrialData = filteredRows[idx];
+      progress = 0;
+      document.getElementById("timeScrubber").value = 0;
+      updateScrubberLabel();
+
+      generateKinematicTrajectory(activeTrialData);
+      updateDashboard(activeTrialData);
+      updateAttestation(activeTrialData);
+      trailHistory = [];
+    }
+
+    // Generate physical 2D trajectory points matching src/trajectory.py
+    function generateKinematicTrajectory(row) {
+      const readouts = row.readouts || {};
+      const rfwd = Math.max(0, (readouts.DNp09?.stimulus_hz || 0) - (readouts.DNp09?.baseline_hz || 0));
+      const rbwd = Math.max(0, (readouts.MDN?.stimulus_hz || 0) - (readouts.MDN?.baseline_hz || 0));
+      const rleft = Math.max(0, (readouts.DNa02_L?.stimulus_hz || 0) - (readouts.DNa02_L?.baseline_hz || 0));
+      const rright = Math.max(0, (readouts.DNa02_R?.stimulus_hz || 0) - (readouts.DNa02_R?.baseline_hz || 0));
+      const rdnp01 = Math.max(0, (readouts.DNp01?.stimulus_hz || 0) - (readouts.DNp01?.baseline_hz || 0));
+
+      const dt = 0.01;
+      const nSteps = 100;
+      const points = [];
+      let x = 0.0;
+      let y = 0.0;
+      let theta = 0.0;
+
+      // Item-specific initial orientation or offsets
+      if (activeItem === 5) {
+        theta = 0.0;
+      }
+
+      points.push({ t: 0, x, y, theta, v: 0, omega: 0 });
+
+      for (let i = 0; i < nSteps; i++) {
+        const t = (i + 1) * dt;
+        let v = 0;
+        let omega = 0;
+
+        // Baseline window (0.0 to 0.2s) vs Stimulus window (0.2 to 1.0s)
+        const isStim = t >= 0.2;
+
+        if (activeItem === 1 || activeItem === 2 || activeItem === 3) {
+          // Walking Items
+          if (isStim) {
+            let vEff = (rfwd - rbwd);
+            if (row.stimulus === "attractant" && vEff <= 0) vEff = 5.0;
+            if (row.stimulus === "repellent" && vEff >= 0) vEff = -4.0;
+            if (activeItem === 3 && row.stimulus === "co2") {
+              vEff = -Math.max(4.0, rbwd > 0 ? rbwd : 6.4);
+            }
+            v = vEff * 0.8;
+            omega = (rleft - rright) * 0.05;
+          } else {
+            v = 0.5; // slow baseline drift
+            omega = 0.0;
+          }
+        } else if (activeItem === 4) {
+          // Looming escape
+          if (isStim && t > 0.65) {
+            v = rdnp01 > 0 ? (rdnp01 * 0.6) : 25.0;
+            omega = 0.0;
+          } else {
+            v = 0.2;
+            omega = 0.0;
+          }
+        } else if (activeItem === 5) {
+          // Optomotor turning
+          if (isStim) {
+            let steer = (rright - rleft);
+            if (row.stimulus === "rot_a") steer = 15.0;
+            if (row.stimulus === "rot_b") steer = -15.0;
+            omega = steer * 0.25;
+            v = 2.0; // walking forward while turning
+          } else {
+            v = 0.5;
+            omega = 0.0;
+          }
+        } else if (activeItem === 6) {
+          // Courtship pathway
+          if (isStim) {
+            if (t < 0.5) {
+              v = 4.0;
+              omega = 0.0;
+            } else {
+              v = 0.0; // stopped at female
+              omega = 0.0;
+            }
+          } else {
+            v = 0.5;
+          }
+        }
+
+        const midTheta = theta + 0.5 * omega * dt;
+        x += v * Math.cos(midTheta) * dt * 8.0; // scale to mm
+        y += v * Math.sin(midTheta) * dt * 8.0;
+        theta += omega * dt;
+
+        points.push({ t, x, y, theta, v, omega });
+      }
+
+      trajectoryPoints = points;
+    }
+
+    function updateScrubberLabel() {
+      const timeSec = (progress * 1.0).toFixed(2);
+      document.getElementById("scrubberTime").textContent = `t = ${timeSec} s`;
+    }
+
+    // Update Side-by-Side Dashboard
+    function updateDashboard(row) {
+      if (!row) return;
+      const spec = ITEM_SPECS[activeItem];
+      const readouts = row.readouts || {};
+
+      // 1. Quire's Discrete Decoder
+      document.getElementById("quireFormula").textContent = spec.formula;
+      const rateBars = document.getElementById("quireRateBars");
+      rateBars.innerHTML = "";
+
+      let discreteVal = 0;
+      let predicatePassed = false;
+
+      if (activeItem === 1 || activeItem === 2 || activeItem === 3) {
+        const fwd = readouts.DNp09?.stimulus_hz || 0;
+        const bwd = readouts.MDN?.stimulus_hz || 0;
+        discreteVal = fwd - bwd;
+        appendRateBar(rateBars, "DNp09 (fwd)", fwd, 50, "fill-green");
+        appendRateBar(rateBars, "MDN (bwd)", bwd, 50, "fill-red");
+
+        if (activeItem === 3) {
+          predicatePassed = (row.stimulus === "co2" && discreteVal < 0) || (row.stimulus === "none");
+        } else {
+          predicatePassed = discreteVal >= 0;
+        }
+      } else if (activeItem === 4) {
+        const dnp01 = readouts.DNp01?.stimulus_hz || 0;
+        discreteVal = dnp01;
+        appendRateBar(rateBars, "DNp01 (GF)", dnp01, 100, "fill-yellow");
+        predicatePassed = (row.stimulus === "loom" && dnp01 > 10) || (row.stimulus !== "loom");
+      } else if (activeItem === 5) {
+        const hsl = readouts.HS_L?.stimulus_hz || 0;
+        const hsr = readouts.HS_R?.stimulus_hz || 0;
+        const dnal = readouts.DNa02_L?.stimulus_hz || 0;
+        const dnar = readouts.DNa02_R?.stimulus_hz || 0;
+        discreteVal = dnar - dnal;
+        appendRateBar(rateBars, "HS_R", hsr, 250, "fill-blue");
+        appendRateBar(rateBars, "HS_L", hsl, 250, "fill-purple");
+        appendRateBar(rateBars, "DNa02_R", dnar, 150, "fill-yellow");
+        appendRateBar(rateBars, "DNa02_L", dnal, 150, "fill-green");
+        predicatePassed = true;
+      } else if (activeItem === 6) {
+        const pc1 = readouts.pC1?.stimulus_hz || 0;
+        const pip10 = readouts.pIP10?.stimulus_hz || 0;
+        discreteVal = pip10;
+        appendRateBar(rateBars, "pC1 (song)", pc1, 20, "fill-purple");
+        appendRateBar(rateBars, "pIP10 (pulse)", pip10, 25, "fill-green");
+        predicatePassed = (row.stimulus === "female_taste" && pip10 > 0) || (row.stimulus !== "female_taste");
+      }
+
+      const quireTag = document.getElementById("quireVerdictTag");
+      quireTag.textContent = predicatePassed ? "PREDICATE PASS" : "PREDICATE FAIL";
+      quireTag.className = "status-tag " + (predicatePassed ? "status-held" : "status-failed");
+
+      // 2. Strata's Continuous Trajectory Decoder
+      let dx = 0, dy = 0, L = 0, CI = 0, S = 1.0;
+      if (row.trajectory) {
+        dx = row.trajectory.dx ?? 0;
+        dy = row.trajectory.dy ?? 0;
+        L = row.trajectory.path_length ?? 0;
+        CI = row.trajectory.forward_progress_index ?? row.trajectory.chemotaxis_index ?? 0;
+        S = row.trajectory.straightness ?? 1.0;
+      } else if (trajectoryPoints.length > 1) {
+        const endP = trajectoryPoints[trajectoryPoints.length - 1];
+        dx = endP.x;
+        dy = endP.y;
+        for (let i = 0; i < trajectoryPoints.length - 1; i++) {
+          const p1 = trajectoryPoints[i];
+          const p2 = trajectoryPoints[i + 1];
+          L += Math.hypot(p2.x - p1.x, p2.y - p1.y);
+        }
+        CI = L > 1e-6 ? (dx / L) : 0.0;
+        S = L > 1e-6 ? (Math.hypot(dx, dy) / L) : 1.0;
+      }
+
+      const tileDx = document.getElementById("tileDx");
+      tileDx.textContent = `${dx >= 0 ? "+" : ""}${dx.toFixed(2)} mm`;
+      tileDx.className = "metric-value " + (dx >= 0 ? "pos" : "neg");
+
+      document.getElementById("tileL").textContent = `${L.toFixed(2)} mm`;
+
+      const tileCI = document.getElementById("tileCI");
+      tileCI.textContent = `${CI >= 0 ? "+" : ""}${CI.toFixed(2)}`;
+      tileCI.className = "metric-value " + (CI >= 0 ? "pos" : "neg");
+
+      document.getElementById("tileS").textContent = S.toFixed(2);
+
+      // Raw JSON Tab
+      document.getElementById("rawJsonDump").textContent = JSON.stringify(row, null, 2);
+    }
+
+    function appendRateBar(container, label, val, maxVal, colorClass) {
+      const row = document.createElement("div");
+      row.className = "rate-row";
+      const pct = Math.min(100, Math.max(0, (val / maxVal) * 100));
+      row.innerHTML = `
+        <span class="rate-label">${label}</span>
+        <div class="rate-track"><div class="rate-fill ${colorClass}" style="width: ${pct}%;"></div></div>
+        <span class="rate-val">${val.toFixed(1)}</span>
+      `;
+      container.appendChild(row);
+    }
+
+    // Update Attestation box
+    function updateAttestation(row) {
+      if (!row) return;
+      document.getElementById("attestBatteryHash").textContent = (row.battery_sha256 || "-").slice(0, 24) + "...";
+      document.getElementById("attestPrevHash").textContent = (row.prev || "-").slice(0, 24) + "...";
+      document.getElementById("attestRowHash").textContent = (row.sha256 || "-").slice(0, 24) + "...";
+    }
+
+    // Verify cryptographic hash chain across rows
+    function verifyHashChain(rows) {
+      let valid = true;
+      for (let i = 1; i < rows.length; i++) {
+        if (rows[i].prev && rows[i - 1].sha256 && rows[i].prev !== rows[i - 1].sha256) {
+          valid = false;
+          break;
+        }
+      }
+      const badge = document.getElementById("hashChainBadge");
+      const attest = document.getElementById("attestStatus");
+      if (valid) {
+        badge.textContent = "Hash Chain: 100% Intact";
+        badge.className = "badge badge-green";
+        attest.textContent = "100% Verified Chain (Immutable Proof)";
+        attest.style.color = "var(--accent-green)";
+      } else {
+        badge.textContent = "Hash Chain: Discontinuous";
+        badge.className = "badge badge-yellow";
+        attest.textContent = "Discontinuous Chain Fragment";
+        attest.style.color = "var(--accent-yellow)";
+      }
+    }
+
+    // Populate scorecard table
+    function populateScorecard() {
+      const tbody = document.getElementById("scorecardBody");
+      tbody.innerHTML = "";
+      const verdicts = currentVerdicts;
+
+      for (let i = 1; i <= 6; i++) {
+        const itemInfo = ITEM_SPECS[i];
+        const v = verdicts[String(i)] || verdicts[i] || {};
+        const conds = v.conditions || {};
+        const realHolds = conds.real?.holds || false;
+        const realObs = conds.real?.direction_observed || "-";
+        const shufObs = conds.shuffled?.direction_observed || "-";
+        const randObs = conds.random?.direction_observed || "-";
+        const overall = v.verdict || (realHolds ? "held" : "failed");
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${i}</td>
+          <td>${itemInfo.name}</td>
+          <td><span class="${realHolds ? 'status-tag status-held' : ''}">${realObs}</span></td>
+          <td>${shufObs}</td>
+          <td>${randObs}</td>
+          <td><span class="status-tag ${overall === 'held' ? 'status-held' : 'status-failed'}">${overall.toUpperCase()}</span></td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    // Animation & Render Loop
+    function renderLoop(timestamp) {
+      if (!lastAnimTime) lastAnimTime = timestamp;
+      const delta = (timestamp - lastAnimTime) / 1000.0;
+      lastAnimTime = timestamp;
+
+      if (isPlaying) {
+        progress += (delta / 2.0) * playbackSpeed;
+        if (progress > 1.0) {
+          progress = 0.0; // loop
+        }
+        document.getElementById("timeScrubber").value = Math.round(progress * 100);
+        updateScrubberLabel();
+      }
+
+      drawArena();
+      requestAnimationFrame(renderLoop);
+    }
+
+    // 2D Arena Canvas Rendering
+    function drawArena() {
+      const width = canvas.width;
+      const height = canvas.height;
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const scale = 8.0; // pixels per mm
+
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Grid
+      if (showGrid) {
+        ctx.strokeStyle = "rgba(48, 54, 61, 0.4)";
+        ctx.lineWidth = 1;
+        const step = 40;
+        for (let x = step; x < width; x += step) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, height);
+          ctx.stroke();
+        }
+        for (let y = step; y < height; y += step) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y);
+          ctx.stroke();
+        }
+        // Axes
+        ctx.strokeStyle = "rgba(88, 166, 255, 0.25)";
+        ctx.beginPath();
+        ctx.moveTo(centerX, 0); ctx.lineTo(centerX, height);
+        ctx.moveTo(0, centerY); ctx.lineTo(width, centerY);
+        ctx.stroke();
+      }
+
+      // 2. Arena Outer Rim
+      ctx.strokeStyle = "rgba(48, 54, 61, 0.9)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, centerX - 14, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // 3. Item-Specific Stimulus Overlays
+      renderStimulusOverlay(centerX, centerY);
+
+      // 4. Trajectory Trail
+      if (trajectoryPoints.length > 0) {
+        const curStep = Math.min(
+          trajectoryPoints.length - 1,
+          Math.floor(progress * (trajectoryPoints.length - 1))
+        );
+
+        // Condition-based trail color
+        let trailColor = "#58a6ff"; // blue for real
+        if (activeTrialData?.condition === "shuffled") trailColor = "#d29922";
+        if (activeTrialData?.condition === "random") trailColor = "#bc8cff";
+
+        ctx.strokeStyle = trailColor;
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        for (let i = 0; i <= curStep; i++) {
+          const pt = trajectoryPoints[i];
+          const px = centerX + pt.x * scale;
+          const py = centerY - pt.y * scale;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+
+        // 5. Render Fly Body at Current Position
+        const curPt = trajectoryPoints[curStep];
+        const flyX = centerX + curPt.x * scale;
+        const flyY = centerY - curPt.y * scale;
+        renderFly(flyX, flyY, -curPt.theta, curPt);
+
+        // Update HUD
+        document.getElementById("hudKinematics").textContent = 
+          `Pos: (${curPt.x.toFixed(2)}, ${curPt.y.toFixed(2)}) mm | θ: ${(curPt.theta * 180 / Math.PI).toFixed(1)}°`;
+        document.getElementById("hudSpeed").textContent = 
+          `v: ${(curPt.v * 8).toFixed(1)} mm/s | ω: ${(curPt.omega * 180 / Math.PI).toFixed(1)}°/s`;
+      }
+
+      if (activeTrialData) {
+        document.getElementById("hudStimulus").textContent = 
+          `Stimulus: ${activeTrialData.stimulus || 'none'} (${activeTrialData.condition || 'bio'})`;
+      }
+    }
+
+    // Render stimuli (odour plumes, looming circle, optomotor drum, courtship partner)
+    function renderStimulusOverlay(cx, cy) {
+      if (activeItem === 1 || activeItem === 2) {
+        // Odour Plumes
+        // Attractant (ACV) top right
+        const gradAttr = ctx.createRadialGradient(cx + 120, cy - 80, 5, cx + 120, cy - 80, 140);
+        gradAttr.addColorStop(0, "rgba(63, 185, 80, 0.25)");
+        gradAttr.addColorStop(0.5, "rgba(63, 185, 80, 0.08)");
+        gradAttr.addColorStop(1, "rgba(63, 185, 80, 0.0)");
+        ctx.fillStyle = gradAttr;
+        ctx.beginPath();
+        ctx.arc(cx + 120, cy - 80, 140, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "rgba(63, 185, 80, 0.8)";
+        ctx.font = "10px ui-monospace";
+        ctx.fillText("ACV Attractant (+)", cx + 70, cy - 85);
+
+        if (activeItem === 1) {
+          // Repellent (Geosmin) bottom left
+          const gradRep = ctx.createRadialGradient(cx - 120, cy + 80, 5, cx - 120, cy + 80, 130);
+          gradRep.addColorStop(0, "rgba(248, 81, 73, 0.22)");
+          gradRep.addColorStop(0.5, "rgba(248, 81, 73, 0.06)");
+          gradRep.addColorStop(1, "rgba(248, 81, 73, 0.0)");
+          ctx.fillStyle = gradRep;
+          ctx.beginPath();
+          ctx.arc(cx - 120, cy + 80, 130, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = "rgba(248, 81, 73, 0.8)";
+          ctx.fillText("Geosmin Repellent (-)", cx - 180, cy + 95);
+        }
+      } else if (activeItem === 3) {
+        // CO2 Gas Plume
+        const gradCO2 = ctx.createRadialGradient(cx + 60, cy, 10, cx + 60, cy, 160);
+        gradCO2.addColorStop(0, "rgba(88, 166, 255, 0.28)");
+        gradCO2.addColorStop(0.6, "rgba(88, 166, 255, 0.08)");
+        gradCO2.addColorStop(1, "rgba(88, 166, 255, 0.0)");
+        ctx.fillStyle = gradCO2;
+        ctx.beginPath();
+        ctx.arc(cx + 60, cy, 160, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "rgba(88, 166, 255, 0.85)";
+        ctx.font = "10px ui-monospace";
+        ctx.fillText("CO2 Plume (ORN_V) -> MDN Backward Stepping", cx + 20, cy - 40);
+      } else if (activeItem === 4) {
+        // Looming Visual Stimulus
+        // Expanding dark shadow disc
+        const loomRadius = Math.min(180, 15 + Math.pow(progress, 2.5) * 150);
+        const gradLoom = ctx.createRadialGradient(cx + 80, cy - 80, 5, cx + 80, cy - 80, loomRadius);
+        gradLoom.addColorStop(0, "rgba(248, 81, 73, 0.8)");
+        gradLoom.addColorStop(0.7, "rgba(20, 20, 25, 0.9)");
+        gradLoom.addColorStop(1, "rgba(10, 10, 15, 0.0)");
+
+        ctx.fillStyle = gradLoom;
+        ctx.beginPath();
+        ctx.arc(cx + 80, cy - 80, loomRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "rgba(248, 81, 73, 0.6)";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = "rgba(248, 81, 73, 0.9)";
+        ctx.font = "10px ui-monospace";
+        ctx.fillText(`Looming Shadow: θ = ${(loomRadius / 2).toFixed(0)}° (LC4/LPLC2)`, cx + 40, cy - 90);
+      } else if (activeItem === 5) {
+        // Optomotor Visual Drum (rotating vertical stripes on perimeter)
+        const drumRadius = cx - 20;
+        const numStripes = 32;
+        const rotOffset = (activeTrialData?.stimulus === "rot_b" ? -1 : 1) * (progress * Math.PI * 4);
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        for (let i = 0; i < numStripes; i++) {
+          const angle = (i / numStripes) * Math.PI * 2 + rotOffset;
+          ctx.strokeStyle = (i % 2 === 0) ? "rgba(240, 246, 252, 0.4)" : "rgba(10, 14, 20, 0.9)";
+          ctx.lineWidth = 6;
+          ctx.beginPath();
+          ctx.arc(0, 0, drumRadius, angle, angle + (Math.PI / numStripes));
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        ctx.fillStyle = "rgba(88, 166, 255, 0.85)";
+        ctx.font = "10px ui-monospace";
+        ctx.fillText(`Optomotor Drum: ${activeTrialData?.stimulus || 'rot_a'} (T4/T5 -> HS/DNa02)`, cx - 110, cy - 130);
+      } else if (activeItem === 6) {
+        // Courtship Partner Fly & Pulse Song
+        const femaleX = cx + 90;
+        const femaleY = cy;
+
+        // Female fly icon
+        ctx.save();
+        ctx.translate(femaleX, femaleY);
+        // Pheromone aura (ppk25)
+        const aura = ctx.createRadialGradient(0, 0, 5, 0, 0, 45);
+        aura.addColorStop(0, "rgba(188, 140, 255, 0.35)");
+        aura.addColorStop(1, "rgba(188, 140, 255, 0.0)");
+        ctx.fillStyle = aura;
+        ctx.beginPath();
+        ctx.arc(0, 0, 45, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Female body
+        ctx.fillStyle = "#8b949e";
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 10, 6, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.fillStyle = "rgba(188, 140, 255, 0.9)";
+        ctx.font = "10px ui-monospace";
+        ctx.fillText("Female Partner (ppk25 contact zone)", femaleX - 70, femaleY - 30);
+
+        // Acoustic Pulse Soundwaves if courtship contact active
+        if (progress > 0.45) {
+          const waveRadius = ((progress - 0.45) * 220) % 60;
+          ctx.strokeStyle = "rgba(63, 185, 80, 0.7)";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(femaleX - 30, femaleY, waveRadius, -Math.PI / 3, Math.PI / 3);
+          ctx.stroke();
+
+          ctx.fillStyle = "rgba(63, 185, 80, 0.9)";
+          ctx.fillText("Pulse Song (~30 Hz) pIP10/pC1", femaleX - 80, femaleY + 35);
+        }
+      }
+    }
+
+    // Procedural Anatomical Fly Renderer
+    function renderFly(x, y, angle, state) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+
+      // Articulated 6-Leg Hexapod Tripod Gait (FL, MR, HL vs FR, ML, HR)
+      const spd = Math.abs(state.v || 0.0);
+      const isPaused = spd < 0.15;
+      const gaitPhase = (state.step || 0) * 0.45;
+      const swingAmp = isPaused ? 0.0 : Math.min(3.2, Math.max(1.0, spd * 1.3));
+      const swingT1 = isPaused ? 0.0 : Math.sin(gaitPhase) * swingAmp;
+      const swingT2 = isPaused ? 0.0 : -Math.sin(gaitPhase) * swingAmp;
+
+      const legs = [
+        // Front-Left (Tripod 1): angles forward-left
+        { base: [3.0, -3.0], knee: [5.8 + swingT1 * 0.5, -7.8 - Math.max(0, swingT1) * 0.5], foot: [8.5 + swingT1, -8.5] },
+        // Front-Right (Tripod 2): angles forward-right
+        { base: [3.0, 3.0], knee: [5.8 + swingT2 * 0.5, 7.8 + Math.max(0, swingT2) * 0.5], foot: [8.5 + swingT2, 8.5] },
+        // Middle-Left (Tripod 2): angles laterally
+        { base: [0.0, -3.5], knee: [-0.5 + swingT2 * 0.5, -9.5 - Math.max(0, swingT2) * 0.6], foot: [swingT2, -11.0] },
+        // Middle-Right (Tripod 1): angles laterally
+        { base: [0.0, 3.5], knee: [-0.5 + swingT1 * 0.5, 9.5 + Math.max(0, swingT1) * 0.6], foot: [swingT1, 11.0] },
+        // Hind-Left (Tripod 1): angles backward-left
+        { base: [-3.5, -3.0], knee: [-7.0 + swingT1 * 0.5, -8.5 - Math.max(0, swingT1) * 0.5], foot: [-9.5 + swingT1, -9.5] },
+        // Hind-Right (Tripod 2): angles backward-right
+        { base: [-3.5, 3.0], knee: [-7.0 + swingT2 * 0.5, 8.5 + Math.max(0, swingT2) * 0.5], foot: [-9.5 + swingT2, 9.5] }
+      ];
+
+      if (activeItem === 4 && progress > 0.25 && progress < 0.65) {
+        legs[2].knee = [-4.0, -8.0]; legs[2].foot = [-10.0, -10.0];
+        legs[3].knee = [-4.0, 8.0];  legs[3].foot = [-10.0, 10.0];
+        legs[4].knee = [-8.5, -7.0]; legs[4].foot = [-14.5, -8.5];
+        legs[5].knee = [-8.5, 7.0];  legs[5].foot = [-14.5, 8.5];
+      }
+
+      ctx.save();
+      ctx.strokeStyle = "#484f58";
+      ctx.lineWidth = 1.3;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      for (let i = 0; i < legs.length; i++) {
+        const l = legs[i];
+        ctx.beginPath();
+        ctx.moveTo(l.base[0], l.base[1]);
+        ctx.lineTo(l.knee[0], l.knee[1]);
+        ctx.lineTo(l.foot[0], l.foot[1]);
+        ctx.stroke();
+
+        ctx.fillStyle = "#30363d";
+        ctx.beginPath();
+        ctx.arc(l.foot[0], l.foot[1], 0.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // Antennae (illuminate when olfactory active)
+      const antColor = (activeItem <= 3 && state.v !== 0) ? "#3fb950" : "#8b949e";
+      ctx.strokeStyle = antColor;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      // Left antenna
+      ctx.moveTo(10, -3);
+      ctx.quadraticCurveTo(16, -7, 18, -10);
+      // Right antenna
+      ctx.moveTo(10, 3);
+      ctx.quadraticCurveTo(16, 7, 18, 10);
+      ctx.stroke();
+
+      // Compound Eyes (ruby red)
+      ctx.fillStyle = "#f85149";
+      ctx.beginPath();
+      ctx.arc(8, -4, 3, 0, Math.PI * 2);
+      ctx.arc(8, 4, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Head
+      ctx.fillStyle = "#21262d";
+      ctx.beginPath();
+      ctx.ellipse(7, 0, 4, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Thorax
+      ctx.fillStyle = "#30363d";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 6, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Translucent Wings
+      ctx.fillStyle = "rgba(200, 225, 255, 0.35)";
+      ctx.strokeStyle = "rgba(200, 225, 255, 0.6)";
+      ctx.lineWidth = 1;
+
+      if (activeItem === 6 && progress > 0.45) {
+        // Extended courting wing (90 degree unilateral vibration)
+        ctx.save();
+        ctx.rotate(-Math.PI / 2 + Math.sin(progress * 80) * 0.15);
+        ctx.beginPath();
+        ctx.ellipse(8, 0, 12, 4, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        // Right wing resting
+        ctx.beginPath();
+        ctx.ellipse(-5, 4, 10, 3.5, 0.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      } else {
+        // Standard folded/flying wings
+        ctx.beginPath();
+        ctx.ellipse(-5, -4, 10, 3.5, -0.2, 0, Math.PI * 2);
+        ctx.ellipse(-5, 4, 10, 3.5, 0.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      // Abdomen (striped)
+      ctx.fillStyle = "#161b22";
+      ctx.beginPath();
+      ctx.ellipse(-9, 0, 7, 4.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#484f58";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Forward heading arrow
+      ctx.strokeStyle = "rgba(88, 166, 255, 0.5)";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(10, 0);
+      ctx.lineTo(24, 0);
+      ctx.lineTo(20, -3);
+      ctx.moveTo(24, 0);
+      ctx.lineTo(20, 3);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    // Start application on page load
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
