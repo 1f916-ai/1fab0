@@ -7,6 +7,7 @@ Outputs results/runs.jsonl (hash-chained, one row per trial) and results/verdict
 import json, os, sys, time, hashlib, argparse, math
 import numpy as np, scipy.sparse as sp, torch
 import pyarrow.feather as f, pyarrow.compute as pc
+from src.trajectory import integrate_trajectory, trajectory_metrics
 DER = os.environ.get('FLY_DERIVED', 'data/derived'); DATA = os.environ.get('FLY_DATA', 'data/malecns')
 dev = 'mps' if torch.backends.mps.is_available() else 'cpu'
 BATTERY_FILE = os.environ.get('FLY_BATTERY', 'battery/battery.json'); B = json.load(open(BATTERY_FILE)); R = B['reference_dynamics']; T = B['trials']
@@ -75,8 +76,8 @@ def sign_permuted_weights(coo, seed):
     M = sp.csr_matrix((w.astype(np.float32), (coo.row, coo.col)), shape=(n, n)); M.eliminate_zeros(); Mc = M.tocoo()
     idx = torch.tensor(np.vstack([Mc.row, Mc.col]), dtype=torch.int64); v = torch.tensor(Mc.data, dtype=torch.float32)
     return torch.sparse_coo_tensor(idx, v, (n, n)).coalesce().to(dev)
-def simulate(W, P, jit, inputs, readouts, seed, dt=1.0):
-    """inputs: list of (index array, rate function of t_ms -> Hz). Returns spike counts per readout in baseline and stimulus windows."""
+def simulate(W, P, jit, inputs, readouts, seed, dt=1.0, track_trajectory=True):
+    """inputs: list of (index array, rate function of t_ms -> Hz). Returns spike counts per readout in baseline and stimulus windows, and continuous trajectory metrics."""
     g = torch.Generator(device='cpu').manual_seed(seed)
     v = torch.zeros(n, device=dev); gsyn = torch.zeros(n, device=dev); refr = torch.zeros(n, device=dev)
     D = max(1, int(round(P['dly'] / dt))); buf = [torch.zeros(n, device=dev) for _ in range(D)]
@@ -84,6 +85,13 @@ def simulate(W, P, jit, inputs, readouts, seed, dt=1.0):
     counts = {k: [0.0, 0.0] for k in readouts}; ro = {k: torch.tensor(ix, device=dev) for k, ix in readouts.items()}
     decay_g = math.exp(-dt / P['tau']); Vth = P['gap']
     inp = [(torch.tensor(ix, device=dev), rate) for ix, rate in inputs]
+
+    desc_keys = ['DNp09', 'MDN', 'DNa02_L', 'DNa02_R']
+    track_traj = track_trajectory and all(k in readouts for k in desc_keys)
+    bin_ms = 10.0
+    n_bins = max(1, int(round(Ts / bin_ms)))
+    bin_spikes = {k: [0.0] * n_bins for k in desc_keys} if track_traj else None
+
     for t in range(steps):
         tm = t * dt; s_del = buf[t % D]
         inc = torch.sparse.mm(W, s_del[:, None])[:, 0] * P['wscale']
@@ -100,12 +108,29 @@ def simulate(W, P, jit, inputs, readouts, seed, dt=1.0):
         s = spk.float(); buf[t % D] = s
         if tm >= Tw:
             win = 0 if tm < Tw + Tb else 1
-            for k, ix in ro.items(): counts[k][win] += float(s[ix].sum())
+            for k, ix in ro.items():
+                spk_sum = float(s[ix].sum())
+                counts[k][win] += spk_sum
+                if track_traj and win == 1 and k in desc_keys:
+                    b_idx = int((tm - Tw - Tb) / bin_ms)
+                    if 0 <= b_idx < n_bins:
+                        bin_spikes[k][b_idx] += spk_sum
     out = {}
     for k, ix in readouts.items():
         nb, ns = len(ix), len(ix)
         out[k] = dict(baseline_hz=counts[k][0] / max(1, nb) / (Tb / 1000.0), stimulus_hz=counts[k][1] / max(1, ns) / (Ts / 1000.0), n=int(len(ix)))
-    return out
+
+    traj_metrics = None
+    if track_traj:
+        bin_sec = bin_ms / 1000.0
+        rate_series = {
+            k: [bin_spikes[k][b] / max(1, len(readouts[k])) / bin_sec for b in range(n_bins)]
+            for k in desc_keys
+        }
+        traj = integrate_trajectory(rate_series, dt=bin_sec)
+        traj_metrics = trajectory_metrics(traj)
+
+    return out, traj_metrics
 # ---- items -> (stimuli, readouts)
 def item_plan(it):
     stim = {}
@@ -157,10 +182,12 @@ def main():
                         print('  sweep trial %d x%.2f: wscale %.4f probe %.3f (target %.3f) in %d iters' % (tr, step, P0['wscale'], rate, ref_rate * step, iters), flush=True)
                       else: P0 = P
                       for sname, inputs in stim.items():
-                          t1 = time.time(); res = simulate(W, P0, jit, inputs, ro, seed=sd)
-                          row = dict(step=(P0.get('target_multiplier') if cond == 'random' else None), seed=sd, seed_material=a.seed_material, battery_file=BATTERY_FILE, battery_sha256=hashlib.sha256(open(BATTERY_FILE, 'rb').read()).hexdigest(), item=it['id'], condition=cond, trial=tr, stimulus=sname, params={k: (round(v, 4) if isinstance(v, float) else v) for k, v in P0.items()}, readouts=res, wall_s=round(time.time() - t1, 1), prev=prev)
+                          t1 = time.time(); is_walking = it['id'] in (1, 2, 3); res, traj_metrics = simulate(W, P0, jit, inputs, ro, seed=sd, track_trajectory=is_walking)
+                          row = dict(step=(P0.get('target_multiplier') if cond == 'random' else None), seed=sd, seed_material=a.seed_material, battery_file=BATTERY_FILE, battery_sha256=hashlib.sha256(open(BATTERY_FILE, 'rb').read()).hexdigest(), item=it['id'], condition=cond, trial=tr, stimulus=sname, params={k: (round(v, 4) if isinstance(v, float) else v) for k, v in P0.items()}, readouts=res, trajectory=(traj_metrics if is_walking else None), wall_s=round(time.time() - t1, 1), prev=prev)
                           prev = hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest(); row['sha256'] = prev
                           fo.write(json.dumps(row, sort_keys=True) + '\n'); fo.flush(); rows += 1
-                          print('item %d %-8s trial %d %-12s %5.1fs  DNp09 %.2f MDN %.2f DNp01 %.2f pC1 %.2f pIP10 %.2f HS R/L %.2f/%.2f' % (it['id'], cond, tr, sname, row['wall_s'], res['DNp09']['stimulus_hz'], res['MDN']['stimulus_hz'], res['DNp01']['stimulus_hz'], res['pC1']['stimulus_hz'], res['pIP10']['stimulus_hz'], res['HS_R']['stimulus_hz'], res['HS_L']['stimulus_hz']), flush=True)
+                          fpi_val = traj_metrics.get('forward_progress_index', traj_metrics.get('chemotaxis_index')) if traj_metrics else None
+                          fpi_str = (' FPI %+.2f' % fpi_val) if fpi_val is not None else ''
+                          print('item %d %-8s trial %d %-12s %5.1fs  DNp09 %.2f MDN %.2f DNp01 %.2f pC1 %.2f pIP10 %.2f HS R/L %.2f/%.2f%s' % (it['id'], cond, tr, sname, row['wall_s'], res['DNp09']['stimulus_hz'], res['MDN']['stimulus_hz'], res['DNp01']['stimulus_hz'], res['pC1']['stimulus_hz'], res['pIP10']['stimulus_hz'], res['HS_R']['stimulus_hz'], res['HS_L']['stimulus_hz'], fpi_str), flush=True)
     print('rows', rows, 'total %.0fs' % (time.time() - t0))
 if __name__ == '__main__': main()
