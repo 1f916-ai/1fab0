@@ -1,0 +1,474 @@
+{
+ "battery": "v5",
+ "seal": 6412,
+ "battery_sha256": "9363a61c60fd4eaf954cea6544533c46ac9156b051830e406340c31decd70226",
+ "checkpoint_root": "798845f22017424a33ff54887caae29c98191ecf7ac56cdcdc8f91903458074c",
+ "tree_size": 16976,
+ "checkpoint_id": 21733,
+ "rows": 3150,
+ "items": {
+  "1": {
+   "name": "odour valence ordering",
+   "real": "3/30",
+   "shuffled": {
+    "fake": "2/30",
+    "fisher_p": 0.5,
+    "two_sided_p": 1.0,
+    "sign": "real>fake",
+    "cell": "failed"
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "2/30",
+     "fisher_p": 0.5,
+     "two_sided_p": 1.0,
+     "sign": "real>fake",
+     "cell": "failed",
+     "verdict": "failed"
+    },
+    "0.5": {
+     "fake": "5/30",
+     "fisher_p": 0.87289,
+     "two_sided_p": 0.70647,
+     "sign": "fake>real",
+     "cell": "failed",
+     "verdict": "failed"
+    },
+    "1": {
+     "fake": "6/30",
+     "fisher_p": 0.92725,
+     "two_sided_p": 0.47164,
+     "sign": "fake>real",
+     "cell": "failed",
+     "verdict": "failed"
+    },
+    "2": {
+     "fake": "5/30",
+     "fisher_p": 0.87289,
+     "two_sided_p": 0.70647,
+     "sign": "fake>real",
+     "cell": "failed",
+     "verdict": "failed"
+    },
+    "4": {
+     "fake": "2/30",
+     "fisher_p": 0.5,
+     "two_sided_p": 1.0,
+     "sign": "real>fake",
+     "cell": "failed",
+     "verdict": "failed"
+    }
+   },
+   "count_bar": "with real at 3/30, the fake must show the direction in at most -1 of 30",
+   "cells": {
+    "shuffled": "failed",
+    "random_0.25": "failed",
+    "random_0.5": "failed",
+    "random_1": "failed",
+    "random_2": "failed",
+    "random_4": "failed"
+   },
+   "predicted_cells": {
+    "shuffled": "failed",
+    "random_0.25": "failed",
+    "random_0.5": "failed",
+    "random_1": "failed",
+    "random_2": "failed",
+    "random_4": "failed"
+   },
+   "cells_moved": {},
+   "verdict_scalar_step_1": "failed"
+  },
+  "2": {
+   "name": "concentration reversal",
+   "real": "0/30",
+   "shuffled": {
+    "fake": "15/30",
+    "fisher_p": 1.0,
+    "two_sided_p": 1e-05,
+    "sign": "fake>real",
+    "cell": "inverted"
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "13/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 5e-05,
+     "sign": "fake>real",
+     "cell": "inverted",
+     "verdict": "failed"
+    },
+    "0.5": {
+     "fake": "10/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 0.0008,
+     "sign": "fake>real",
+     "cell": "inverted",
+     "verdict": "failed"
+    },
+    "1": {
+     "fake": "14/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 2e-05,
+     "sign": "fake>real",
+     "cell": "inverted",
+     "verdict": "failed"
+    },
+    "2": {
+     "fake": "12/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 0.00012,
+     "sign": "fake>real",
+     "cell": "inverted",
+     "verdict": "failed"
+    },
+    "4": {
+     "fake": "14/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 2e-05,
+     "sign": "fake>real",
+     "cell": "inverted",
+     "verdict": "failed"
+    }
+   },
+   "count_bar": "with real at 0/30, the fake must show the direction in at most -1 of 30",
+   "cells": {
+    "shuffled": "inverted",
+    "random_0.25": "inverted",
+    "random_0.5": "inverted",
+    "random_1": "inverted",
+    "random_2": "inverted",
+    "random_4": "inverted"
+   },
+   "predicted_cells": {
+    "shuffled": "inverted",
+    "random_0.25": "failed",
+    "random_0.5": "inverted",
+    "random_1": "inverted",
+    "random_2": "inverted",
+    "random_4": "failed"
+   },
+   "cells_moved": {
+    "random_0.25": {
+     "predicted": "failed",
+     "observed": "inverted"
+    },
+    "random_4": {
+     "predicted": "failed",
+     "observed": "inverted"
+    }
+   },
+   "verdict_scalar_step_1": "failed"
+  },
+  "3": {
+   "name": "CO2 avoidance, walking state",
+   "real": "30/30",
+   "shuffled": {
+    "fake": "3/30",
+    "fisher_p": 0.0,
+    "two_sided_p": 0.0,
+    "sign": "real>fake",
+    "cell": "held"
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "2/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "0.5": {
+     "fake": "4/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "1": {
+     "fake": "7/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "2": {
+     "fake": "17/30",
+     "fisher_p": 2e-05,
+     "two_sided_p": 5e-05,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "4": {
+     "fake": "13/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    }
+   },
+   "count_bar": "with real at 30/30, the fake must show the direction in at most 23 of 30",
+   "cells": {
+    "shuffled": "held",
+    "random_0.25": "held",
+    "random_0.5": "held",
+    "random_1": "held",
+    "random_2": "held",
+    "random_4": "held"
+   },
+   "predicted_cells": {
+    "shuffled": "held",
+    "random_0.25": "held",
+    "random_0.5": "held",
+    "random_1": "held",
+    "random_2": "held",
+    "random_4": "held"
+   },
+   "cells_moved": {},
+   "verdict_scalar_step_1": "held"
+  },
+  "4": {
+   "name": "looming escape via the giant fibre",
+   "real": "30/30",
+   "shuffled": {
+    "fake": "7/30",
+    "fisher_p": 0.0,
+    "two_sided_p": 0.0,
+    "sign": "real>fake",
+    "cell": "held"
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "24/30",
+     "fisher_p": 0.01186,
+     "two_sided_p": 0.02372,
+     "sign": "real>fake",
+     "cell": "failed",
+     "verdict": "failed"
+    },
+    "0.5": {
+     "fake": "18/30",
+     "fisher_p": 6e-05,
+     "two_sided_p": 0.00012,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "1": {
+     "fake": "11/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "2": {
+     "fake": "11/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "4": {
+     "fake": "14/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    }
+   },
+   "count_bar": "with real at 30/30, the fake must show the direction in at most 23 of 30",
+   "cells": {
+    "shuffled": "held",
+    "random_0.25": "failed",
+    "random_0.5": "held",
+    "random_1": "held",
+    "random_2": "held",
+    "random_4": "held"
+   },
+   "predicted_cells": {
+    "shuffled": "held",
+    "random_0.25": "failed",
+    "random_0.5": "held",
+    "random_1": "held",
+    "random_2": "held",
+    "random_4": "held"
+   },
+   "cells_moved": {},
+   "verdict_scalar_step_1": "held"
+  },
+  "5": {
+   "name": "optomotor turning",
+   "real": "30/30",
+   "shuffled": {
+    "fake": "0/30",
+    "fisher_p": 0.0,
+    "two_sided_p": 0.0,
+    "sign": "real>fake",
+    "cell": "held"
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "0/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "0.5": {
+     "fake": "1/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "1": {
+     "fake": "2/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "2": {
+     "fake": "0/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    },
+    "4": {
+     "fake": "0/30",
+     "fisher_p": 0.0,
+     "two_sided_p": 0.0,
+     "sign": "real>fake",
+     "cell": "held",
+     "verdict": "held"
+    }
+   },
+   "count_bar": "with real at 30/30, the fake must show the direction in at most 23 of 30",
+   "cells": {
+    "shuffled": "held",
+    "random_0.25": "held",
+    "random_0.5": "held",
+    "random_1": "held",
+    "random_2": "held",
+    "random_4": "held"
+   },
+   "predicted_cells": {
+    "shuffled": "held",
+    "random_0.25": "held",
+    "random_0.5": "held",
+    "random_1": "held",
+    "random_2": "held",
+    "random_4": "held"
+   },
+   "cells_moved": {},
+   "verdict_scalar_step_1": "held"
+  },
+  "6": {
+   "name": "male courtship song pathway",
+   "real": "0/30",
+   "shuffled": {
+    "fake": "0/30",
+    "fisher_p": 1.0,
+    "two_sided_p": 1.0,
+    "sign": "equal",
+    "cell": "failed"
+   },
+   "random_steps": {
+    "0.25": {
+     "fake": "6/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 0.02372,
+     "sign": "fake>real",
+     "cell": "failed",
+     "verdict": "failed"
+    },
+    "0.5": {
+     "fake": "5/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 0.05219,
+     "sign": "fake>real",
+     "cell": "failed",
+     "verdict": "failed"
+    },
+    "1": {
+     "fake": "3/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 0.23729,
+     "sign": "fake>real",
+     "cell": "failed",
+     "verdict": "failed"
+    },
+    "2": {
+     "fake": "1/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 1.0,
+     "sign": "fake>real",
+     "cell": "failed",
+     "verdict": "failed"
+    },
+    "4": {
+     "fake": "0/30",
+     "fisher_p": 1.0,
+     "two_sided_p": 1.0,
+     "sign": "equal",
+     "cell": "failed",
+     "verdict": "failed"
+    }
+   },
+   "count_bar": "with real at 0/30, the fake must show the direction in at most -1 of 30",
+   "cells": {
+    "shuffled": "failed",
+    "random_0.25": "failed",
+    "random_0.5": "failed",
+    "random_1": "failed",
+    "random_2": "failed",
+    "random_4": "failed"
+   },
+   "predicted_cells": {
+    "shuffled": "failed",
+    "random_0.25": "failed",
+    "random_0.5": "failed",
+    "random_1": "failed",
+    "random_2": "failed",
+    "random_4": "failed"
+   },
+   "cells_moved": {},
+   "verdict_scalar_step_1": "failed"
+  }
+ },
+ "cells_moved": [
+  [
+   "2",
+   "random_0.25",
+   "failed",
+   "inverted"
+  ],
+  [
+   "2",
+   "random_4",
+   "failed",
+   "inverted"
+  ]
+ ],
+ "headline": {
+  "1": "failed",
+  "2": "failed",
+  "3": "held",
+  "4": "held",
+  "5": "held",
+  "6": "failed"
+ }
+}
