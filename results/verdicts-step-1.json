@@ -3,36 +3,51 @@
   "name": "odour valence ordering",
   "conditions": {
    "real": {
-    "direction_observed": "1/10",
-    "p_one_sided": 0.999,
+    "direction_observed": "5/30",
+    "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     -0.125,
-     -0.167,
-     -1.833
+     -0.028,
+     -0.194,
+     -2.444
     ]
    },
    "shuffled": {
-    "direction_observed": "1/10",
-    "p_one_sided": 0.999,
+    "direction_observed": "5/30",
+    "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     30.375,
-     0.167,
+     7.167,
+     3.75,
      0.0
     ]
    },
    "random": {
-    "direction_observed": "0/10",
-    "p_one_sided": 1.0,
+    "direction_observed": "8/30",
+    "p_one_sided": 0.9974,
     "holds": false,
     "mean_stats": [
-     -3.458,
-     -6.167,
-     -8.458
+     -2.264,
+     -2.375,
+     -2.056
     ]
    }
   },
+  "difference_tests": {
+   "shuffled": {
+    "real": "5/30",
+    "fake": "5/30",
+    "fisher_p": 0.63468,
+    "holds": false
+   },
+   "random": {
+    "real": "5/30",
+    "fake": "8/30",
+    "fisher_p": 0.89538,
+    "holds": false
+   }
+  },
+  "count_bar": "with real at 5/30, the fake must show the direction in at most -1 of 30",
   "verdict": "failed",
   "real_only": false
  },
@@ -40,33 +55,48 @@
   "name": "concentration reversal",
   "conditions": {
    "real": {
-    "direction_observed": "0/10",
+    "direction_observed": "1/30",
     "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     -2.125,
-     0.0
+     -0.708,
+     -0.014
     ]
    },
    "shuffled": {
-    "direction_observed": "2/10",
-    "p_one_sided": 0.9893,
+    "direction_observed": "13/30",
+    "p_one_sided": 0.8192,
     "holds": false,
     "mean_stats": [
-     8.417,
-     36.667
+     8.069,
+     18.472
     ]
    },
    "random": {
-    "direction_observed": "5/10",
-    "p_one_sided": 0.623,
+    "direction_observed": "14/30",
+    "p_one_sided": 0.7077,
     "holds": false,
     "mean_stats": [
-     -4.0,
-     -4.875
+     -1.528,
+     -2.5
     ]
    }
   },
+  "difference_tests": {
+   "shuffled": {
+    "real": "1/30",
+    "fake": "13/30",
+    "fisher_p": 0.99999,
+    "holds": false
+   },
+   "random": {
+    "real": "1/30",
+    "fake": "14/30",
+    "fisher_p": 1.0,
+    "holds": false
+   }
+  },
+  "count_bar": "with real at 1/30, the fake must show the direction in at most -1 of 30",
   "verdict": "failed",
   "real_only": false
  },
@@ -74,33 +104,48 @@
   "name": "CO2 avoidance, walking state",
   "conditions": {
    "real": {
-    "direction_observed": "10/10",
-    "p_one_sided": 0.001,
+    "direction_observed": "30/30",
+    "p_one_sided": 0.0,
     "holds": true,
     "mean_stats": [
-     -6.458,
+     -6.264,
      0.0
     ]
    },
    "shuffled": {
-    "direction_observed": "0/10",
+    "direction_observed": "4/30",
     "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     0.0,
+     0.625,
      0.0
     ]
    },
    "random": {
-    "direction_observed": "5/10",
-    "p_one_sided": 0.623,
+    "direction_observed": "9/30",
+    "p_one_sided": 0.9919,
     "holds": false,
     "mean_stats": [
-     -6.167,
+     2.875,
      0.0
     ]
    }
   },
+  "difference_tests": {
+   "shuffled": {
+    "real": "30/30",
+    "fake": "4/30",
+    "fisher_p": 0.0,
+    "holds": true
+   },
+   "random": {
+    "real": "30/30",
+    "fake": "9/30",
+    "fisher_p": 0.0,
+    "holds": true
+   }
+  },
+  "count_bar": "with real at 30/30, the fake must show the direction in at most 23 of 30",
   "verdict": "held",
   "real_only": true
  },
@@ -108,33 +153,48 @@
   "name": "looming escape via the giant fibre",
   "conditions": {
    "real": {
-    "direction_observed": "10/10",
-    "p_one_sided": 0.001,
+    "direction_observed": "30/30",
+    "p_one_sided": 0.0,
     "holds": true,
     "mean_stats": [
-     51.0,
-     2.167
+     49.889,
+     1.444
     ]
    },
    "shuffled": {
-    "direction_observed": "1/10",
-    "p_one_sided": 0.999,
+    "direction_observed": "3/30",
+    "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     3.5,
-     17.167
+     6.139,
+     32.417
     ]
    },
    "random": {
-    "direction_observed": "4/10",
-    "p_one_sided": 0.8281,
+    "direction_observed": "11/30",
+    "p_one_sided": 0.9506,
     "holds": false,
     "mean_stats": [
-     84.75,
-     97.833
+     99.472,
+     111.694
     ]
    }
   },
+  "difference_tests": {
+   "shuffled": {
+    "real": "30/30",
+    "fake": "3/30",
+    "fisher_p": 0.0,
+    "holds": true
+   },
+   "random": {
+    "real": "30/30",
+    "fake": "11/30",
+    "fisher_p": 0.0,
+    "holds": true
+   }
+  },
+  "count_bar": "with real at 30/30, the fake must show the direction in at most 23 of 30",
   "verdict": "held",
   "real_only": true
  },
@@ -142,82 +202,112 @@
   "name": "optomotor turning",
   "conditions": {
    "real": {
-    "direction_observed": "0/10",
-    "p_one_sided": 1.0,
-    "holds": false,
+    "direction_observed": "29/30",
+    "p_one_sided": 0.0,
+    "holds": true,
     "mean_stats": [
      250.0,
-     0.0,
-     226.167,
-     -4.5
+     -250.0,
+     169.389,
+     -44.278
     ]
    },
    "shuffled": {
-    "direction_observed": "0/10",
+    "direction_observed": "0/30",
     "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     -4.278,
-     -3.222,
-     -27.833,
-     -35.333
+     2.611,
+     3.667,
+     12.778,
+     13.722
     ]
    },
    "random": {
-    "direction_observed": "0/10",
+    "direction_observed": "1/30",
     "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     177.111,
-     58.778,
-     2.167,
-     10.667
+     34.926,
+     -57.611,
+     0.111,
+     -0.444
     ]
    }
   },
-  "verdict": "failed",
-  "real_only": false
+  "difference_tests": {
+   "shuffled": {
+    "real": "29/30",
+    "fake": "0/30",
+    "fisher_p": 0.0,
+    "holds": true
+   },
+   "random": {
+    "real": "29/30",
+    "fake": "1/30",
+    "fisher_p": 0.0,
+    "holds": true
+   }
+  },
+  "count_bar": "with real at 29/30, the fake must show the direction in at most 21 of 30",
+  "verdict": "held",
+  "real_only": true
  },
  "6": {
   "name": "male courtship song pathway",
   "conditions": {
    "real": {
-    "direction_observed": "0/10",
+    "direction_observed": "0/30",
     "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     1.704,
+     2.463,
      0.0,
-     8.75,
-     0.75,
+     9.96,
+     3.806,
      0.0
     ]
    },
    "shuffled": {
-    "direction_observed": "1/10",
-    "p_one_sided": 0.999,
+    "direction_observed": "0/30",
+    "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     0.025,
+     0.013,
      0.0,
-     12.524,
-     0.083,
+     28.584,
+     0.0,
      0.0
     ]
    },
    "random": {
-    "direction_observed": "2/10",
-    "p_one_sided": 0.9893,
+    "direction_observed": "4/30",
+    "p_one_sided": 1.0,
     "holds": false,
     "mean_stats": [
-     29.933,
+     23.286,
      0.0,
-     18.631,
-     91.5,
+     22.309,
+     86.944,
      0.0
     ]
    }
   },
+  "difference_tests": {
+   "shuffled": {
+    "real": "0/30",
+    "fake": "0/30",
+    "fisher_p": 1.0,
+    "holds": false
+   },
+   "random": {
+    "real": "0/30",
+    "fake": "4/30",
+    "fisher_p": 1.0,
+    "holds": false
+   }
+  },
+  "count_bar": "with real at 0/30, the fake must show the direction in at most -1 of 30",
   "verdict": "failed",
   "real_only": false
  }
