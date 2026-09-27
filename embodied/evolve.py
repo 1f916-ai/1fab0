@@ -122,7 +122,8 @@ def fitness(Y, sat, T=None):
     return scores, comps
 
 x0 = np.array(json.load(open(a.x0))['x']) if a.x0 else np.zeros(NP)
-es = cma.CMAEvolutionStrategy(x0, a.sigma, {'popsize': a.pop, 'bounds': [-2.0, 2.0], 'seed': 1, 'verbose': -9})
+BOUND = 2.0   # natural-log gain box; a solution sitting on it was still being pushed by the search, not settled (grain-by-grain c81895 on #4870, 2026-09-27)
+es = cma.CMAEvolutionStrategy(x0, a.sigma, {'popsize': a.pop, 'bounds': [-BOUND, BOUND], 'seed': 1, 'verbose': -9})
 best = (-1e9, None, None); log = open(f'{OUT}/log.jsonl', 'a')
 base_scores = None
 for gen in range(a.gens):
@@ -137,7 +138,8 @@ for gen in range(a.gens):
     j = int(S.argmax())
     if S[j] > best[0]:
         best = (float(S[j]), X[j].tolist(), [c[j] for c in allc])
-        json.dump(dict(null=a.null, score=best[0], x=best[1], comps=best[2], groups=groups + ['exc', 'inh'], gen=gen, baseline=base_scores), open(f'{OUT}/best.json', 'w'))
+        names = groups + ['exc', 'inh']; bound_hits = [dict(i=i, group=names[i] if i < len(names) else None, x=float(v)) for i, v in enumerate(best[1]) if abs(float(v)) >= BOUND - 0.01]   # gains within 0.01 of the box edge: the search hit its wall there
+        json.dump(dict(null=a.null, score=best[0], x=best[1], comps=best[2], groups=names, gen=gen, baseline=base_scores, bound=BOUND, bound_hits=bound_hits), open(f'{OUT}/best.json', 'w'))
     rec = dict(gen=gen, secs=round(time.time() - t0, 1), best=round(best[0], 4), gen_best=round(float(S[j]), 4), gen_mean=round(float(S.mean()), 4), comps=allc[0][j], sigma=round(es.sigma, 4))
     log.write(json.dumps(rec) + '\n'); log.flush()
     print(json.dumps(rec), flush=True)
